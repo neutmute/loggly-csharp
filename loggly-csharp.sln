@@ -3,7 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loggly-csharp", "loggly-csharp\loggly-csharp.csproj", "{F66349BA-29A6-4336-BA81-993170FC9963}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loggly-chspar.tests", "loggly-csharp.tests\loggly-csharp.tests.csproj", "{8276BB03-DBCC-4A94-8111-5D333F49FECD}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "loggly-csharp.tests", "loggly-csharp.tests\loggly-csharp.tests.csproj", "{8276BB03-DBCC-4A94-8111-5D333F49FECD}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "stuff", "stuff", "{5B1BDA21-CAE4-4686-B45B-1087AA9A36F4}"
+	ProjectSection(SolutionItems) = preProject
+		license.txt = license.txt
+		readme.textile = readme.textile
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

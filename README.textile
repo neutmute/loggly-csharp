@@ -1,0 +1,10 @@
+h2. Loggly .NET Driver
+
+This is a .NET driver for "loggly.com":http://loggly.com. It is in early development and can currently only be used to log messages (meaning the search/management stuff isn't available).
+
+h3. Usage
+
+Create a new @Logger@ with your input key:
+<pre>var logger = new Logger("47beab4d-74de-435f-9979-f5f318a4009f");</pre>
+
+Use either a synchronous or asynchronous @Log@ method.
