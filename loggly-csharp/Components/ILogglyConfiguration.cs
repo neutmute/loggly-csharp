@@ -1,4 +1,5 @@
 using System;
+using System.Net;
 
 namespace Loggly
 {
@@ -7,6 +8,8 @@ namespace Loggly
       ILogglyConfiguration WithTimeout(int timeout);
       ILogglyConfiguration WithTimeout(TimeSpan timeout);
       ILogglyConfiguration DontUseHttps();
+      ILogglyConfiguration AuthenticateWith(string username, string password);
+
       /// <summary>
       /// Used by the test library
       /// </summary>      
@@ -18,12 +21,10 @@ namespace Loggly
       private static ConfigurationData _data = new ConfigurationData();
       private static readonly LogglyConfiguration _configuration = new LogglyConfiguration();
 
-      public static void Configure(Action<ILogglyConfiguration> action)
+      protected LogglyConfiguration()
       {
-         action(_configuration);
       }
-      protected LogglyConfiguration() { }
-      
+
       public static IConfigurationData Data
       {
          get { return _data; }
@@ -37,12 +38,18 @@ namespace Loggly
 
       public ILogglyConfiguration WithTimeout(TimeSpan timeout)
       {
-         return WithTimeout((int)timeout.TotalMilliseconds);
+         return WithTimeout((int) timeout.TotalMilliseconds);
       }
 
       public ILogglyConfiguration DontUseHttps()
       {
          _data.Https = false;
+         return this;
+      }
+
+      public ILogglyConfiguration AuthenticateWith(string username, string password)
+      {
+         _data.Credentials = new NetworkCredential(username, password);
          return this;
       }
 
@@ -53,6 +60,11 @@ namespace Loggly
       {
          _data.ForcedUrl = url;
          return this;
+      }
+
+      public static void Configure(Action<ILogglyConfiguration> action)
+      {
+         action(_configuration);
       }
 
       /// <summary>

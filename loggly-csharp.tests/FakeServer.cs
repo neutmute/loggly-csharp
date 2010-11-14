@@ -56,7 +56,7 @@ namespace Loggly.Tests
          }
       }
 
-      private void SendResponse(HttpListenerContext context, string body, ApiExpectation expectation)
+      private static void SendResponse(HttpListenerContext context, string body, ApiExpectation expectation)
       {
          var response = context.Response;
          response.StatusCode = expectation.Status ?? 200;
@@ -97,6 +97,10 @@ namespace Loggly.Tests
             {
                continue;
             }
+            if (expectation.QueryString != null && string.Compare(request.Url.Query, expectation.QueryString, true) != 0)
+            {
+               continue;
+            }
             return expectation; //we found a match!
          }
          return null;
@@ -128,6 +132,7 @@ namespace Loggly.Tests
       public static readonly ApiExpectation EchoAll = new ApiExpectation();
       public string Method { get; set; }
       public string Url { get; set; }
+      public string QueryString { get; set; }
       public string Request { get; set; }
       public int? Status { get; set; }
       public string Response { get; set; }

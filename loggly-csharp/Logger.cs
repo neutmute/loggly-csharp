@@ -11,11 +11,6 @@ namespace Loggly
       private readonly string _inputKey;
 
 
-      public string Url
-      {
-         get { return _url; }
-      }
-
       public Logger(string inputKey)
       {
          _inputKey = inputKey;
@@ -42,7 +37,7 @@ namespace Loggly
       public void LogAsync(string message, Action<LogResponse> callback)
       {
          var communicator = new Communicator(this);
-         var callbackWrapper = callback == null ? (Action<Response>)null : r =>
+         var callbackWrapper = callback == null ? (Action<Response>) null : r =>
          {
             if (r.Success)
             {
@@ -50,6 +45,11 @@ namespace Loggly
             }
          };
          communicator.SendPayload(Communicator.POST, string.Concat("inputs/", _inputKey), message, callbackWrapper);
-      }      
+      }
+
+      public string Url
+      {
+         get { return _url; }
+      }
    }
 }

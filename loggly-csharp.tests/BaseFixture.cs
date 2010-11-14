@@ -8,12 +8,14 @@ namespace Loggly.Tests
    public abstract class BaseFixture
    {
       protected static readonly Func<IDictionary<string, object>> EmptyPayload = () => new Dictionary<string, object>();
+
+      protected FakeServer Server;
+      protected AutoResetEvent Trigger;
+
       protected virtual bool NeedAServer
       {
          get { return true; }
       }
-      protected FakeServer Server;
-      protected AutoResetEvent Trigger;
 
       [SetUp]
       public void SetUp()
@@ -26,6 +28,7 @@ namespace Loggly.Tests
          }
          BeforeEachTest();
       }
+
       [TearDown]
       public void TearDown()
       {
@@ -36,14 +39,21 @@ namespace Loggly.Tests
          }
          AfterEachTest();
       }
-      public virtual void AfterEachTest() { }
-      public virtual void BeforeEachTest() { }
+
+      public virtual void AfterEachTest()
+      {
+      }
+
+      public virtual void BeforeEachTest()
+      {
+      }
 
 
       protected void Set()
       {
          Trigger.Set();
       }
+
       protected void WaitOne()
       {
          Assert.IsTrue(Trigger.WaitOne(3000), "Test terminated without properly signalling the trigger");

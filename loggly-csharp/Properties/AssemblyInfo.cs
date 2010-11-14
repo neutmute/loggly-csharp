@@ -1,5 +1,6 @@
 ﻿using System.Reflection;
 using System.Runtime.InteropServices;
+
 [assembly: AssemblyTitle("loggly-csharp")]
 [assembly: AssemblyDescription("A .NET driver for loggly.com")]
 [assembly: AssemblyConfiguration("")]

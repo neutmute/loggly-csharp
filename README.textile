@@ -1,10 +1,22 @@
 h2. Loggly .NET Driver
 
-This is a .NET driver for "loggly.com":http://loggly.com. It is in early development and can currently only be used to log messages (meaning the search/management stuff isn't available).
+This is a .NET driver for "loggly.com":http://loggly.com.
 
-h3. Usage
+h3. Logging Events
 
 Create a new @Logger@ with your input key:
-<pre>var logger = new Logger("47beab4d-74de-435f-9979-f5f318a4009f");</pre>
+<pre>var logger = new Logger("my-long-key-that-i-got-when-setting-up-my-http-input");</pre>
 
 Use either a synchronous or asynchronous @Log@ method.
+
+h3. Searching Events
+
+First, setup the username/password you want to connect with:
+<pre>LogglyConfiguration.Configure(c => c.AuthenticateWith("username", "oassword"));</pre>
+
+Next, create a searcher with your domain:
+<pre>var searcher = new Searcher("mydomain");</pre>
+
+Finally, use the various @Search@ methods.
+
+Note that searching happens synchronously.

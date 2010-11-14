@@ -10,11 +10,12 @@ namespace Loggly.Responses
 
       public static Response CreateSuccess(string raw)
       {
-         return new Response { Success = true, Raw = raw };
+         return new Response {Success = true, Raw = raw};
       }
+
       public static Response CreateError(ErrorMessage error)
       {
-         return new Response { Success = false, Error = error };
+         return new Response {Success = false, Error = error};
       }
    }
 
