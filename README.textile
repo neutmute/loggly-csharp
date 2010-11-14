@@ -12,7 +12,7 @@ Use either a synchronous or asynchronous @Log@ method.
 h3. Searching Events
 
 First, setup the username/password you want to connect with:
-<pre>LogglyConfiguration.Configure(c => c.AuthenticateWith("username", "oassword"));</pre>
+<pre>LogglyConfiguration.Configure(c => c.AuthenticateWith("username", "password"));</pre>
 
 Next, create a searcher with your domain:
 <pre>var searcher = new Searcher("mydomain");</pre>
