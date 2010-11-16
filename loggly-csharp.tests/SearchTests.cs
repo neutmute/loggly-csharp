@@ -15,7 +15,25 @@ namespace Loggly.Tests
       public void ProperlySerializesTimes()
       {
          Server.Stub(new ApiExpectation { Method = "GET", Url = "/api/search", QueryString = "?q=NewQuery&from=2001-10-19T21%3a35%3a22.000Z" });
-         new Searcher("mogade").Search(new SearchQuery{Query = "NewQuery", From = new DateTime(2001, 10, 20, 5, 35, 22)});
+         new Searcher("mogade").Search(new SearchQuery { Query = "NewQuery", From = new DateTime(2001, 10, 20, 5, 35, 22) });
+      }
+      [Test]
+      public void DoesntSerializeAllFields()
+      {
+         Server.Stub(new ApiExpectation { Method = "GET", Url = "/api/search", QueryString = "?q=NewQuery" });
+         new Searcher("mogade").Search(new SearchQuery { Query = "NewQuery", FieldsToSelect = Fields.All});         
+      }
+      [Test]
+      public void SerializesSingleField()
+      {
+         Server.Stub(new ApiExpectation { Method = "GET", Url = "/api/search", QueryString = "?q=NewQuery&fields=text" });
+         new Searcher("mogade").Search(new SearchQuery { Query = "NewQuery", FieldsToSelect = Fields.Text });
+      }
+      [Test]
+      public void SerializesMultipleField()
+      {
+         Server.Stub(new ApiExpectation { Method = "GET", Url = "/api/search", QueryString = "?q=NewQuery&fields=ip%2cinputname%2ctimestamp" });
+         new Searcher("mogade").Search(new SearchQuery { Query = "NewQuery", FieldsToSelect = Fields.Timestamp | Fields.Ip | Fields.InputName });
       }
       [Test]
       public void GetsTheResponse()

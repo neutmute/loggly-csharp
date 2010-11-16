@@ -45,6 +45,7 @@
     <Compile Include="Components\IConfigurationData.cs" />
     <Compile Include="Components\ILogglyConfiguration.cs" />
     <Compile Include="Components\IRequestContext.cs" />
+    <Compile Include="Fields.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="ISearcher.cs" />
     <Compile Include="Logger.cs" />
