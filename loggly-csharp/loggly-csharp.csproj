@@ -45,12 +45,17 @@
     <Compile Include="Components\IConfigurationData.cs" />
     <Compile Include="Components\ILogglyConfiguration.cs" />
     <Compile Include="Components\IRequestContext.cs" />
+    <Compile Include="Facet.cs" />
+    <Compile Include="FacetQuery.cs" />
     <Compile Include="Fields.cs" />
+    <Compile Include="IFacet.cs" />
     <Compile Include="ILogger.cs" />
     <Compile Include="ISearcher.cs" />
     <Compile Include="Logger.cs" />
     <Compile Include="LogglyException.cs" />
+    <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Responses\FacetResponse.cs" />
     <Compile Include="Responses\LogResponse.cs" />
     <Compile Include="Responses\Response.cs" />
     <Compile Include="Responses\SearchResponse.cs" />

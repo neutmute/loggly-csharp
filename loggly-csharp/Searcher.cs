@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using Loggly.Responses;
 
 namespace Loggly
@@ -42,7 +41,7 @@ namespace Loggly
       public SearchResponse Search(SearchQuery query)
       {
          var communicator = new Communicator(this);         
-         return communicator.GetPayload<SearchResponse>(string.Concat("api/search"), query.ToParameters());
+         return communicator.GetPayload<SearchResponse>("api/search", query.ToParameters());
       }
    }
 }
