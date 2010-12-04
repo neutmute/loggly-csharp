@@ -20,3 +20,16 @@ Next, create a searcher with your domain:
 Finally, use the various @Search@ methods.
 
 Note that searching happens synchronously.
+
+
+h4. Facents
+
+First, setup the username/password you want to connect with:
+<pre>LogglyConfiguration.Configure(c => c.AuthenticateWith("username", "password"));</pre>
+
+Next, create a facet with your domain:
+<pre>var facet = new Facet("mydomain");</pre>
+
+Finally, use the various @GetDate@, @GetIp@ and @GetInput* methods.
+
+Getting facts is always synchronous
