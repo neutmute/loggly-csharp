@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package>
+  <metadata>
+    <id>loggly-csharp</id>
+    <version>1.0</version>
+    <authors>Karl Seguin</authors>
+    <owners>Karl Seguin</owners>
+    <description>A .NET driver for loggly.com</description>
+    <language>en-US</language>
+    <projectUrl>https://github.com/karlseguin/loggly-csharp</projectUrl>
+    <licenseUrl>https://github.com/karlseguin/loggly-csharp/blob/master/license.txt</licenseUrl>
+    <dependencies>
+      <dependency id="Newtonsoft.Json" version="3.5.0" />
+    </dependencies>
+    <tags>LOGS LOGGING NLOG LOGGLY</tags>
+  </metadata>
+</package>
