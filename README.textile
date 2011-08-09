@@ -22,7 +22,7 @@ Finally, use the various @Search@ methods.
 Note that searching happens synchronously.
 
 
-h4. Facents
+h4. Facets
 
 First, setup the username/password you want to connect with:
 <pre>LogglyConfiguration.Configure(c => c.AuthenticateWith("username", "password"));</pre>
