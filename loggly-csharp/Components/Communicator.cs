@@ -19,10 +19,15 @@ namespace Loggly
       {
          _context = context;
       }
-      
+
       public void SendPayload(string method, string endPoint, string message, Action<Response> callback)
       {
-         var request = CreateRequest(method, endPoint, false);
+          this.SendPayload(method, endPoint, message, false, callback);
+      }
+
+      public void SendPayload(string method, string endPoint, string message, bool json, Action<Response> callback)
+      {
+         var request = CreateRequest(method, endPoint, false, json);
          var state = new RequestState {Request = request, Payload = message == null ? null : Encoding.UTF8.GetBytes(message), Callback = callback};
          request.BeginGetRequestStream(GetRequestStream, state);
       }
@@ -71,6 +76,11 @@ namespace Loggly
 
       private HttpWebRequest CreateRequest(string method, string endPoint, bool withCredentials)
       {
+          return this.CreateRequest(method, endPoint, withCredentials, false);
+      }
+
+      private HttpWebRequest CreateRequest(string method, string endPoint, bool withCredentials, bool json)
+      {
          var data = LogglyConfiguration.Data;
          var url = data.ForcedUrl ?? string.Concat(data.Https ? "https://" : "http://", _context.Url);
          var request = (HttpWebRequest) WebRequest.Create(string.Concat(url, endPoint));
@@ -80,6 +90,7 @@ namespace Loggly
          request.UserAgent = "loggly-csharp";
          request.KeepAlive = false;
          if (withCredentials) { request.Credentials = data.Credentials; }
+         if (json) { request.ContentType = "application/json"; }
          return request;
       }
 

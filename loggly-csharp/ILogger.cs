@@ -9,7 +9,7 @@ namespace Loggly
       /// Synchronously logs a message
       /// </summary>
       /// <param name="message">The message to log</param>     
-      LogResponse Log(string message);
+      LogResponse LogSync(string message);
 
       /// <summary>
       /// Asynchronously logs a message
@@ -18,7 +18,7 @@ namespace Loggly
       /// <remarks>
       /// Same as calling LogAsync(message, callback) where callback is null
       /// </remarks>
-      void LogAsync(string message);
+      void Log(string message);
 
       /// <summary>
       /// Asynchronously logs a message
@@ -28,6 +28,6 @@ namespace Loggly
       /// <remarks>
       /// Callback can be null which will give great performance, at the cost of not knowing if a failure occured.
       /// </remarks>
-      void LogAsync(string message, Action<LogResponse> callback);
+      void Log(string message, Action<LogResponse> callback);
    }
 }

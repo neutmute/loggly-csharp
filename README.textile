@@ -7,6 +7,8 @@ h3. Logging Events
 Create a new @Logger@ with your input key:
 <pre>var logger = new Logger("my-long-key-that-i-got-when-setting-up-my-http-input");</pre>
 
+For JSON logging you can use @LogInfo@, @LogVerbose@, @LogWarning@, @LogError@ methods that will create json objects with properties like category, message, exception (if applicable), extra data that you provide.
+
 Use either a synchronous or asynchronous @Log@ method.
 
 h3. Searching Events
@@ -18,6 +20,8 @@ Next, create a searcher with your domain:
 <pre>var searcher = new Searcher("mydomain");</pre>
 
 Finally, use the various @Search@ methods.
+
+For JSON search you can use @SearchJson@ methods.
 
 Note that searching happens synchronously.
 

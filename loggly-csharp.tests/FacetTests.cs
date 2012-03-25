@@ -8,8 +8,8 @@ namespace Loggly.Tests
       [Test]
       public void ProperlySerializesTimes()
       {
-         Server.Stub(new ApiExpectation { Method = "GET", Url = "/api/facets/date", QueryString = "?q=NewQuery&from=2001-10-19T21%3a35%3a22.000Z" });
-         new Facet("mogade").GetDate(new FacetQuery() { Query = "NewQuery", From = new DateTime(2001, 10, 20, 5, 35, 22) });
+         Server.Stub(new ApiExpectation { Method = "GET", Url = "/api/facets/date", QueryString = "?q=NewQuery&from=2001-10-20T05%3a35%3a22.000Z" });
+         new Facet("mogade").GetDate(new FacetQuery() { Query = "NewQuery", From = new DateTime(2001, 10, 20, 5, 35, 22, DateTimeKind.Utc) });
       }
       [Test]
       public void FacetsByIp()
