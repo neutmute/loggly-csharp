@@ -1,5 +1,8 @@
 ﻿using System;
 using Loggly.Responses;
+using System.Collections;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Loggly
 {
@@ -40,8 +43,69 @@ namespace Loggly
 
       public SearchResponse Search(SearchQuery query)
       {
-         var communicator = new Communicator(this);         
+         var communicator = new Communicator(this);
          return communicator.GetPayload<SearchResponse>("api/search", query.ToParameters());
+      }
+
+      public SearchJsonResponse SearchJson(SearchQuery query)
+      {
+          var communicator = new Communicator(this);
+          return communicator.GetPayload<SearchJsonResponse>("api/search", query.ToParameters());
+      }
+
+      public SearchJsonResponse SearchJson(string query)
+      {
+          return SearchJson(new SearchQuery { Query = query });
+      }
+
+      public SearchJsonResponse SearchJson(string query, DateTime start, DateTime until)
+      {
+          return SearchJson(new SearchQuery { Query = query, From = start, Until = until });
+      }
+
+      public SearchJsonResponse SearchJson(string query, int startingAt, int numberOfRows)
+      {
+          return SearchJson(new SearchQuery { Query = query, StartingAt = startingAt, NumberOfRows = numberOfRows });
+      }
+
+      public SearchJsonResponse SearchJson(string query, DateTime start, DateTime until, int startingAt, int numberOfRows)
+      {
+          return SearchJson(new SearchQuery { Query = query, From = start, Until = until, StartingAt = startingAt, NumberOfRows = numberOfRows });
+      }
+
+      public SearchJsonResponse SearchJson(string property, string value)
+      {
+          var query = GetJsonQuery(new Dictionary<string, string> { { property, value } });
+          return SearchJson(new SearchQuery { Query = query });
+      }
+
+      public SearchJsonResponse SearchJson(string property, string value, DateTime start, DateTime until)
+      {
+          var query = GetJsonQuery(new Dictionary<string, string> { { property, value } });          
+          return SearchJson(new SearchQuery { Query = query, From = start, Until = until });
+      }
+
+      public SearchJsonResponse SearchJson(string property, string value, int startingAt, int numberOfRows)
+      {
+          var query = GetJsonQuery(new Dictionary<string, string> { { property, value } });
+          return SearchJson(new SearchQuery { Query = query, StartingAt = startingAt, NumberOfRows = numberOfRows });
+      }
+
+      public SearchJsonResponse SearchJson(string property, string value, DateTime start, DateTime until, int startingAt, int numberOfRows)
+      {
+          var query = GetJsonQuery(new Dictionary<string, string> { { property, value } });
+          return SearchJson(new SearchQuery { Query = query, From = start, Until = until, StartingAt = startingAt, NumberOfRows = numberOfRows });
+      }
+
+      private string GetJsonQuery(IDictionary<string, string> properties)
+      {
+          var sb = new StringBuilder();
+          foreach (var prop in properties)
+          {
+              sb.AppendFormat("json.{0}:{1} ", prop.Key, prop.Value);
+          }
+
+          return sb.ToString();
       }
    }
 }
