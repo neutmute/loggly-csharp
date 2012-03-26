@@ -39,14 +39,15 @@
       <HintPath>..\references\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
-    <Reference Include="Microsoft.CSharp" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BaseFixture.cs" />
     <Compile Include="CoreCommunicationTests.cs" />
     <Compile Include="FacetTests.cs" />
     <Compile Include="FakeServer.cs" />
+    <Compile Include="IntegrationTests.cs" />
     <Compile Include="LogTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchTests.cs" />
@@ -56,6 +57,9 @@
       <Project>{F66349BA-29A6-4336-BA81-993170FC9963}</Project>
       <Name>loggly-csharp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
