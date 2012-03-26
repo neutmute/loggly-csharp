@@ -9,4 +9,4 @@ copy LICENSE.txt Download
 
 copy loggly-csharp\bin\Release\Loggly.dll Download\Package\lib\net35\
 
-nuget.exe pack loggly.nuspec -b Download\Package -o Download
+nuget.exe pack loggly.nuspec -BasePath Download\Package -o Download
