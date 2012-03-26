@@ -47,7 +47,6 @@
     <Compile Include="CoreCommunicationTests.cs" />
     <Compile Include="FacetTests.cs" />
     <Compile Include="FakeServer.cs" />
-    <Compile Include="IntegrationTests.cs" />
     <Compile Include="LogTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SearchTests.cs" />

@@ -1,8 +1,7 @@
 ﻿using System;
-using Loggly.Responses;
-using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using Loggly.Responses;
 
 namespace Loggly
 {
@@ -23,22 +22,22 @@ namespace Loggly
 
       public SearchResponse Search(string query)
       {
-         return Search(new SearchQuery { Query = query });
+         return Search(new SearchQuery {Query = query});
       }
 
       public SearchResponse Search(string query, DateTime start, DateTime until)
       {
-         return Search(new SearchQuery { Query = query, From = start, Until = until });
+         return Search(new SearchQuery {Query = query, From = start, Until = until});
       }
 
       public SearchResponse Search(string query, int startingAt, int numberOfRows)
       {
-         return Search(new SearchQuery { Query = query, StartingAt = startingAt, NumberOfRows = numberOfRows });
+         return Search(new SearchQuery {Query = query, StartingAt = startingAt, NumberOfRows = numberOfRows});
       }
 
       public SearchResponse Search(string query, DateTime start, DateTime until, int startingAt, int numberOfRows)
       {
-         return Search(new SearchQuery { Query = query, From = start, Until = until, StartingAt = startingAt, NumberOfRows = numberOfRows});
+         return Search(new SearchQuery {Query = query, From = start, Until = until, StartingAt = startingAt, NumberOfRows = numberOfRows});
       }
 
       public SearchResponse Search(SearchQuery query)
@@ -47,65 +46,64 @@ namespace Loggly
          return communicator.GetPayload<SearchResponse>("api/search", query.ToParameters());
       }
 
-      public SearchJsonResponse SearchJson(SearchQuery query)
-      {
-          var communicator = new Communicator(this);
-          return communicator.GetPayload<SearchJsonResponse>("api/search", query.ToParameters());
-      }
-
       public SearchJsonResponse SearchJson(string query)
       {
-          return SearchJson(new SearchQuery { Query = query });
+         return SearchJson(new SearchQuery {Query = query});
       }
 
       public SearchJsonResponse SearchJson(string query, DateTime start, DateTime until)
       {
-          return SearchJson(new SearchQuery { Query = query, From = start, Until = until });
+         return SearchJson(new SearchQuery {Query = query, From = start, Until = until});
       }
 
       public SearchJsonResponse SearchJson(string query, int startingAt, int numberOfRows)
       {
-          return SearchJson(new SearchQuery { Query = query, StartingAt = startingAt, NumberOfRows = numberOfRows });
+         return SearchJson(new SearchQuery {Query = query, StartingAt = startingAt, NumberOfRows = numberOfRows});
       }
 
       public SearchJsonResponse SearchJson(string query, DateTime start, DateTime until, int startingAt, int numberOfRows)
       {
-          return SearchJson(new SearchQuery { Query = query, From = start, Until = until, StartingAt = startingAt, NumberOfRows = numberOfRows });
+         return SearchJson(new SearchQuery {Query = query, From = start, Until = until, StartingAt = startingAt, NumberOfRows = numberOfRows});
       }
 
       public SearchJsonResponse SearchJson(string property, string value)
       {
-          var query = GetJsonQuery(new Dictionary<string, string> { { property, value } });
-          return SearchJson(new SearchQuery { Query = query });
+         var query = GetJsonQuery(new Dictionary<string, string> {{property, value}});
+         return SearchJson(new SearchQuery {Query = query});
       }
 
       public SearchJsonResponse SearchJson(string property, string value, DateTime start, DateTime until)
       {
-          var query = GetJsonQuery(new Dictionary<string, string> { { property, value } });          
-          return SearchJson(new SearchQuery { Query = query, From = start, Until = until });
+         var query = GetJsonQuery(new Dictionary<string, string> {{property, value}});
+         return SearchJson(new SearchQuery {Query = query, From = start, Until = until});
       }
 
       public SearchJsonResponse SearchJson(string property, string value, int startingAt, int numberOfRows)
       {
-          var query = GetJsonQuery(new Dictionary<string, string> { { property, value } });
-          return SearchJson(new SearchQuery { Query = query, StartingAt = startingAt, NumberOfRows = numberOfRows });
+         var query = GetJsonQuery(new Dictionary<string, string> {{property, value}});
+         return SearchJson(new SearchQuery {Query = query, StartingAt = startingAt, NumberOfRows = numberOfRows});
       }
 
       public SearchJsonResponse SearchJson(string property, string value, DateTime start, DateTime until, int startingAt, int numberOfRows)
       {
-          var query = GetJsonQuery(new Dictionary<string, string> { { property, value } });
-          return SearchJson(new SearchQuery { Query = query, From = start, Until = until, StartingAt = startingAt, NumberOfRows = numberOfRows });
+         var query = GetJsonQuery(new Dictionary<string, string> {{property, value}});
+         return SearchJson(new SearchQuery {Query = query, From = start, Until = until, StartingAt = startingAt, NumberOfRows = numberOfRows});
       }
 
-      private string GetJsonQuery(IDictionary<string, string> properties)
+      public SearchJsonResponse SearchJson(SearchQuery query)
       {
-          var sb = new StringBuilder();
-          foreach (var prop in properties)
-          {
-              sb.AppendFormat("json.{0}:{1} ", prop.Key, prop.Value);
-          }
+         var communicator = new Communicator(this);
+         return communicator.GetPayload<SearchJsonResponse>("api/search", query.ToParameters());
+      }
 
-          return sb.ToString();
+      private static string GetJsonQuery(IEnumerable<KeyValuePair<string, string>> properties)
+      {
+         var sb = new StringBuilder();
+         foreach (var prop in properties)
+         {
+            sb.AppendFormat("json.{0}:{1} ", prop.Key, prop.Value);
+         }
+         return sb.ToString();
       }
    }
 }

@@ -4,6 +4,8 @@ This is a .NET driver for "loggly.com":http://loggly.com.
 
 h3. Logging Events
 
+*Please note that as of the 2.0 release, async logging is the default. To log synchronously, use the corresponding @Sync@ methods (@Log@ vs @LogSync@)*
+
 Create a new @Logger@ with your input key:
 <pre>var logger = new Logger("my-long-key-that-i-got-when-setting-up-my-http-input");</pre>
 

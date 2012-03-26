@@ -1,4 +1,3 @@
-using System;
 using Loggly.Responses;
 
 namespace Loggly

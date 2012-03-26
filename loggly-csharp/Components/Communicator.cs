@@ -20,11 +20,6 @@ namespace Loggly
          _context = context;
       }
 
-      public void SendPayload(string method, string endPoint, string message, Action<Response> callback)
-      {
-          this.SendPayload(method, endPoint, message, false, callback);
-      }
-
       public void SendPayload(string method, string endPoint, string message, bool json, Action<Response> callback)
       {
          var request = CreateRequest(method, endPoint, false, json);
@@ -35,7 +30,7 @@ namespace Loggly
       public T GetPayload<T>(string endPoint, IDictionary<string, object> parameters)
       {
          var pathAndQuery = BuildPathAndQuery(endPoint, parameters);
-         var request = CreateRequest(GET, pathAndQuery, true);        
+         var request = CreateRequest(GET, pathAndQuery, true);
          try
          {
             using (var response = request.GetResponse())
@@ -51,10 +46,9 @@ namespace Loggly
          {
             throw new LogglyException(ex.Message, ex);
          }
-         
       }
 
-      private static string BuildPathAndQuery(string endPoint, IDictionary<string, object> parameters)
+      private static string BuildPathAndQuery(string endPoint, ICollection<KeyValuePair<string, object>> parameters)
       {
          if (parameters == null || parameters.Count == 0)
          {
@@ -65,7 +59,10 @@ namespace Loggly
          sb.Append('?');
          foreach (var kvp in parameters)
          {
-            if (kvp.Value == null) { continue; }
+            if (kvp.Value == null)
+            {
+               continue;
+            }
             sb.Append(kvp.Key);
             sb.Append('=');
             sb.Append(HttpUtility.UrlEncode(kvp.Value.ToString()));
@@ -76,7 +73,7 @@ namespace Loggly
 
       private HttpWebRequest CreateRequest(string method, string endPoint, bool withCredentials)
       {
-          return this.CreateRequest(method, endPoint, withCredentials, false);
+         return CreateRequest(method, endPoint, withCredentials, false);
       }
 
       private HttpWebRequest CreateRequest(string method, string endPoint, bool withCredentials, bool json)
@@ -123,7 +120,7 @@ namespace Loggly
             }
          }
          catch (Exception ex)
-         {            
+         {
             if (state.Callback != null)
             {
                state.Callback(Response.CreateError(HandleException(ex)));
@@ -133,11 +130,14 @@ namespace Loggly
 
       private static string GetResponseBody(WebResponse response)
       {
-         if (response == null) { return null; }
+         if (response == null)
+         {
+            return null;
+         }
          using (var stream = response.GetResponseStream())
          {
             var sb = new StringBuilder();
-            var read = 0;
+            int read;
             do
             {
                var buffer = new byte[2048];
@@ -147,6 +147,7 @@ namespace Loggly
             return sb.ToString();
          }
       }
+
       private static ErrorMessage HandleException(Exception exception)
       {
          if (exception is WebException)
@@ -157,23 +158,15 @@ namespace Loggly
          return new ErrorMessage {Error = "Unknown Error", InnerException = exception};
       }
 
-      #region Nested type: RequestState
-
       private class RequestState : ResponseState
       {
          public byte[] Payload { get; set; }
       }
-
-      #endregion
-
-      #region Nested type: ResponseState
 
       private class ResponseState
       {
          public HttpWebRequest Request { get; set; }
          public Action<Response> Callback { get; set; }
       }
-
-      #endregion
    }
 }

@@ -20,7 +20,7 @@ namespace Loggly.Responses
 
    public class JsonRecord
    {
-      public DateTime? Timestamp { get; set; }      
+      public DateTime? Timestamp { get; set; }
       public string InputName { get; set; }
 
       [JsonProperty("ip")]

@@ -56,7 +56,7 @@ namespace Loggly.Tests
 
       protected void WaitOne()
       {
-         Assert.IsTrue(Trigger.WaitOne(3000), "Test terminated without properly signalling the trigger");
+         Assert.IsTrue(Trigger.WaitOne(6000), "Test terminated without properly signalling the trigger");
       }
    }
 
