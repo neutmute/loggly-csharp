@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>loggly-csharp</id>
-    <version>2.0</version>
+    <version>2.1</version>
     <authors>Karl Seguin</authors>
     <owners>Karl Seguin</owners>
     <description>A .NET driver for loggly.com</description>
