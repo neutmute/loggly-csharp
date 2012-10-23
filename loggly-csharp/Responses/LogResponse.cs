@@ -6,5 +6,6 @@ namespace Loggly.Responses
    {
       [JsonProperty("eventstamp")]
       public int TimeStamp { get; set; }
+      public bool Success { get; set; }
    }
 }
