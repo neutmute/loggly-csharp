@@ -123,7 +123,14 @@ namespace Loggly
          {
             if (r.Success)
             {
-               callback(JsonConvert.DeserializeObject<LogResponse>(r.Raw));
+               var res = JsonConvert.DeserializeObject<LogResponse>(r.Raw);
+               res.Success = true;
+               callback(res);
+            }
+            else
+            {
+               var res = new LogResponse{ Success = false };
+               callback(res);
             }
          };
          communicator.SendPayload(Communicator.POST, string.Concat("inputs/", _inputKey), message, json, callbackWrapper);
