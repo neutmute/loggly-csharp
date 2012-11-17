@@ -94,16 +94,26 @@ namespace Loggly
       private static void GetRequestStream(IAsyncResult result)
       {
          var state = (RequestState) result.AsyncState;
-         if (state.Payload != null)
+         try
          {
-            using (var requestStream = state.Request.EndGetRequestStream(result))
+            if (state.Payload != null)
             {
-               requestStream.Write(state.Payload, 0, state.Payload.Length);
-               requestStream.Flush();
-               requestStream.Close();
+               using (var requestStream = state.Request.EndGetRequestStream(result))
+               {
+                  requestStream.Write(state.Payload, 0, state.Payload.Length);
+                  requestStream.Flush();
+                  requestStream.Close();
+               }
+            }
+            state.Request.BeginGetResponse(GetResponseStream, state);
+         }
+         catch (Exception ex)
+         {
+            if (state.Callback != null)
+            {
+               state.Callback(Response.CreateError(HandleException(ex)));
             }
          }
-         state.Request.BeginGetResponse(GetResponseStream, state);
       }
 
       private static void GetResponseStream(IAsyncResult result)
