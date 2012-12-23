@@ -8,12 +8,14 @@ namespace Loggly
 {
    public class Logger : ILogger, IRequestContext
    {
-      private const string _url = "logs.loggly.com/";
+      private string _url = "logs.loggly.com/";
       private readonly string _inputKey;
 
-
-      public Logger(string inputKey)
+      public Logger(string inputKey, string alternativeUrl = null)
       {
+          if (!string.IsNullOrEmpty(alternativeUrl))
+              _url = alternativeUrl;
+
          _inputKey = inputKey;
       }
 
