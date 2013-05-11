@@ -13,7 +13,9 @@ namespace Loggly.Tests
    /// </summary>
    public class IntegrationTests
    {
-      private ILogger _logger;
+       // Bumping up the timeout to 5 minutes as it seems Loggly may take longer than 1 minute to get things indexed
+       private const int _searchTimeout = 5*60*1000; // 5 minutes -> milliseconds
+       private ILogger _logger;
 
       [SetUp]
       public void SetUp()
@@ -50,14 +52,16 @@ namespace Loggly.Tests
       [Test, Category("Integration")]
       public void LogErrorToJsonInputAsync()
       {
+          // TODO: This test case needs to be expanded further. Looks like adding the word "oops" 
+          // TODO: before randomString, makes the post and the search unreliable. 
          var randomString = GenerateRandomString(8);
-         _logger.LogError(randomString, new InvalidOperationException("oops" + randomString + " something went wrong"));
-         var response = StartJsonThread("oops" + randomString, "exception");
+         _logger.LogError(randomString, new InvalidOperationException(randomString + " something went wrong"));
+         var response = StartJsonThread(randomString, "exception");
          Assert.IsNotNull(response);
          Assert.AreEqual(1, response.TotalRecords);
          Assert.AreEqual(randomString, response.Results[0].Json["message"]);
          Assert.AreEqual("error", response.Results[0].Json["category"]);
-         Assert.AreEqual("System.InvalidOperationException: oops" + randomString + " something went wrong", response.Results[0].Json["exception"]);
+         Assert.AreEqual("System.InvalidOperationException: " + randomString + " something went wrong", response.Results[0].Json["exception"]);
       }
 
       [Test, Category("Integration")]
@@ -95,12 +99,12 @@ namespace Loggly.Tests
             while (true)
             {
                Thread.Sleep(3000);
-               response = new Searcher("csharptests").Search(randomString);
+               response = new Searcher(ConfigurationManager.AppSettings["IntegrationUser"]).Search(randomString);
                if (response.TotalRecords > 0) { break; }
             }
             signal.Set();
          }).Start();
-         signal.WaitOne(50000); // wait till loggly index the new event (if it didn't after 50 seconds it is broken)
+         signal.WaitOne(_searchTimeout); // wait till loggly index the new event
          return response;
       }
 
@@ -113,12 +117,12 @@ namespace Loggly.Tests
             while (true)
             {
                Thread.Sleep(3000);
-               response = new Searcher("csharptests").SearchJson(property, randomString);
+               response = new Searcher(ConfigurationManager.AppSettings["IntegrationUser"]).SearchJson(property, randomString);
                if (response.TotalRecords > 0) { break; }
             }
             signal.Set();
          }).Start();
-         signal.WaitOne(50000); // wait till loggly index the new event (if it didn't after 50 seconds it is broken)
+         signal.WaitOne(_searchTimeout); // wait till loggly index the new event
          return response;
       }
 
