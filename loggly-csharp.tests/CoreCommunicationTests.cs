@@ -19,7 +19,7 @@ namespace Loggly.Tests
       {
          Server.Stub(new ApiExpectation { Response = "{invalidJson"});
          var ex = Assert.Throws<LogglyException>(() => new Communicator(new FakeContext()).GetPayload<object>("end", new Dictionary<string, object>(0)));
-         Assert.IsTrue(ex.Message.StartsWith("Unexpected end when parsing unquoted property name"));
+         Assert.IsTrue(ex.Message.StartsWith("Unexpected end while parsing unquoted property name"));
       }
    }
 
