@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
     <metadata>
         <id>loggly-csharp</id>
-        <version>2.2</version>
+        <version>2.3</version>
         <authors>Karl Seguin</authors>
         <owners>Karl Seguin</owners>
         <licenseUrl>https://github.com/karlseguin/loggly-csharp/blob/master/license.txt</licenseUrl>
@@ -13,7 +13,6 @@
         <tags>LOGS LOGGING NLOG LOGGLY</tags>
         <dependencies>
             <dependency id="Newtonsoft.Json" version="5.0.0" />
-            <dependency id="NUnit" version="2.6.2" />
         </dependencies>
     </metadata>
 </package>
