@@ -23,7 +23,7 @@ Next, create a searcher with your domain:
 
 Finally, use the various `Search` methods.
 
-Note that searching happens synchronously.
+Note that searching happens synchronously but entries are lazy-loaded when enumerating through the entries.
 
 
 ## Integration Tests
