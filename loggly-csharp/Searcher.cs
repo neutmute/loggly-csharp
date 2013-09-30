@@ -20,92 +20,46 @@ namespace Loggly
             get { return _url; }
         }
 
-        public SearchJsonResponse Search(string query)
+        public SearchResponse Search(string query)
         {
             return Search(new SearchQuery { Query = query });
         }
 
-        public SearchJsonResponse Search(string query, DateTime start, DateTime until)
+        public SearchResponse Search(string query, DateTime start, DateTime until)
         {
             return Search(new SearchQuery { Query = query, From = start, Until = until });
         }
 
-        public SearchJsonResponse Search(string query, int startingAt, int numberOfRows)
+        public SearchResponse Search(string query, DateTime start, DateTime until, int numberOfRows)
         {
-            return Search(new SearchQuery { Query = query, StartingAt = startingAt, NumberOfRows = numberOfRows });
+            return Search(new SearchQuery { Query = query, From = start, Until = until, NumberOfRows = numberOfRows});
         }
 
-        public SearchJsonResponse Search(string query, DateTime start, DateTime until, int startingAt, int numberOfRows)
-        {
-            return Search(new SearchQuery { Query = query, From = start, Until = until, StartingAt = startingAt, NumberOfRows = numberOfRows });
-        }
-
-        public SearchJsonResponse Search(SearchQuery query)
+        public SearchResponse Search(SearchQuery query)
         {
             var communicator = new Communicator(this);
-            return communicator.GetPayload<SearchJsonResponse>("apiv2/search", query.ToParameters());
+            return communicator.GetPayload<SearchResponse>("apiv2/search", query.ToParameters());
         }
 
-        public SearchJsonResponse SearchJson(string query)
+        public SearchResponse<TMessage> Search<TMessage>(string query)
         {
-            return SearchJson(new SearchQuery { Query = query });
+            return Search<TMessage>(new SearchQuery { Query = query });
         }
 
-        public SearchJsonResponse SearchJson(string query, DateTime start, DateTime until)
+        public SearchResponse<TMessage> Search<TMessage>(string query, DateTime start, DateTime until)
         {
-            return SearchJson(new SearchQuery { Query = query, From = start, Until = until });
+            return Search<TMessage>(new SearchQuery { Query = query, From = start, Until = until });
         }
 
-        public SearchJsonResponse SearchJson(string query, int startingAt, int numberOfRows)
+        public SearchResponse<TMessage> Search<TMessage>(string query, DateTime start, DateTime until, int numberOfRows)
         {
-            return SearchJson(new SearchQuery { Query = query, StartingAt = startingAt, NumberOfRows = numberOfRows });
+            return Search<TMessage>(new SearchQuery { Query = query, From = start, Until = until, NumberOfRows = numberOfRows });
         }
 
-        public SearchJsonResponse SearchJson(string query, DateTime start, DateTime until, int startingAt, int numberOfRows)
-        {
-            return SearchJson(new SearchQuery { Query = query, From = start, Until = until, StartingAt = startingAt, NumberOfRows = numberOfRows });
-        }
-
-        public SearchJsonResponse SearchJson(string property, string value)
-        {
-            var query = GetJsonQuery(new Dictionary<string, string> { { property, value } });
-            return SearchJson(new SearchQuery { Query = query });
-        }
-
-        public SearchJsonResponse SearchJson(string property, string value, DateTime start, DateTime until)
-        {
-            var query = GetJsonQuery(new Dictionary<string, string> { { property, value } });
-            return SearchJson(new SearchQuery { Query = query, From = start, Until = until });
-        }
-
-        public SearchJsonResponse SearchJson(string property, string value, int startingAt, int numberOfRows)
-        {
-            var query = GetJsonQuery(new Dictionary<string, string> { { property, value } });
-            return SearchJson(new SearchQuery { Query = query, StartingAt = startingAt, NumberOfRows = numberOfRows });
-        }
-
-        public SearchJsonResponse SearchJson(string property, string value, DateTime start, DateTime until, int startingAt, int numberOfRows)
-        {
-            var query = GetJsonQuery(new Dictionary<string, string> { { property, value } });
-            return SearchJson(new SearchQuery { Query = query, From = start, Until = until, StartingAt = startingAt, NumberOfRows = numberOfRows });
-        }
-
-        public SearchJsonResponse SearchJson(SearchQuery query)
+        public SearchResponse<TMessage> Search<TMessage>(SearchQuery query)
         {
             var communicator = new Communicator(this);
-            return communicator.GetPayload<SearchJsonResponse>("apiv2/search", query.ToParameters());
-        }
-
-        private static string GetJsonQuery(IEnumerable<KeyValuePair<string, string>> properties)
-        {
-            var sb = new StringBuilder();
-            foreach (var prop in properties)
-            {
-                sb.AppendFormat("json.{0}:{1} ", prop.Key, prop.Value);
-            }
-
-            sb.Remove(sb.Length - 1, 1);
-            return sb.ToString();
+            return communicator.GetPayload<SearchResponse<TMessage>>("apiv2/search", query.ToParameters());
         }
     }
 }

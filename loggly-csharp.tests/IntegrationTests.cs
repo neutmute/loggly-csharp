@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Text;
 using System.Threading;
 using Loggly.Responses;
@@ -28,79 +29,45 @@ namespace Loggly.Tests
       public void SyncLogToPlainTextInput()
       {
          var randomString = GenerateRandomString(8);
-         _logger.LogSync(randomString);
+         _logger.LogSync(new TestLogEntry() { Message = randomString }, "tag1", "tag2");
          var response = StartThread(randomString);
          Assert.IsNotNull(response);
-         Assert.AreEqual(1, response.TotalRecords);
-         //Assert.AreEqual(randomString, response.Results[0].Text);
+         Assert.AreEqual(1, response.TotalEvents);
+         Assert.AreEqual("{\"Message\":\"" + randomString + "\"}", response.ElementAt(0).Message);
+         Assert.IsTrue(response.ElementAt(0).Tags.Any(tag => tag == "tag1"));
+         Assert.IsTrue(response.ElementAt(0).Tags.Any(tag => tag == "tag2"));
       }
 
-      [Test, Category("Integration")]
-      public void LogInfoToJsonInputAsync()
+    public class TestLogEntry
+    {
+        public string Message { get; set; }
+    }
+
+    [Test, Category("Integration")]
+      public void AsyncLogToPlainTextInput()
       {
          var randomString = GenerateRandomString(8);
-         _logger.LogInfo(randomString, new Dictionary<string, object> {{"key1", "value1"}, {"key2", "value2"}}, "tag1", "tag2");
-         var response = StartJsonThread(randomString, "message");
+         _logger.Log(new TestLogEntry() { Message = randomString }, "tag1", "tag2");
+         var response = StartJsonThread(randomString, "Message");
          Assert.IsNotNull(response);
-         Assert.AreEqual(1, response.TotalRecords);
-         Assert.AreEqual(randomString, response.Results[0].Json["message"]);
-         Assert.AreEqual("info", response.Results[0].Json["category"]);
-         Assert.AreEqual("value1", response.Results[0].Json["key1"]);
-         Assert.AreEqual("value2", response.Results[0].Json["key2"]);
+         Assert.AreEqual(1, response.TotalEvents);
+         Assert.AreEqual(1, response.Count());
+         Assert.AreEqual("{\"Message\":\"" + randomString + "\"}", response.ElementAt(0).Message);
+         Assert.IsTrue(response.ElementAt(0).Tags.Any(tag => tag == "tag1"));
+         Assert.IsTrue(response.ElementAt(0).Tags.Any(tag => tag == "tag2"));
       }
 
-      [Test, Category("Integration")]
-      public void LogErrorToJsonInputAsync()
-      {
-          // TODO: This test case needs to be expanded further. Looks like adding the word "oops" 
-          // TODO: before randomString, makes the post and the search unreliable. 
-         var randomString = GenerateRandomString(8);
-         _logger.LogError(randomString, new InvalidOperationException(randomString + " something went wrong"));
-         var response = StartJsonThread(randomString, "exception");
-         Assert.IsNotNull(response);
-         Assert.AreEqual(1, response.TotalRecords);
-         Assert.AreEqual(randomString, response.Results[0].Json["message"]);
-         Assert.AreEqual("error", response.Results[0].Json["category"]);
-         Assert.AreEqual("System.InvalidOperationException: " + randomString + " something went wrong", response.Results[0].Json["exception"]);
-      }
-
-      [Test, Category("Integration")]
-      public void LogVerboseToJsonInputAsync()
-      {
-         var randomString = GenerateRandomString(8);
-         _logger.LogVerbose(randomString);
-
-         var response = StartJsonThread(randomString, "message");
-         Assert.IsNotNull(response);
-         Assert.AreEqual(1, response.TotalRecords);
-         Assert.AreEqual(randomString, response.Results[0].Json["message"]);
-         Assert.AreEqual("verbose", response.Results[0].Json["category"]);
-      }
-
-
-      [Test, Category("Integration")]
-      public void LogWarningToJsonInputAsync()
-      {
-         var randomString = GenerateRandomString(8);
-         _logger.LogWarning(randomString);
-         var response = StartJsonThread(randomString, "message");
-         Assert.IsNotNull(response);
-         Assert.AreEqual(1, response.TotalRecords);
-         Assert.AreEqual(randomString, response.Results[0].Json["message"]);
-         Assert.AreEqual("warning", response.Results[0].Json["category"]);
-      }
-
-      private static SearchJsonResponse StartThread(string randomString)
+      private static SearchResponse StartThread(string randomString)
       {
          var signal = new AutoResetEvent(false);
-         SearchJsonResponse response = null;
+         SearchResponse response = null;
          new Thread(() =>
          {
             while (true)
             {
                Thread.Sleep(3000);
                response = new Searcher(ConfigurationManager.AppSettings["IntegrationAccount"]).Search(randomString);
-               if (response.TotalRecords > 0) { break; }
+               if (response.TotalEvents > 0) { break; }
             }
             signal.Set();
          }).Start();
@@ -108,19 +75,20 @@ namespace Loggly.Tests
          return response;
       }
 
-      private static SearchJsonResponse StartJsonThread(string randomString, string property)
+      private static SearchResponse StartJsonThread(string randomString, string property)
       {
           LogglyConfiguration.Configure(config => config.WithTimeout(180000));
 
          var signal = new AutoResetEvent(false);
-         SearchJsonResponse response = null;
+         SearchResponse response = null;
          new Thread(() =>
          {
             while (true)
             {
                Thread.Sleep(3000);
-               response = new Searcher(ConfigurationManager.AppSettings["IntegrationAccount"]).SearchJson(property, randomString);
-               if (response.TotalRecords > 0) { break; }
+               response = new Searcher(ConfigurationManager.AppSettings["IntegrationAccount"]).Search(
+                   string.Format("json.{0}:{1}", property, randomString));
+               if (response.TotalEvents > 0) { break; }
             }
             signal.Set();
          }).Start();

@@ -49,6 +49,7 @@
     <Compile Include="IntegrationTests.cs" />
     <Compile Include="LogTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Responses\SearchResponseTest.cs" />
     <Compile Include="SearchTests.cs" />
   </ItemGroup>
   <ItemGroup>

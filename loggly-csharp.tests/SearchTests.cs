@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using NUnit.Framework;
 
 namespace Loggly.Tests
@@ -8,32 +9,38 @@ namespace Loggly.Tests
         [Test]
         public void SendsASimpleSearchRequest()
         {
-            Server.Stub(new ApiExpectation { Method = "GET", Url = "/apiv2/search", QueryString = "?q=abc+123" });
+            string responseJson =
+                "{\"rsid\": {\"status\": \"SCHEDULED\",\"date_from\": 1379706043000,\"elapsed_time\": 0.017975807189941406,\"date_to\": 1380570043000, \"id\": \"1910175565\"} }";
+
+            Server.Stub(new ApiExpectation { Method = "GET", Url = "/apiv2/search", QueryString = "?q=abc+123", Response = responseJson });
             new Searcher("mogade").Search("abc 123");
         }
 
         [Test]
         public void ProperlySerializesTimes()
         {
-            Server.Stub(new ApiExpectation { Method = "GET", Url = "/apiv2/search", QueryString = "?q=NewQuery&from=2001-10-20T05%3a35%3a22.000Z" });
+            string responseJson =
+    "{\"rsid\": {\"status\": \"SCHEDULED\",\"date_from\": 1379706043000,\"elapsed_time\": 0.017975807189941406,\"date_to\": 1380570043000, \"id\": \"1910175565\"} }";
+
+            Server.Stub(new ApiExpectation { Method = "GET", Url = "/apiv2/search", QueryString = "?q=NewQuery&from=2001-10-20T05%3a35%3a22.000Z", Response = responseJson});
             new Searcher("mogade").Search(new SearchQuery { Query = "NewQuery", From = new DateTime(2001, 10, 20, 5, 35, 22, DateTimeKind.Utc) });
         }
 
         [Test]
         public void GetsTheResponse()
         {
-            Server.Stub(new ApiExpectation { Response = "{numFound: 130, data:[{timestamp: '2010-02-17 18:08:45.912-0000', inputname: 'i1', ip: '444.555.666.777', text: 'log 1'}, {timestamp: '2011-02-17 17:08:45.912-0000', inputname: 'i2', ip: '444.555.666.778', text: 'log 2'}]}" });
+            string responseJson =
+                "{\"rsid\": {\"status\": \"SCHEDULED\",\"date_from\": 1379706043000,\"elapsed_time\": 0.017975807189941406,\"date_to\": 1380570043000, \"id\": \"1910175565\"} }";
+
+            Server.Stub(new ApiExpectation { Response = responseJson });
             var r = new Searcher("mogade").Search("anything");
-            Assert.AreEqual(130, r.TotalRecords);
-            Assert.AreEqual(2, r.Results.Count);
-            Assert.AreEqual(new DateTime(2010, 2, 17, 18, 8, 45, 912), r.Results[0].Timestamp.Value.ToUniversalTime());
-            Assert.AreEqual("i1", r.Results[0].InputName);
-            Assert.AreEqual("444.555.666.777", r.Results[0].IpAddress);
-            //Assert.AreEqual("log 1", r.Results[0].Text);
-            Assert.AreEqual(new DateTime(2011, 2, 17, 17, 8, 45, 912), r.Results[1].Timestamp.Value.ToUniversalTime());
-            Assert.AreEqual("i2", r.Results[1].InputName);
-            Assert.AreEqual("444.555.666.778", r.Results[1].IpAddress);
-            //Assert.AreEqual("log 2", r.Results[1].Text);
+            Assert.IsNotNull(r);
+            Assert.IsNotNull(r.RSID);
+            Assert.AreEqual("SCHEDULED", r.RSID.Status);
+            Assert.AreEqual(1379706043000, r.RSID.From);
+            Assert.AreEqual(0.017975807189941406, r.RSID.ElapsedTime);
+            Assert.AreEqual(1380570043000, r.RSID.To);
+            Assert.AreEqual("1910175565", r.RSID.Id);
         }
     }
 }

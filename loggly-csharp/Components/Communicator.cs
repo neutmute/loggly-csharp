@@ -31,21 +31,19 @@ namespace Loggly
         {
             try
             {
-                SearchResponse searchResponse;
                 var searchPathAndQuery = BuildPathAndQuery(endPoint, parameters);
                 var searchRequest = CreateRequest(GET, searchPathAndQuery, true, null);
 
                 using (var response = searchRequest.GetResponse())
                 {
-                    searchResponse = JsonConvert.DeserializeObject<SearchResponse>(GetResponseBody(response));
-                }
+                    T responseObject = JsonConvert.DeserializeObject<T>(GetResponseBody(response));
+                    if (typeof (T) == typeof (SearchResponse))
+                    {
+                        SearchResponse searchResponse = responseObject as SearchResponse;
+                        searchResponse.Communicator = this;
+                    }
 
-                var eventsPathAndQuery = BuildPathAndQuery(endPoint, new Dictionary<string, object>() { { "rsid", searchResponse.RSID.Id }});
-                var eventsRequest = CreateRequest(GET, eventsPathAndQuery, true, null);
-
-                using (var response = eventsRequest.GetResponse())
-                {
-                    return JsonConvert.DeserializeObject<T>(GetResponseBody(response));
+                    return responseObject;
                 }
             }
             catch (WebException ex)

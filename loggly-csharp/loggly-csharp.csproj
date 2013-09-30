@@ -51,14 +51,11 @@
     <Compile Include="LogglyException.cs" />
     <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Responses\SearchJsonResponse.cs" />
-    <Compile Include="Responses\FacetResponse.cs" />
     <Compile Include="Responses\LogResponse.cs" />
     <Compile Include="Responses\Response.cs" />
-    <Compile Include="Responses\SearchResponse.cs" />
     <Compile Include="Searcher.cs" />
     <Compile Include="SearchQuery.cs" />
-    <Compile Include="SearchResponse.cs" />
+    <Compile Include="Responses\SearchResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -21,7 +21,12 @@ namespace Loggly
 
         public LogResponse LogSync(string message, params string[] tags)
         {
-            return LogSync(message, false);
+            return LogSync(message, false, tags);
+        }
+
+        public LogResponse LogSync<TMessage>(TMessage message, params string[] tags)
+        {
+            return LogSync(JsonConvert.SerializeObject(message), true, tags);
         }
 
         public void Log(string message, params string[] tags)
@@ -32,6 +37,16 @@ namespace Loggly
         public void Log(string message, Action<LogResponse> callback, params string[] tags)
         {
             Log(message, false, callback);
+        }
+
+        public void Log<TMessage>(TMessage message, params string[] tags)
+        {
+            Log(message, null, tags);
+        }
+
+        public void Log<TMessage>(TMessage message, Action<LogResponse> callback, params string[] tags)
+        {
+            Log(JsonConvert.SerializeObject(message), true, callback, tags);
         }
 
         public string Url
@@ -48,77 +63,19 @@ namespace Loggly
             {
                 response = r;
                 synchronizer.Set();
-            });
+            },
+            tags);
 
             synchronizer.WaitOne();
             return response;
         }
 
-        public void Log(string message, string category, params string[] tags)
-        {
-            Log(message, category, null, tags);
-        }
-
-        public void Log(string message, string category, IDictionary<string, object> data, params string[] tags)
-        {
-            var logEntry = new Dictionary<string, object>(data ?? new Dictionary<string, object>())
-                        {
-                           {"message", message}, {"category", category}
-                        };
-            var jsonLogEntry = JsonConvert.SerializeObject(logEntry);
-            Log(jsonLogEntry, true);
-        }
-
-        public void LogInfo(string message, params string[] tags)
-        {
-            LogInfo(message, null, tags);
-        }
-
-        public void LogInfo(string message, IDictionary<string, object> data, params string[] tags)
-        {
-            Log(message, "info", data, tags);
-        }
-
-        public void LogVerbose(string message, params string[] tags)
-        {
-            LogVerbose(message, null, tags);
-        }
-
-        public void LogVerbose(string message, IDictionary<string, object> data, params string[] tags)
-        {
-            Log(message, "verbose", data, tags);
-        }
-
-        public void LogWarning(string message, params string[] tags)
-        {
-            LogWarning(message, null, tags);
-        }
-
-        public void LogWarning(string message, IDictionary<string, object> data, params string[] tags)
-        {
-            Log(message, "warning", data, tags);
-        }
-
-        public void LogError(string message, Exception ex, params string[] tags)
-        {
-            LogError(message, ex, null, tags);
-        }
-
-        public void LogError(string message, Exception ex, IDictionary<string, object> data, params string[] tags)
-        {
-            var exceptionData = new Dictionary<string, object>(data ?? new Dictionary<string, object>())
-                             {
-                                {"exception", ex.ToString()}
-                             };
-            Log(message, "error", exceptionData, tags);
-        }
-
-        public void Log(string message, bool json, params string[] tags)
+        private void Log(string message, bool json, params string[] tags)
         {
             Log(message, json, null, tags);
         }
 
-        public void Log(string message, bool json, Action<LogResponse> callback, params string[] tags)
+        private void Log(string message, bool json, Action<LogResponse> callback, params string[] tags)
         {
             var communicator = new Communicator(this);
             var callbackWrapper = callback == null ? (Action<Response>)null : r =>

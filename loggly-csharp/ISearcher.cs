@@ -5,10 +5,13 @@ namespace Loggly
 {
    internal interface ISearcher
    {
-       SearchJsonResponse Search(string query);
-       SearchJsonResponse Search(string query, DateTime start, DateTime until);
-       SearchJsonResponse Search(string query, int startingAt, int numberOfRows);
-       SearchJsonResponse Search(string query, DateTime start, DateTime until, int startingAt, int numberOfRows);
-       SearchJsonResponse Search(SearchQuery query);
+       SearchResponse Search(string query);
+       SearchResponse Search(string query, DateTime start, DateTime until);
+       SearchResponse Search(string query, DateTime start, DateTime until, int numberOfRows);
+       SearchResponse Search(SearchQuery query);
+       SearchResponse<TMessage> Search<TMessage>(string query);
+       SearchResponse<TMessage> Search<TMessage>(string query, DateTime start, DateTime until);
+       SearchResponse<TMessage> Search<TMessage>(string query, DateTime start, DateTime until, int numberOfRows);
+       SearchResponse<TMessage> Search<TMessage>(SearchQuery query);
    }
 }
