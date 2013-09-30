@@ -4,9 +4,9 @@ This is a .NET driver for [loggly.com](http://loggly.com) VERSION 2. It is a for
 
 ## Logging Events
 
-Create a new `Logger` with your input key:
+Create a new `Logger` with your customer token:
 
-	var logger = new Logger("my-long-key-that-i-got-when-setting-up-my-http-input");
+	var logger = new Logger("my-long-key-that-i-got-when-setting-up-customer-tokens");
 
 Use either a synchronous or asynchronous `Log` method.
 
