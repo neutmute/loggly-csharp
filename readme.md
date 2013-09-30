@@ -1,16 +1,12 @@
 # Loggly .NET Driver
 
-This is a .NET driver for [loggly.com](http://loggly.com).
+This is a .NET driver for [loggly.com](http://loggly.com) VERSION 2. It is a fork from https://github.com/karlseguin/loggly-csharp which currently only provides support for version 1. Besides that this repository provides a cleaner API and better support for JSON logging.
 
 ## Logging Events
-
-**Please note that as of the 2.0 release, async logging is the default. To log synchronously, use the corresponding `Sync` methods (`Log` vs `LogSync`)**
 
 Create a new `Logger` with your input key:
 
 	var logger = new Logger("my-long-key-that-i-got-when-setting-up-my-http-input");
-
-For JSON logging you can use `LogInfo`, `LogVerbose`, `LogWarning`, `LogError` methods that will create json objects with properties like category, message, exception (if applicable), extra data that you provide.
 
 Use either a synchronous or asynchronous `Log` method.
 
@@ -27,24 +23,7 @@ Next, create a searcher with your domain:
 
 Finally, use the various `Search` methods.
 
-For JSON search you can use `SearchJson` methods.
-
 Note that searching happens synchronously.
-
-
-## Facets
-
-First, setup the username/password you want to connect with:
-
-	LogglyConfiguration.Configure(c => c.AuthenticateWith("username", "password"));
-
-Next, create a facet with your domain:
-
-	var facet = new Facet("mydomain");
-
-Finally, use the various `GetDate`, `GetIp` and `GetInput* methods.
-
-Getting facts is always synchronous
 
 
 ## Integration Tests
@@ -53,6 +32,7 @@ To run the integration tests, you'll need to place a `config.user` file in the t
 
 	<appSettings>
 		<add key="IntegrationKey" value="YOUR KEY"></add>
+		<add key="IntegrationAccount" value="YOUR ACCOUNT NAME (SUBDOMAIN)"></add>
 		<add key="IntegrationUser" value="YOUR USERNAME"></add>
 		<add key="IntegrationPassword" value="YOUR PASSWORD"></add>
 	</appSettings>
