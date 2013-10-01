@@ -19,55 +19,39 @@ namespace Loggly
             _customerToken = customerToken;
         }
 
-        public LogResponse LogSync(string message, params string[] tags)
-        {
-            return LogSync(message, false, tags);
-        }
-
-        public LogResponse LogSync<TMessage>(TMessage message, params string[] tags)
-        {
-            return LogSync(JsonConvert.SerializeObject(message), true, tags);
-        }
-
         public void Log(string message, params string[] tags)
         {
-            Log(message, false);
+            Log(message, false, tags);
         }
 
         public void Log(string message, Action<LogResponse> callback, params string[] tags)
         {
-            Log(message, false, callback);
+            Log(message, false, callback, tags);
         }
 
-        public void Log<TMessage>(TMessage message, params string[] tags)
+        public void LogJson<TMessage>(TMessage message, params string[] tags)
         {
-            Log(message, null, tags);
+            LogJson(message, null, tags);
         }
 
-        public void Log<TMessage>(TMessage message, Action<LogResponse> callback, params string[] tags)
+        public void LogJson<TMessage>(TMessage message, Action<LogResponse> callback, params string[] tags)
         {
             Log(JsonConvert.SerializeObject(message), true, callback, tags);
+        }
+
+        public void LogJson(string message, params string[] tags)
+        {
+            Log(message, true, tags);
+        }
+
+        public void LogJson(string message, Action<LogResponse> callback, params string[] tags)
+        {
+            Log(message, true, callback, tags);
         }
 
         public string Url
         {
             get { return _url; }
-        }
-
-        public LogResponse LogSync(string message, bool json, params string[] tags)
-        {
-            var synchronizer = new AutoResetEvent(false);
-
-            LogResponse response = null;
-            Log(message, json, r =>
-            {
-                response = r;
-                synchronizer.Set();
-            },
-            tags);
-
-            synchronizer.WaitOne();
-            return response;
         }
 
         private void Log(string message, bool json, params string[] tags)

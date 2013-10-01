@@ -7,13 +7,6 @@ namespace Loggly
    public interface ILogger
    {
       /// <summary>
-      /// Synchronously logs a message
-      /// </summary>
-      /// <param name="message">The message to log</param>
-      LogResponse LogSync(string message, params string[] tags);
-      LogResponse LogSync<TMessage>(TMessage message, params string[] tags);
-
-      /// <summary>
       /// Asynchronously logs a message
       /// </summary>
       /// <param name="message">The message to log</param>
@@ -33,7 +26,10 @@ namespace Loggly
       /// Callback can be null which will give great performance, at the cost of not knowing if a failure occured.
       /// </remarks>
       void Log(string message, Action<LogResponse> callback, params string[] tags);
-      void Log<TMessage>(TMessage message, params string[] tags);
-      void Log<TMessage>(TMessage message, Action<LogResponse> callback, params string[] tags);
+      void LogJson<TMessage>(TMessage message, params string[] tags);
+      void LogJson<TMessage>(TMessage message, Action<LogResponse> callback, params string[] tags);
+
+      void LogJson(string message, params string[] tags);
+      void LogJson(string message, Action<LogResponse> callback, params string[] tags);
    }
 }
