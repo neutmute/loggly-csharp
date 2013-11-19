@@ -8,7 +8,7 @@ Create a new `Logger` with your customer token:
 
 	var logger = new Logger("my-long-key-that-i-got-when-setting-up-customer-tokens");
 
-Use either a synchronous or asynchronous `Log` method.
+Supports asynchronous logging of strings, json, pocos or collections of pocos.
 
 
 ## Searching Events
