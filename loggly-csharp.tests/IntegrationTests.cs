@@ -57,6 +57,31 @@ namespace Loggly.Tests
          Assert.IsTrue(response.ElementAt(0).Tags.Any(tag => tag == "tag2"));
       }
 
+    [Test, Category("Integration")]
+    public void AsyncLogToJsonBulkInput()
+    {
+        var randomString1 = GenerateRandomString(8);
+        var randomString2 = GenerateRandomString(8);
+        var randomString3 = GenerateRandomString(8);
+
+        _logger.LogJson(new[]
+            {
+                new TestLogEntry() { Message = randomString1 },
+                new TestLogEntry() { Message = randomString2 },
+                new TestLogEntry() { Message = randomString3 }
+            }, "tag1", "tag2");
+
+        var response1 = StartJsonThread(randomString1, "Message");
+        Assert.IsNotNull(response1);
+        Assert.AreEqual(1, response1.TotalEvents);
+        var response2 = StartJsonThread(randomString2, "Message");
+        Assert.IsNotNull(response2);
+        Assert.AreEqual(1, response2.TotalEvents);
+        var response3 = StartJsonThread(randomString3, "Message");
+        Assert.IsNotNull(response3);
+        Assert.AreEqual(1, response3.TotalEvents);
+    }
+
       private static SearchResponse StartThread(string randomString)
       {
          var signal = new AutoResetEvent(false);
@@ -104,7 +129,7 @@ namespace Loggly.Tests
                   "w", "x", "y", "z"
               };
          var builder = new StringBuilder();
-         var random = new Random();
+          var random = new Random(Guid.NewGuid().GetHashCode());
          for (var i = 0; i < size; ++i)
          {
              var ch = chars[Convert.ToInt32(Math.Floor(24 * random.NextDouble()))];

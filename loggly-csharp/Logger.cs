@@ -1,5 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using System.Text;
 using System.Threading;
 using Loggly.Responses;
 using Newtonsoft.Json;
@@ -36,7 +38,19 @@ namespace Loggly
 
         public void LogJson<TMessage>(TMessage message, Action<LogResponse> callback, params string[] tags)
         {
-            Log(JsonConvert.SerializeObject(message), true, callback, tags);
+            IEnumerable enumerableMessage = message as IEnumerable;
+            if (enumerableMessage != null)
+            {
+                StringBuilder sb = new StringBuilder();
+                foreach (object messageLine in enumerableMessage)
+                    sb.AppendLine(JsonConvert.SerializeObject(messageLine));
+
+                Log(sb.ToString(), true, callback, tags);
+            }
+            else
+            {
+                Log(JsonConvert.SerializeObject(message), true, callback, tags);
+            }
         }
 
         public void LogJson(string message, params string[] tags)
@@ -61,6 +75,8 @@ namespace Loggly
 
         private void Log(string message, bool json, Action<LogResponse> callback, params string[] tags)
         {
+            bool isMultiLine = message.Contains("\n");
+
             var communicator = new Communicator(this);
             var callbackWrapper = callback == null ? (Action<Response>)null : r =>
             {
@@ -76,7 +92,7 @@ namespace Loggly
                     callback(res);
                 }
             };
-            communicator.SendPayload(Communicator.POST, string.Concat("inputs/", _customerToken), message, json, callbackWrapper, tags);
+            communicator.SendPayload(Communicator.POST, string.Concat(isMultiLine ? "bulk/" : "inputs/", _customerToken), message, json, callbackWrapper, tags);
         }
     }
 }
