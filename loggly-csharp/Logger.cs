@@ -43,18 +43,26 @@ namespace Loggly
             {
                 StringBuilder sb = new StringBuilder();
                 foreach (object messageLine in enumerableMessage)
-                    sb.AppendLine(JsonConvert.SerializeObject(
-                        messageLine, 
-                        new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }));
+                {
+                    sb.AppendLine(ToString(messageLine));
+                }
 
                 Log(sb.ToString(), true, callback, tags);
             }
             else
             {
-                Log(JsonConvert.SerializeObject(
-                    message, 
-                    new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore }), true, callback, tags);
+                Log(ToString(message), true, callback, tags);
             }
+        }
+
+        private static string ToString(object messageLine)
+        {
+            if (messageLine is string)
+                return messageLine as string;
+
+            return JsonConvert.SerializeObject(
+                messageLine,
+                new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
         }
 
         public void LogJson(string message, params string[] tags)

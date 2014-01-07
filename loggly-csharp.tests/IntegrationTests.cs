@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading;
 using Loggly.Responses;
 using NUnit.Framework;
+using Newtonsoft.Json;
 
 namespace Loggly.Tests
 {
@@ -66,9 +67,9 @@ namespace Loggly.Tests
 
         _logger.LogJson(new[]
             {
-                new TestLogEntry() { Message = randomString1 },
-                new TestLogEntry() { Message = randomString2 },
-                new TestLogEntry() { Message = randomString3 }
+                JsonConvert.SerializeObject(new TestLogEntry() { Message = randomString1 }),
+                JsonConvert.SerializeObject(new TestLogEntry() { Message = randomString2 }),
+                JsonConvert.SerializeObject(new TestLogEntry() { Message = randomString3 })
             }, "tag1", "tag2");
 
         var response1 = StartJsonThread(randomString1, "Message");
