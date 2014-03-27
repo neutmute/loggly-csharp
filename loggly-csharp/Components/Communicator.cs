@@ -37,9 +37,9 @@ namespace Loggly
                 using (var response = searchRequest.GetResponse())
                 {
                     T responseObject = JsonConvert.DeserializeObject<T>(GetResponseBody(response));
-                    if (typeof (T) == typeof (SearchResponse))
+                    if (responseObject is SearchResponseBase)
                     {
-                        SearchResponse searchResponse = responseObject as SearchResponse;
+                        SearchResponseBase searchResponse = responseObject as SearchResponseBase;
                         searchResponse.Communicator = this;
                     }
 
