@@ -13,5 +13,6 @@ namespace Loggly
        SearchResponse<TMessage> Search<TMessage>(string query, DateTime start, DateTime until);
        SearchResponse<TMessage> Search<TMessage>(string query, DateTime start, DateTime until, int numberOfRows);
        SearchResponse<TMessage> Search<TMessage>(SearchQuery query);
+       FieldResponse Field(FieldQuery query);
    }
 }

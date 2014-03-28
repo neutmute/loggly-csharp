@@ -5,6 +5,7 @@ using System.Text;
 using System.Web;
 using Loggly.Responses;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace Loggly
 {
@@ -28,6 +29,7 @@ namespace Loggly
         }
 
         public T GetPayload<T>(string endPoint, IDictionary<string, object> parameters)
+            where T : class
         {
             try
             {
@@ -36,7 +38,9 @@ namespace Loggly
 
                 using (var response = searchRequest.GetResponse())
                 {
-                    T responseObject = JsonConvert.DeserializeObject<T>(GetResponseBody(response));
+                    T responseObject = typeof(T) == typeof(FieldResponse)
+                        ? new FieldResponse(JObject.Parse(GetResponseBody(response)), parameters["fieldname"].ToString()) as T
+                        : JsonConvert.DeserializeObject<T>(GetResponseBody(response));
                     if (responseObject is SearchResponseBase)
                     {
                         SearchResponseBase searchResponse = responseObject as SearchResponseBase;

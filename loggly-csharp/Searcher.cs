@@ -61,5 +61,12 @@ namespace Loggly
             var communicator = new Communicator(this);
             return communicator.GetPayload<SearchResponse<TMessage>>("apiv2/search", query.ToParameters());
         }
+
+        public FieldResponse Field(FieldQuery query)
+        {
+            var communicator = new Communicator(this);
+            return communicator.GetPayload<FieldResponse>("apiv2/fields/" + query.FieldName + "/", query.ToParameters());
+        }
+
     }
 }

@@ -11,7 +11,7 @@ namespace Loggly
       public DateTime? Until { get; set; }
       public int? NumberOfRows { get; set; }
 
-      public IDictionary<string, object> ToParameters()
+      public virtual IDictionary<string, object> ToParameters()
       {
          return new Dictionary<string, object>
                 {
@@ -22,4 +22,17 @@ namespace Loggly
                 };
       }
    }
+
+    public class FieldQuery : SearchQuery
+    {
+        public string FieldName { get; set; }
+
+        public virtual IDictionary<string, object> ToParameters()
+        {
+            IDictionary<string, object> parameters = base.ToParameters();
+            parameters.Add("fieldname", this.FieldName);
+
+            return parameters;
+        }
+    }
 }
