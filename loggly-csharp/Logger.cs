@@ -8,15 +8,20 @@ namespace Loggly
 {
    public class Logger : ILogger, IRequestContext
    {
-      private string _url = "logs.loggly.com/";
+      private string _url = "logs-01.loggly.com/";
       private readonly string _inputKey;
+      private readonly string _applicationName;
+      
 
-      public Logger(string inputKey, string alternativeUrl = null)
+      public Logger(string inputKey, 
+          string applicationName, 
+          string alternativeUrl = null)
       {
           if (!string.IsNullOrEmpty(alternativeUrl))
               _url = alternativeUrl;
 
          _inputKey = inputKey;
+         _applicationName = applicationName;
       }
 
       public LogResponse LogSync(string message)
@@ -59,14 +64,16 @@ namespace Loggly
          Log(message, category, null);
       }
 
-      public void Log(string message, string category, IDictionary<string, object> data)
+      public void Log(string message, string category, IDictionary<string, object> data =null)
       {
-         var logEntry = new Dictionary<string, object>(data ?? new Dictionary<string, object>())
+          var logEntry = new Dictionary<string, object>(data ?? new Dictionary<string, object>())
                         {
+                           {"userAgent","loggly-csharp"}, {"applicationName",_applicationName},
                            {"message", message}, {"category", category}
                         };
-         var jsonLogEntry = JsonConvert.SerializeObject(logEntry);
-         Log(jsonLogEntry, true);
+
+          var jsonLogEntry = JsonConvert.SerializeObject(logEntry);
+          Log(jsonLogEntry, true);
       }
 
       public void LogInfo(string message)
@@ -93,6 +100,7 @@ namespace Loggly
       {
          LogWarning(message, null);
       }
+
 
       public void LogWarning(string message, IDictionary<string, object> data)
       {
