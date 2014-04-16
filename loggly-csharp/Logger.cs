@@ -9,19 +9,21 @@ namespace Loggly
    public class Logger : ILogger, IRequestContext
    {
       private string _url = "logs-01.loggly.com/";
+      private string _applicationName = "loggly-csharp-app";
       private readonly string _inputKey;
-      private readonly string _applicationName;
       
 
       public Logger(string inputKey, 
-          string applicationName, 
-          string alternativeUrl = null)
+          string alternativeUrl = null,
+          string applicationName = null )
       {
           if (!string.IsNullOrEmpty(alternativeUrl))
               _url = alternativeUrl;
 
+          if (!string.IsNullOrEmpty(applicationName))
+              _applicationName = applicationName;
+
          _inputKey = inputKey;
-         _applicationName = applicationName;
       }
 
       public LogResponse LogSync(string message)
