@@ -13,12 +13,9 @@ namespace Loggly
       private readonly string _inputKey;
       
       public Logger(string inputKey,
-          string applicationName)
-      {
-          _inputKey = inputKey;
-          _applicationName = applicationName;
-      }
-
+          string applicationName) 
+          : this(inputKey,null,applicationName){}
+      
       public Logger(string inputKey, 
           string alternativeUrl = null,
           string applicationName = null )
