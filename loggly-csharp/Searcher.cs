@@ -65,7 +65,7 @@ namespace Loggly
         public FieldResponse Field(FieldQuery query)
         {
             var communicator = new Communicator(this);
-            return communicator.GetPayload<FieldResponse>("apiv2/fields/" + query.FieldName + "/", query.ToParameters());
+            return communicator.GetPayload<FieldResponse>("apiv2/fields/" + query.FieldName, query.ToParameters());
         }
 
     }
