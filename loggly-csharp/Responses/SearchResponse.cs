@@ -9,7 +9,7 @@ namespace Loggly.Responses
 {
     public abstract class SearchResponseBase
     {
-        protected EntryJsonResponseBase _firstEntryResponse;
+        protected EntryJsonResponseBase FirstEntryResponse { get; set; }
 
         [JsonIgnore]
         internal Communicator Communicator { get; set; }
@@ -22,12 +22,12 @@ namespace Loggly.Responses
         {
             get
             {
-                if (this._firstEntryResponse == null)
+                if (this.FirstEntryResponse == null)
                 {
-                    this._firstEntryResponse = GetEntryJsonResponse(0);
+                    this.FirstEntryResponse = GetEntryJsonResponse(0);
                 }
 
-                return this._firstEntryResponse.TotalEvents;
+                return this.FirstEntryResponse.TotalEvents;
             }
         }
 
@@ -43,7 +43,7 @@ namespace Loggly.Responses
         {
             int page = 0;
             int returnedEntryCount = 0;
-            var entryResonse = this._firstEntryResponse ?? GetEntryJsonResponse(page);
+            var entryResonse = this.FirstEntryResponse ?? GetEntryJsonResponse(page);
 
             while (true)
             {
@@ -69,7 +69,7 @@ namespace Loggly.Responses
 
         protected override EntryJsonResponseBase GetEntryJsonResponse(int page)
         {
-            EntryJsonResponse entryResonse = this.Communicator.GetPayload<EntryJsonResponse>(
+            var entryResonse = this.Communicator.GetPayload<EntryJsonResponse>(
                 "apiv2/events",
                 new Dictionary<string, object>() {{"rsid", this.RSID.Id}, {"page", page}});
             return entryResonse;
@@ -83,7 +83,7 @@ namespace Loggly.Responses
         {
             int page = 0;
             int returnedEntryCount = 0;
-            var entryResonse = this._firstEntryResponse ?? GetEntryJsonResponse(page);
+            var entryResonse = FirstEntryResponse ?? GetEntryJsonResponse(page);
 
             while (true)
             {

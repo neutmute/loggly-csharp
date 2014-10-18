@@ -21,9 +21,9 @@ namespace Loggly
             _context = context;
         }
 
-        public void SendPayload(string method, string endPoint, string message, bool json, Action<Response> callback, string[] tags)
+        public void SendPayload(string method, string endPoint, string message, bool json, Action<Response> callback)
         {
-            var request = CreateRequest(method, endPoint, false, json, tags);
+            var request = CreateRequest(method, endPoint, false, json, new string[0]);
             var state = new RequestState { Request = request, Payload = message == null ? null : Encoding.UTF8.GetBytes(message), Callback = callback };
             request.BeginGetRequestStream(GetRequestStream, state);
         }
@@ -43,7 +43,7 @@ namespace Loggly
                         : JsonConvert.DeserializeObject<T>(GetResponseBody(response));
                     if (responseObject is SearchResponseBase)
                     {
-                        SearchResponseBase searchResponse = responseObject as SearchResponseBase;
+                        var searchResponse = responseObject as SearchResponseBase;
                         searchResponse.Communicator = this;
                     }
 

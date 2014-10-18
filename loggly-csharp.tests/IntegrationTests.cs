@@ -26,18 +26,18 @@ namespace Loggly.Tests
          _logger = new Logger(ConfigurationManager.AppSettings["IntegrationKey"]);
       }
 
-      [Test, Category("Integration")]
-      public void SyncLogToPlainTextInput()
-      {
-         var randomString = GenerateRandomString(8);
-         _logger.LogJson(new TestLogEntry() { Message = randomString }, "tag1", "tag2");
-         var response = StartThread(randomString);
-         Assert.IsNotNull(response);
-         Assert.AreEqual(1, response.TotalEvents);
-         Assert.AreEqual("{\"Message\":\"" + randomString + "\"}", response.ElementAt(0).Message);
-         Assert.IsTrue(response.ElementAt(0).Tags.Any(tag => tag == "tag1"));
-         Assert.IsTrue(response.ElementAt(0).Tags.Any(tag => tag == "tag2"));
-      }
+      //[Test, Category("Integration")]
+      //public void SyncLogToPlainTextInput()
+      //{
+      //   var randomString = GenerateRandomString(8);
+      //   _logger.LogJson(new TestLogEntry() { Message = randomString }, "tag1", "tag2");
+      //   var response = StartThread(randomString);
+      //   Assert.IsNotNull(response);
+      //   Assert.AreEqual(1, response.TotalEvents);
+      //   Assert.AreEqual("{\"Message\":\"" + randomString + "\"}", response.ElementAt(0).Message);
+      //   Assert.IsTrue(response.ElementAt(0).Tags.Any(tag => tag == "tag1"));
+      //   Assert.IsTrue(response.ElementAt(0).Tags.Any(tag => tag == "tag2"));
+      //}
 
     public class TestLogEntry
     {
@@ -48,7 +48,7 @@ namespace Loggly.Tests
       public void AsyncLogToPlainTextInput()
       {
          var randomString = GenerateRandomString(8);
-         _logger.LogJson(new TestLogEntry() { Message = randomString }, "tag1", "tag2");
+         _logger.LogJson(new TestLogEntry() { Message = randomString });
          var response = StartJsonThread(randomString, "Message");
          Assert.IsNotNull(response);
          Assert.AreEqual(1, response.TotalEvents);
@@ -58,30 +58,30 @@ namespace Loggly.Tests
          Assert.IsTrue(response.ElementAt(0).Tags.Any(tag => tag == "tag2"));
       }
 
-    [Test, Category("Integration")]
-    public void AsyncLogToJsonBulkInput()
-    {
-        var randomString1 = GenerateRandomString(8);
-        var randomString2 = GenerateRandomString(8);
-        var randomString3 = GenerateRandomString(8);
+    //[Test, Category("Integration")]
+    //public void AsyncLogToJsonBulkInput()
+    //{
+    //    var randomString1 = GenerateRandomString(8);
+    //    var randomString2 = GenerateRandomString(8);
+    //    var randomString3 = GenerateRandomString(8);
 
-        _logger.LogJson(new[]
-            {
-                JsonConvert.SerializeObject(new TestLogEntry() { Message = randomString1 }),
-                JsonConvert.SerializeObject(new TestLogEntry() { Message = randomString2 }),
-                JsonConvert.SerializeObject(new TestLogEntry() { Message = randomString3 })
-            }, "tag1", "tag2");
+    //    _logger.LogJson(new[]
+    //        {
+    //            JsonConvert.SerializeObject(new TestLogEntry() { Message = randomString1 }),
+    //            JsonConvert.SerializeObject(new TestLogEntry() { Message = randomString2 }),
+    //            JsonConvert.SerializeObject(new TestLogEntry() { Message = randomString3 })
+    //        }, "tag1", "tag2");
 
-        var response1 = StartJsonThread(randomString1, "Message");
-        Assert.IsNotNull(response1);
-        Assert.AreEqual(1, response1.TotalEvents);
-        var response2 = StartJsonThread(randomString2, "Message");
-        Assert.IsNotNull(response2);
-        Assert.AreEqual(1, response2.TotalEvents);
-        var response3 = StartJsonThread(randomString3, "Message");
-        Assert.IsNotNull(response3);
-        Assert.AreEqual(1, response3.TotalEvents);
-    }
+    //    var response1 = StartJsonThread(randomString1, "Message");
+    //    Assert.IsNotNull(response1);
+    //    Assert.AreEqual(1, response1.TotalEvents);
+    //    var response2 = StartJsonThread(randomString2, "Message");
+    //    Assert.IsNotNull(response2);
+    //    Assert.AreEqual(1, response2.TotalEvents);
+    //    var response3 = StartJsonThread(randomString3, "Message");
+    //    Assert.IsNotNull(response3);
+    //    Assert.AreEqual(1, response3.TotalEvents);
+    //}
 
       private static SearchResponse StartThread(string randomString)
       {

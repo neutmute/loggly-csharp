@@ -27,7 +27,7 @@ namespace Loggly
     {
         public string FieldName { get; set; }
 
-        public virtual IDictionary<string, object> ToParameters()
+        public override IDictionary<string, object> ToParameters()
         {
             IDictionary<string, object> parameters = base.ToParameters();
             parameters.Add("fieldname", this.FieldName);
