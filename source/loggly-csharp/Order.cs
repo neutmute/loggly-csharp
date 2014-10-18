@@ -1,6 +1,6 @@
 namespace Loggly
 {
-   public enum Enumerations
+   public enum Order
    {
       Descending = 1,
       Ascending = 2,
