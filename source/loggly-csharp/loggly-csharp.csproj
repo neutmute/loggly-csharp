@@ -57,12 +57,19 @@
     <Compile Include="LogglyException.cs" />
     <Compile Include="Enumerations.cs" />
     <Compile Include="Properties\AssemblyInfoUnique.cs" />
+    <Compile Include="Responses\Search\EntryJsonResponse.cs" />
     <Compile Include="Responses\ErrorMessage.cs" />
+    <Compile Include="Responses\EventBase.cs" />
     <Compile Include="Responses\LogResponse.cs" />
     <Compile Include="Responses\Response.cs" />
+    <Compile Include="Responses\Search\EventMessage.cs" />
+    <Compile Include="Responses\Search\FieldResponse.cs" />
+    <Compile Include="Responses\Search\RSID.cs" />
+    <Compile Include="Responses\Search\SearchResponseBase.cs" />
+    <Compile Include="Responses\Search\SearchResponseT.cs" />
     <Compile Include="Search\Searcher.cs" />
     <Compile Include="Search\SearchQuery.cs" />
-    <Compile Include="Responses\SearchResponse.cs" />
+    <Compile Include="Responses\Search\SearchResponse.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
