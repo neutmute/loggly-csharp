@@ -9,8 +9,7 @@ using NUnit.Framework;
 
 namespace Loggly.Tests.Config.ComplexTags
 {
-    [TestFixture]
-    public class HostnameTagFixture 
+    public class HostnameTagFixture : Fixture
     {
         [Test]
         public void FormattedValue()
