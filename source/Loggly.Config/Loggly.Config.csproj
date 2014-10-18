@@ -37,17 +37,37 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ConfigurationSection.csd.cs">
+      <DependentUpon>ConfigurationSection.csd.xsd</DependentUpon>
+    </Compile>
+    <Compile Include="ConfigurationSection1.csd.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>ConfigurationSection.csd</DependentUpon>
+    </Compile>
+    <Compile Include="LiteralTagLayout.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="TagRendererBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ConfigurationSection.csd">
       <Generator>CsdFileGenerator</Generator>
+      <LastGenOutput>ConfigurationSection1.csd.cs</LastGenOutput>
+    </None>
+    <None Include="ConfigurationSection.csd.config">
+      <DependentUpon>ConfigurationSection.csd</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="ConfigurationSection.csd.diagram">
       <DependentUpon>ConfigurationSection.csd</DependentUpon>
     </None>
+    <None Include="ConfigurationSection.csd.xsd">
+      <DependentUpon>ConfigurationSection.csd</DependentUpon>
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
     <Service Include="{B4F97281-0DBD-4835-9ED8-7DFB966E87FF}" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

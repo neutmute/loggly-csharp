@@ -3,9 +3,10 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
 VisualStudioVersion = 12.0.30501.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "stuff", "stuff", "{5B1BDA21-CAE4-4686-B45B-1087AA9A36F4}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{5B1BDA21-CAE4-4686-B45B-1087AA9A36F4}"
 	ProjectSection(SolutionItems) = preProject
 		license.txt = license.txt
+		loggly.nuspec = loggly.nuspec
 		package.cmd = package.cmd
 	EndProjectSection
 EndProject

@@ -8,4 +8,45 @@
 </auto-generated>
 -->
 <xs:schema xmlns:tns="Loggly" elementFormDefault="qualified" targetNamespace="Loggly" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="loggly" type="tns:Loggly.Config.LogglyConfigCT" />
+	<xs:complexType name="Loggly.Config.LogglyConfigCT">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element minOccurs="0" name="tags" type="tns:Loggly.Config.TagListCT">
+				<xs:annotation>
+					<xs:documentation>The Tags.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+		<xs:attribute name="customerToken" use="optional" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The CustomerToken.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="Loggly.Config.TagListCT">
+		<xs:choice minOccurs="0" maxOccurs="unbounded">
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="tagRenderer" type="tns:Loggly.Config.TagLayoutCT">
+				<xs:annotation>
+					<xs:documentation>The TagLayout Configuration Element.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="Loggly.Config.TagLayoutCT">
+		<xs:attribute name="key" use="required" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The Key.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="formatter" use="optional" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The Formatter.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="type" use="required" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The Type.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
 </xs:schema>
