@@ -30,7 +30,7 @@ namespace Loggly.Tests
       //public void SyncLogToPlainTextInput()
       //{
       //   var randomString = GenerateRandomString(8);
-      //   _logger.LogJson(new TestLogEntry() { Message = randomString }, "tag1", "tag2");
+      //   _logger.Log(new TestLogEntry() { Message = randomString }, "tag1", "tag2");
       //   var response = StartThread(randomString);
       //   Assert.IsNotNull(response);
       //   Assert.AreEqual(1, response.TotalEvents);
@@ -48,7 +48,7 @@ namespace Loggly.Tests
       public void AsyncLogToPlainTextInput()
       {
          var randomString = GenerateRandomString(8);
-         _logger.LogJson(new TestLogEntry() { Message = randomString });
+         _logger.Log(new TestLogEntry() { Message = randomString });
          var response = StartJsonThread(randomString, "Message");
          Assert.IsNotNull(response);
          Assert.AreEqual(1, response.TotalEvents);
@@ -65,7 +65,7 @@ namespace Loggly.Tests
     //    var randomString2 = GenerateRandomString(8);
     //    var randomString3 = GenerateRandomString(8);
 
-    //    _logger.LogJson(new[]
+    //    _logger.Log(new[]
     //        {
     //            JsonConvert.SerializeObject(new TestLogEntry() { Message = randomString1 }),
     //            JsonConvert.SerializeObject(new TestLogEntry() { Message = randomString2 }),
