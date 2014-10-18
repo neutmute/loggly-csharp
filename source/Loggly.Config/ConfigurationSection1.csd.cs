@@ -92,7 +92,7 @@ namespace Loggly.Config
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
         [global::System.ComponentModel.DescriptionAttribute("The CustomerToken.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.LogglyConfig.CustomerTokenPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.LogglyConfig.CustomerTokenPropertyName, IsRequired=true, IsKey=false, IsDefaultCollection=false)]
         public virtual string CustomerToken
         {
             get
@@ -119,15 +119,41 @@ namespace Loggly.Config
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
         [global::System.ComponentModel.DescriptionAttribute("The Tags.")]
         [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.LogglyConfig.TagsPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
-        public virtual global::Loggly.Config.TagList Tags
+        public virtual global::Loggly.Config.Tags Tags
         {
             get
             {
-                return ((global::Loggly.Config.TagList)(base[global::Loggly.Config.LogglyConfig.TagsPropertyName]));
+                return ((global::Loggly.Config.Tags)(base[global::Loggly.Config.LogglyConfig.TagsPropertyName]));
             }
             set
             {
                 base[global::Loggly.Config.LogglyConfig.TagsPropertyName] = value;
+            }
+        }
+        #endregion
+        
+        #region Transport Property
+        /// <summary>
+        /// The XML name of the <see cref="Transport"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string TransportPropertyName = "transport";
+        
+        /// <summary>
+        /// Gets or sets the Transport.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The Transport.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.LogglyConfig.TransportPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::Loggly.Config.Transport Transport
+        {
+            get
+            {
+                return ((global::Loggly.Config.Transport)(base[global::Loggly.Config.LogglyConfig.TransportPropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.LogglyConfig.TransportPropertyName] = value;
             }
         }
         #endregion
@@ -138,18 +164,18 @@ namespace Loggly.Config
     
     
     /// <summary>
-    /// A collection of TagLayout instances.
+    /// A collection of ComplexTagConfig instances.
     /// </summary>
-    [global::System.Configuration.ConfigurationCollectionAttribute(typeof(global::Loggly.Config.TagLayout), CollectionType=global::System.Configuration.ConfigurationElementCollectionType.BasicMapAlternate, AddItemName=global::Loggly.Config.TagList.TagLayoutPropertyName)]
-    public partial class TagList : global::System.Configuration.ConfigurationElementCollection
+    [global::System.Configuration.ConfigurationCollectionAttribute(typeof(global::Loggly.Config.ComplexTagConfig), CollectionType=global::System.Configuration.ConfigurationElementCollectionType.BasicMapAlternate, AddItemName=global::Loggly.Config.ComplexTags.ComplexTagConfigPropertyName)]
+    public partial class ComplexTags : global::System.Configuration.ConfigurationElementCollection
     {
         
         #region Constants
         /// <summary>
-        /// The XML name of the individual <see cref="global::Loggly.Config.TagLayout"/> instances in this collection.
+        /// The XML name of the individual <see cref="global::Loggly.Config.ComplexTagConfig"/> instances in this collection.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        internal const string TagLayoutPropertyName = "tagRenderer";
+        internal const string ComplexTagConfigPropertyName = "complex";
         #endregion
         
         #region Overrides
@@ -174,7 +200,7 @@ namespace Loggly.Config
         {
             get
             {
-                return global::Loggly.Config.TagList.TagLayoutPropertyName;
+                return global::Loggly.Config.ComplexTags.ComplexTagConfigPropertyName;
             }
         }
         
@@ -188,7 +214,7 @@ namespace Loggly.Config
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
         protected override bool IsElementName(string elementName)
         {
-            return (elementName == global::Loggly.Config.TagList.TagLayoutPropertyName);
+            return (elementName == global::Loggly.Config.ComplexTags.ComplexTagConfigPropertyName);
         }
         
         /// <summary>
@@ -201,93 +227,65 @@ namespace Loggly.Config
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
         protected override object GetElementKey(global::System.Configuration.ConfigurationElement element)
         {
-            return ((global::Loggly.Config.TagLayout)(element)).Key;
+            return ((global::Loggly.Config.ComplexTagConfig)(element)).Name;
         }
         
         /// <summary>
-        /// Creates a new <see cref="global::Loggly.Config.TagLayout"/>.
+        /// Creates a new <see cref="global::Loggly.Config.ComplexTagConfig"/>.
         /// </summary>
         /// <returns>
-        /// A new <see cref="global::Loggly.Config.TagLayout"/>.
+        /// A new <see cref="global::Loggly.Config.ComplexTagConfig"/>.
         /// </returns>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
         protected override global::System.Configuration.ConfigurationElement CreateNewElement()
         {
-            return new global::Loggly.Config.TagLayout();
-        }
-        #endregion
-        
-        #region Indexer
-        /// <summary>
-        /// Gets the <see cref="global::Loggly.Config.TagLayout"/> at the specified index.
-        /// </summary>
-        /// <param name="index">The index of the <see cref="global::Loggly.Config.TagLayout"/> to retrieve.</param>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        public global::Loggly.Config.TagLayout this[int index]
-        {
-            get
-            {
-                return ((global::Loggly.Config.TagLayout)(base.BaseGet(index)));
-            }
-        }
-        
-        /// <summary>
-        /// Gets the <see cref="global::Loggly.Config.TagLayout"/> with the specified key.
-        /// </summary>
-        /// <param name="key">The key of the <see cref="global::Loggly.Config.TagLayout"/> to retrieve.</param>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        public global::Loggly.Config.TagLayout this[object key]
-        {
-            get
-            {
-                return ((global::Loggly.Config.TagLayout)(base.BaseGet(key)));
-            }
+            return new global::Loggly.Config.ComplexTagConfig();
         }
         #endregion
         
         #region Add
         /// <summary>
-        /// Adds the specified <see cref="global::Loggly.Config.TagLayout"/> to the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// Adds the specified <see cref="global::Loggly.Config.ComplexTagConfig"/> to the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
         /// </summary>
-        /// <param name="tagRenderer">The <see cref="global::Loggly.Config.TagLayout"/> to add.</param>
+        /// <param name="complex">The <see cref="global::Loggly.Config.ComplexTagConfig"/> to add.</param>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        public void Add(global::Loggly.Config.TagLayout tagRenderer)
+        public void Add(global::Loggly.Config.ComplexTagConfig complex)
         {
-            base.BaseAdd(tagRenderer);
+            base.BaseAdd(complex);
         }
         #endregion
         
         #region Remove
         /// <summary>
-        /// Removes the specified <see cref="global::Loggly.Config.TagLayout"/> from the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// Removes the specified <see cref="global::Loggly.Config.ComplexTagConfig"/> from the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
         /// </summary>
-        /// <param name="tagRenderer">The <see cref="global::Loggly.Config.TagLayout"/> to remove.</param>
+        /// <param name="complex">The <see cref="global::Loggly.Config.ComplexTagConfig"/> to remove.</param>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        public void Remove(global::Loggly.Config.TagLayout tagRenderer)
+        public void Remove(global::Loggly.Config.ComplexTagConfig complex)
         {
-            base.BaseRemove(this.GetElementKey(tagRenderer));
+            base.BaseRemove(this.GetElementKey(complex));
         }
         #endregion
         
         #region GetItem
         /// <summary>
-        /// Gets the <see cref="global::Loggly.Config.TagLayout"/> at the specified index.
+        /// Gets the <see cref="global::Loggly.Config.ComplexTagConfig"/> at the specified index.
         /// </summary>
-        /// <param name="index">The index of the <see cref="global::Loggly.Config.TagLayout"/> to retrieve.</param>
+        /// <param name="index">The index of the <see cref="global::Loggly.Config.ComplexTagConfig"/> to retrieve.</param>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        public global::Loggly.Config.TagLayout GetItemAt(int index)
+        public global::Loggly.Config.ComplexTagConfig GetItemAt(int index)
         {
-            return ((global::Loggly.Config.TagLayout)(base.BaseGet(index)));
+            return ((global::Loggly.Config.ComplexTagConfig)(base.BaseGet(index)));
         }
         
         /// <summary>
-        /// Gets the <see cref="global::Loggly.Config.TagLayout"/> with the specified key.
+        /// Gets the <see cref="global::Loggly.Config.ComplexTagConfig"/> with the specified key.
         /// </summary>
-        /// <param name="key">The key of the <see cref="global::Loggly.Config.TagLayout"/> to retrieve.</param>
+        /// <param name="name">The key of the <see cref="global::Loggly.Config.ComplexTagConfig"/> to retrieve.</param>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        public global::Loggly.Config.TagLayout GetItemByKey(string key)
+        public global::Loggly.Config.ComplexTagConfig GetItemByKey(string name)
         {
-            return ((global::Loggly.Config.TagLayout)(base.BaseGet(((object)(key)))));
+            return ((global::Loggly.Config.ComplexTagConfig)(base.BaseGet(((object)(name)))));
         }
         #endregion
         
@@ -308,9 +306,9 @@ namespace Loggly.Config
     
     
     /// <summary>
-    /// The TagLayout Configuration Element.
+    /// The ComplexTagConfig Configuration Element.
     /// </summary>
-    public partial class TagLayout : global::System.Configuration.ConfigurationElement
+    public partial class ComplexTagConfig : global::System.Configuration.ConfigurationElement
     {
         
         #region IsReadOnly override
@@ -324,54 +322,54 @@ namespace Loggly.Config
         }
         #endregion
         
-        #region Key Property
+        #region Name Property
         /// <summary>
-        /// The XML name of the <see cref="Key"/> property.
+        /// The XML name of the <see cref="Name"/> property.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        internal const string KeyPropertyName = "key";
+        internal const string NamePropertyName = "name";
         
         /// <summary>
-        /// Gets or sets the Key.
+        /// Gets or sets the Name.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        [global::System.ComponentModel.DescriptionAttribute("The Key.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.TagLayout.KeyPropertyName, IsRequired=true, IsKey=true, IsDefaultCollection=false)]
-        public virtual string Key
+        [global::System.ComponentModel.DescriptionAttribute("The Name.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.ComplexTagConfig.NamePropertyName, IsRequired=true, IsKey=true, IsDefaultCollection=false)]
+        public virtual string Name
         {
             get
             {
-                return ((string)(base[global::Loggly.Config.TagLayout.KeyPropertyName]));
+                return ((string)(base[global::Loggly.Config.ComplexTagConfig.NamePropertyName]));
             }
             set
             {
-                base[global::Loggly.Config.TagLayout.KeyPropertyName] = value;
+                base[global::Loggly.Config.ComplexTagConfig.NamePropertyName] = value;
             }
         }
         #endregion
         
-        #region Formatter Property
+        #region Assembly Property
         /// <summary>
-        /// The XML name of the <see cref="Formatter"/> property.
+        /// The XML name of the <see cref="Assembly"/> property.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        internal const string FormatterPropertyName = "formatter";
+        internal const string AssemblyPropertyName = "assembly";
         
         /// <summary>
-        /// Gets or sets the Formatter.
+        /// Gets or sets the Assembly.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        [global::System.ComponentModel.DescriptionAttribute("The Formatter.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.TagLayout.FormatterPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
-        public virtual string Formatter
+        [global::System.ComponentModel.DescriptionAttribute("The Assembly.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.ComplexTagConfig.AssemblyPropertyName, IsRequired=true, IsKey=false, IsDefaultCollection=false)]
+        public virtual string Assembly
         {
             get
             {
-                return ((string)(base[global::Loggly.Config.TagLayout.FormatterPropertyName]));
+                return ((string)(base[global::Loggly.Config.ComplexTagConfig.AssemblyPropertyName]));
             }
             set
             {
-                base[global::Loggly.Config.TagLayout.FormatterPropertyName] = value;
+                base[global::Loggly.Config.ComplexTagConfig.AssemblyPropertyName] = value;
             }
         }
         #endregion
@@ -388,16 +386,530 @@ namespace Loggly.Config
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
         [global::System.ComponentModel.DescriptionAttribute("The Type.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.TagLayout.TypePropertyName, IsRequired=true, IsKey=false, IsDefaultCollection=false)]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.ComplexTagConfig.TypePropertyName, IsRequired=true, IsKey=false, IsDefaultCollection=false)]
         public virtual string Type
         {
             get
             {
-                return ((string)(base[global::Loggly.Config.TagLayout.TypePropertyName]));
+                return ((string)(base[global::Loggly.Config.ComplexTagConfig.TypePropertyName]));
             }
             set
             {
-                base[global::Loggly.Config.TagLayout.TypePropertyName] = value;
+                base[global::Loggly.Config.ComplexTagConfig.TypePropertyName] = value;
+            }
+        }
+        #endregion
+        
+        #region Formatter Property
+        /// <summary>
+        /// The XML name of the <see cref="Formatter"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string FormatterPropertyName = "formatter";
+        
+        /// <summary>
+        /// Gets or sets the Formatter.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The Formatter.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.ComplexTagConfig.FormatterPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual string Formatter
+        {
+            get
+            {
+                return ((string)(base[global::Loggly.Config.ComplexTagConfig.FormatterPropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.ComplexTagConfig.FormatterPropertyName] = value;
+            }
+        }
+        #endregion
+    }
+}
+namespace Loggly.Config
+{
+    
+    
+    /// <summary>
+    /// A collection of Tag instances.
+    /// </summary>
+    [global::System.Configuration.ConfigurationCollectionAttribute(typeof(global::Loggly.Config.Tag), CollectionType=global::System.Configuration.ConfigurationElementCollectionType.BasicMapAlternate, AddItemName=global::Loggly.Config.SimpleTags.TagPropertyName)]
+    public partial class SimpleTags : global::System.Configuration.ConfigurationElementCollection
+    {
+        
+        #region Constants
+        /// <summary>
+        /// The XML name of the individual <see cref="global::Loggly.Config.Tag"/> instances in this collection.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string TagPropertyName = "tag";
+        #endregion
+        
+        #region Overrides
+        /// <summary>
+        /// Gets the type of the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <returns>The <see cref="global::System.Configuration.ConfigurationElementCollectionType"/> of this collection.</returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        public override global::System.Configuration.ConfigurationElementCollectionType CollectionType
+        {
+            get
+            {
+                return global::System.Configuration.ConfigurationElementCollectionType.BasicMapAlternate;
+            }
+        }
+        
+        /// <summary>
+        /// Gets the name used to identify this collection of elements
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        protected override string ElementName
+        {
+            get
+            {
+                return global::Loggly.Config.SimpleTags.TagPropertyName;
+            }
+        }
+        
+        /// <summary>
+        /// Indicates whether the specified <see cref="global::System.Configuration.ConfigurationElement"/> exists in the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <param name="elementName">The name of the element to verify.</param>
+        /// <returns>
+        /// <see langword="true"/> if the element exists in the collection; otherwise, <see langword="false"/>.
+        /// </returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        protected override bool IsElementName(string elementName)
+        {
+            return (elementName == global::Loggly.Config.SimpleTags.TagPropertyName);
+        }
+        
+        /// <summary>
+        /// Gets the element key for the specified configuration element.
+        /// </summary>
+        /// <param name="element">The <see cref="global::System.Configuration.ConfigurationElement"/> to return the key for.</param>
+        /// <returns>
+        /// An <see cref="object"/> that acts as the key for the specified <see cref="global::System.Configuration.ConfigurationElement"/>.
+        /// </returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        protected override object GetElementKey(global::System.Configuration.ConfigurationElement element)
+        {
+            return ((global::Loggly.Config.Tag)(element)).Value;
+        }
+        
+        /// <summary>
+        /// Creates a new <see cref="global::Loggly.Config.Tag"/>.
+        /// </summary>
+        /// <returns>
+        /// A new <see cref="global::Loggly.Config.Tag"/>.
+        /// </returns>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        protected override global::System.Configuration.ConfigurationElement CreateNewElement()
+        {
+            return new global::Loggly.Config.Tag();
+        }
+        #endregion
+        
+        #region Indexer
+        /// <summary>
+        /// Gets the <see cref="global::Loggly.Config.Tag"/> at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="global::Loggly.Config.Tag"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        public global::Loggly.Config.Tag this[int index]
+        {
+            get
+            {
+                return ((global::Loggly.Config.Tag)(base.BaseGet(index)));
+            }
+        }
+        
+        /// <summary>
+        /// Gets the <see cref="global::Loggly.Config.Tag"/> with the specified key.
+        /// </summary>
+        /// <param name="value">The key of the <see cref="global::Loggly.Config.Tag"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        public global::Loggly.Config.Tag this[object value]
+        {
+            get
+            {
+                return ((global::Loggly.Config.Tag)(base.BaseGet(value)));
+            }
+        }
+        #endregion
+        
+        #region Add
+        /// <summary>
+        /// Adds the specified <see cref="global::Loggly.Config.Tag"/> to the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <param name="tag">The <see cref="global::Loggly.Config.Tag"/> to add.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        public void Add(global::Loggly.Config.Tag tag)
+        {
+            base.BaseAdd(tag);
+        }
+        #endregion
+        
+        #region Remove
+        /// <summary>
+        /// Removes the specified <see cref="global::Loggly.Config.Tag"/> from the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
+        /// </summary>
+        /// <param name="tag">The <see cref="global::Loggly.Config.Tag"/> to remove.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        public void Remove(global::Loggly.Config.Tag tag)
+        {
+            base.BaseRemove(this.GetElementKey(tag));
+        }
+        #endregion
+        
+        #region GetItem
+        /// <summary>
+        /// Gets the <see cref="global::Loggly.Config.Tag"/> at the specified index.
+        /// </summary>
+        /// <param name="index">The index of the <see cref="global::Loggly.Config.Tag"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        public global::Loggly.Config.Tag GetItemAt(int index)
+        {
+            return ((global::Loggly.Config.Tag)(base.BaseGet(index)));
+        }
+        
+        /// <summary>
+        /// Gets the <see cref="global::Loggly.Config.Tag"/> with the specified key.
+        /// </summary>
+        /// <param name="value">The key of the <see cref="global::Loggly.Config.Tag"/> to retrieve.</param>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        public global::Loggly.Config.Tag GetItemByKey(string value)
+        {
+            return ((global::Loggly.Config.Tag)(base.BaseGet(((object)(value)))));
+        }
+        #endregion
+        
+        #region IsReadOnly override
+        /// <summary>
+        /// Gets a value indicating whether the element is read-only.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        public override bool IsReadOnly()
+        {
+            return false;
+        }
+        #endregion
+    }
+}
+namespace Loggly.Config
+{
+    
+    
+    /// <summary>
+    /// The Tag Configuration Element.
+    /// </summary>
+    public partial class Tag : global::System.Configuration.ConfigurationElement
+    {
+        
+        #region IsReadOnly override
+        /// <summary>
+        /// Gets a value indicating whether the element is read-only.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        public override bool IsReadOnly()
+        {
+            return false;
+        }
+        #endregion
+        
+        #region Value Property
+        /// <summary>
+        /// The XML name of the <see cref="Value"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string ValuePropertyName = "value";
+        
+        /// <summary>
+        /// Gets or sets the Value.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The Value.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.Tag.ValuePropertyName, IsRequired=true, IsKey=true, IsDefaultCollection=false)]
+        public virtual string Value
+        {
+            get
+            {
+                return ((string)(base[global::Loggly.Config.Tag.ValuePropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.Tag.ValuePropertyName] = value;
+            }
+        }
+        #endregion
+    }
+}
+namespace Loggly.Config
+{
+    
+    
+    /// <summary>
+    /// The Tags Configuration Element.
+    /// </summary>
+    public partial class Tags : global::System.Configuration.ConfigurationElement
+    {
+        
+        #region IsReadOnly override
+        /// <summary>
+        /// Gets a value indicating whether the element is read-only.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        public override bool IsReadOnly()
+        {
+            return false;
+        }
+        #endregion
+        
+        #region Simple Property
+        /// <summary>
+        /// The XML name of the <see cref="Simple"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string SimplePropertyName = "simple";
+        
+        /// <summary>
+        /// Gets or sets the Simple.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The Simple.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.Tags.SimplePropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::Loggly.Config.SimpleTags Simple
+        {
+            get
+            {
+                return ((global::Loggly.Config.SimpleTags)(base[global::Loggly.Config.Tags.SimplePropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.Tags.SimplePropertyName] = value;
+            }
+        }
+        #endregion
+        
+        #region Complex Property
+        /// <summary>
+        /// The XML name of the <see cref="Complex"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string ComplexPropertyName = "complex";
+        
+        /// <summary>
+        /// Gets or sets the Complex.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The Complex.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.Tags.ComplexPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::Loggly.Config.ComplexTags Complex
+        {
+            get
+            {
+                return ((global::Loggly.Config.ComplexTags)(base[global::Loggly.Config.Tags.ComplexPropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.Tags.ComplexPropertyName] = value;
+            }
+        }
+        #endregion
+    }
+}
+namespace Loggly.Config
+{
+    
+    
+    /// <summary>
+    /// The Transport Configuration Element.
+    /// </summary>
+    public partial class Transport : global::System.Configuration.ConfigurationElement
+    {
+        
+        #region IsReadOnly override
+        /// <summary>
+        /// Gets a value indicating whether the element is read-only.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        public override bool IsReadOnly()
+        {
+            return false;
+        }
+        #endregion
+        
+        #region http Property
+        /// <summary>
+        /// The XML name of the <see cref="http"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string httpPropertyName = "http";
+        
+        /// <summary>
+        /// Gets or sets the http.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The http.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.Transport.httpPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::Loggly.Config.HttpTransport http
+        {
+            get
+            {
+                return ((global::Loggly.Config.HttpTransport)(base[global::Loggly.Config.Transport.httpPropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.Transport.httpPropertyName] = value;
+            }
+        }
+        #endregion
+        
+        #region credentials Property
+        /// <summary>
+        /// The XML name of the <see cref="credentials"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string credentialsPropertyName = "credentials";
+        
+        /// <summary>
+        /// Gets or sets the credentials.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The credentials.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.Transport.credentialsPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::Loggly.Config.Credentials credentials
+        {
+            get
+            {
+                return ((global::Loggly.Config.Credentials)(base[global::Loggly.Config.Transport.credentialsPropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.Transport.credentialsPropertyName] = value;
+            }
+        }
+        #endregion
+    }
+}
+namespace Loggly.Config
+{
+    
+    
+    /// <summary>
+    /// The HttpTransport Configuration Element.
+    /// </summary>
+    public partial class HttpTransport : global::System.Configuration.ConfigurationElement
+    {
+        
+        #region IsReadOnly override
+        /// <summary>
+        /// Gets a value indicating whether the element is read-only.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        public override bool IsReadOnly()
+        {
+            return false;
+        }
+        #endregion
+    }
+}
+namespace Loggly.Config
+{
+    
+    
+    /// <summary>
+    /// The Credentials Configuration Element.
+    /// </summary>
+    public partial class Credentials : global::System.Configuration.ConfigurationElement
+    {
+        
+        #region IsReadOnly override
+        /// <summary>
+        /// Gets a value indicating whether the element is read-only.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        public override bool IsReadOnly()
+        {
+            return false;
+        }
+        #endregion
+        
+        #region domain Property
+        /// <summary>
+        /// The XML name of the <see cref="domain"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string domainPropertyName = "domain";
+        
+        /// <summary>
+        /// Gets or sets the domain.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The domain.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.Credentials.domainPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual string domain
+        {
+            get
+            {
+                return ((string)(base[global::Loggly.Config.Credentials.domainPropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.Credentials.domainPropertyName] = value;
+            }
+        }
+        #endregion
+        
+        #region username Property
+        /// <summary>
+        /// The XML name of the <see cref="username"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string usernamePropertyName = "username";
+        
+        /// <summary>
+        /// Gets or sets the username.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The username.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.Credentials.usernamePropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual string username
+        {
+            get
+            {
+                return ((string)(base[global::Loggly.Config.Credentials.usernamePropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.Credentials.usernamePropertyName] = value;
+            }
+        }
+        #endregion
+        
+        #region password Property
+        /// <summary>
+        /// The XML name of the <see cref="password"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string passwordPropertyName = "password";
+        
+        /// <summary>
+        /// Gets or sets the password.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The password.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.Credentials.passwordPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual string password
+        {
+            get
+            {
+                return ((string)(base[global::Loggly.Config.Credentials.passwordPropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.Credentials.passwordPropertyName] = value;
             }
         }
         #endregion

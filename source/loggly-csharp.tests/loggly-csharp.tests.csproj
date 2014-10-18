@@ -10,7 +10,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Loggly.Tests</RootNamespace>
     <AssemblyName>Loggly.Tests</AssemblyName>
-    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
     <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
@@ -24,6 +24,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,14 +33,16 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\packages\Newtonsoft.Json.6.0.5\lib\net35\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="nunit.framework">
-      <HintPath>..\..\packages\NUnit.2.6.2\lib\nunit.framework.dll</HintPath>
+    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration" />
@@ -49,19 +52,24 @@
     <Compile Include="..\..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Config\ComplexTags\HostnameTagFixture.cs" />
     <Compile Include="Properties\AssemblyInfoUnique.cs" />
-    <Compile Include="BaseFixture.cs" />
-    <Compile Include="CoreCommunicationTests.cs" />
-    <Compile Include="FakeServer.cs" />
-    <Compile Include="IntegrationTests.cs" />
-    <Compile Include="LogTests.cs" />
-    <Compile Include="Responses\SearchResponseTest.cs" />
-    <Compile Include="SearchTests.cs" />
+    <Compile Include="Legacy\BaseFixture.cs" />
+    <Compile Include="Legacy\CoreCommunicationTests.cs" />
+    <Compile Include="Legacy\FakeServer.cs" />
+    <Compile Include="Legacy\IntegrationTests.cs" />
+    <Compile Include="Legacy\LogTests.cs" />
+    <Compile Include="Legacy\Responses\SearchResponseTest.cs" />
+    <Compile Include="Legacy\SearchTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\loggly-csharp\loggly-csharp.csproj">
       <Project>{F66349BA-29A6-4336-BA81-993170FC9963}</Project>
       <Name>loggly-csharp</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\loggly.Config\Loggly.Config.csproj">
+      <Project>{58a100ce-cc7e-43bf-a054-d28648f092ac}</Project>
+      <Name>Loggly.Config</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

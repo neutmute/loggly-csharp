@@ -10,8 +10,9 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Loggly.Config</RootNamespace>
     <AssemblyName>Loggly.Config</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -37,6 +38,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ComplexTags\ComplexTag.cs" />
+    <Compile Include="ComplexTags\OperatingSystemVersionTag.cs" />
     <Compile Include="ConfigurationSection.csd.cs">
       <DependentUpon>ConfigurationSection.csd.xsd</DependentUpon>
     </Compile>
@@ -45,9 +48,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ConfigurationSection.csd</DependentUpon>
     </Compile>
-    <Compile Include="LiteralTagLayout.cs" />
+    <Compile Include="ComplexTags\HostnameTag.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TagRendererBase.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ConfigurationSection.csd">
