@@ -21,7 +21,7 @@
             <configurationElementShapeMoniker Id="6aa9eeb6-1f57-4dac-83e8-23e7fbecccce" />
           </nodes>
         </elementPropertyHasTypeConnector>
-        <elementPropertyHasTypeConnector edgePoints="[(1.53125 : 2.60528645833333); (1.53125 : 3.375)]" fixedFrom="Algorithm" fixedTo="Algorithm" TargetRelationshipDomainClassId="817738b5-f315-4a74-9d4f-6ec5e726ddef">
+        <elementPropertyHasTypeConnector edgePoints="[(1.5 : 2.60528645833333); (1.5 : 3.375)]" fixedFrom="Algorithm" fixedTo="Algorithm" TargetRelationshipDomainClassId="817738b5-f315-4a74-9d4f-6ec5e726ddef">
           <relativeChildShapes />
           <nodes>
             <configurationSectionShapeMoniker Id="4f62ea94-744b-4584-bb78-0be52a789d60" />

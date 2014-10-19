@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Loggly.Config
 {
-    public partial class LogglyAppConfig
+    internal partial class LogglyAppConfig
     {
         public static bool HasAppCopnfig
         {

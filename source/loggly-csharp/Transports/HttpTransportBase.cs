@@ -1,5 +1,6 @@
 using System;
 using System.Net;
+using System.Reflection;
 using System.Text;
 using Loggly.Config;
 using Loggly.Responses;
@@ -8,11 +9,16 @@ namespace Loggly
 {
     public abstract class HttpTransportBase
     {
+        private static readonly string _userAgent;
+        static HttpTransportBase ()
+        {
+            _userAgent = "loggly-csharp " + Assembly.GetAssembly(typeof(HttpMessageTransport)).GetName().Version;
+        }
         protected HttpWebRequest CreateRequest(string url, HttpRequestType requestType)
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = requestType.ToString().ToUpper();
-            request.UserAgent = "loggly-csharp"; //todo: reflect version info
+            request.UserAgent = _userAgent;
             request.KeepAlive = false;
             return request;
         }

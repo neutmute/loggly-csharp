@@ -80,8 +80,8 @@ namespace Loggly
 
         private IMessageTransport GetTransport()
         {
-            //return new HttpMessageTransport();
-            return new SyslogMessageTransport();
+            return new HttpMessageTransport();
+            //return new SyslogMessageTransport();
         }
     }
 }

@@ -11,7 +11,7 @@
     <externalType name="TimeSpan" namespace="System" />
   </typeDefinitions>
   <configurationElements>
-    <configurationSection name="LogglyAppConfig" namespace="Loggly.Config" codeGenOptions="Singleton, XmlnsProperty" xmlSectionName="loggly">
+    <configurationSection name="LogglyAppConfig" namespace="Loggly.Config" accessModifier="Internal" codeGenOptions="Singleton, XmlnsProperty" xmlSectionName="loggly">
       <attributeProperties>
         <attributeProperty name="CustomerToken" isRequired="true" isKey="false" isDefaultCollection="false" xmlName="customerToken" isReadOnly="false">
           <type>
@@ -42,12 +42,12 @@
         </elementProperty>
       </elementProperties>
     </configurationSection>
-    <configurationElementCollection name="ComplexTagCollection" namespace="Loggly.Config" xmlItemName="tag" codeGenOptions="AddMethod, RemoveMethod, GetItemMethods">
+    <configurationElementCollection name="ComplexTagCollection" namespace="Loggly.Config" accessModifier="Internal" xmlItemName="tag" codeGenOptions="AddMethod, RemoveMethod, GetItemMethods">
       <itemType>
         <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/ComplexTagAppConfig" />
       </itemType>
     </configurationElementCollection>
-    <configurationElement name="ComplexTagAppConfig" namespace="Loggly.Config">
+    <configurationElement name="ComplexTagAppConfig" namespace="Loggly.Config" accessModifier="Internal">
       <attributeProperties>
         <attributeProperty name="Name" isRequired="true" isKey="true" isDefaultCollection="false" xmlName="name" isReadOnly="false">
           <type>
@@ -71,12 +71,12 @@
         </attributeProperty>
       </attributeProperties>
     </configurationElement>
-    <configurationElementCollection name="SimpleTagCollection" xmlItemName="tag" codeGenOptions="Indexer, AddMethod, RemoveMethod, GetItemMethods">
+    <configurationElementCollection name="SimpleTagCollection" accessModifier="Internal" xmlItemName="tag" codeGenOptions="Indexer, AddMethod, RemoveMethod, GetItemMethods">
       <itemType>
         <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/SimpleTagAppConfig" />
       </itemType>
     </configurationElementCollection>
-    <configurationElement name="SimpleTagAppConfig" namespace="Loggly.Config">
+    <configurationElement name="SimpleTagAppConfig" namespace="Loggly.Config" accessModifier="Internal">
       <attributeProperties>
         <attributeProperty name="Value" isRequired="true" isKey="true" isDefaultCollection="false" xmlName="value" isReadOnly="false">
           <type>
@@ -85,7 +85,7 @@
         </attributeProperty>
       </attributeProperties>
     </configurationElement>
-    <configurationElement name="Tags">
+    <configurationElement name="Tags" accessModifier="Internal">
       <elementProperties>
         <elementProperty name="Simple" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="simple" isReadOnly="false">
           <type>
@@ -99,7 +99,7 @@
         </elementProperty>
       </elementProperties>
     </configurationElement>
-    <configurationElement name="Transport">
+    <configurationElement name="Transport" accessModifier="Internal">
       <elementProperties>
         <elementProperty name="Http" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="http" isReadOnly="false">
           <type>
@@ -108,8 +108,8 @@
         </elementProperty>
       </elementProperties>
     </configurationElement>
-    <configurationElement name="HttpTransport" />
-    <configurationElement name="SearchAppConfig">
+    <configurationElement name="HttpTransport" accessModifier="Internal" />
+    <configurationElement name="SearchAppConfig" accessModifier="Internal">
       <attributeProperties>
         <attributeProperty name="Account" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="account" isReadOnly="false">
           <type>

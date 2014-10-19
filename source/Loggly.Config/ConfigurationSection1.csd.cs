@@ -15,7 +15,7 @@ namespace Loggly.Config
     /// <summary>
     /// The LogglyAppConfig Configuration Section.
     /// </summary>
-    public partial class LogglyAppConfig : global::System.Configuration.ConfigurationSection
+    internal partial class LogglyAppConfig : global::System.Configuration.ConfigurationSection
     {
         
         #region Singleton Instance
@@ -219,7 +219,7 @@ namespace Loggly.Config
     /// A collection of ComplexTagAppConfig instances.
     /// </summary>
     [global::System.Configuration.ConfigurationCollectionAttribute(typeof(global::Loggly.Config.ComplexTagAppConfig), CollectionType=global::System.Configuration.ConfigurationElementCollectionType.BasicMapAlternate, AddItemName=global::Loggly.Config.ComplexTagCollection.ComplexTagAppConfigPropertyName)]
-    public partial class ComplexTagCollection : global::System.Configuration.ConfigurationElementCollection
+    internal partial class ComplexTagCollection : global::System.Configuration.ConfigurationElementCollection
     {
         
         #region Constants
@@ -360,7 +360,7 @@ namespace Loggly.Config
     /// <summary>
     /// The ComplexTagAppConfig Configuration Element.
     /// </summary>
-    public partial class ComplexTagAppConfig : global::System.Configuration.ConfigurationElement
+    internal partial class ComplexTagAppConfig : global::System.Configuration.ConfigurationElement
     {
         
         #region IsReadOnly override
@@ -487,7 +487,7 @@ namespace Loggly.Config
     /// A collection of SimpleTagAppConfig instances.
     /// </summary>
     [global::System.Configuration.ConfigurationCollectionAttribute(typeof(global::Loggly.Config.SimpleTagAppConfig), CollectionType=global::System.Configuration.ConfigurationElementCollectionType.BasicMapAlternate, AddItemName=global::Loggly.Config.SimpleTagCollection.SimpleTagAppConfigPropertyName)]
-    public partial class SimpleTagCollection : global::System.Configuration.ConfigurationElementCollection
+    internal partial class SimpleTagCollection : global::System.Configuration.ConfigurationElementCollection
     {
         
         #region Constants
@@ -656,7 +656,7 @@ namespace Loggly.Config
     /// <summary>
     /// The SimpleTagAppConfig Configuration Element.
     /// </summary>
-    public partial class SimpleTagAppConfig : global::System.Configuration.ConfigurationElement
+    internal partial class SimpleTagAppConfig : global::System.Configuration.ConfigurationElement
     {
         
         #region IsReadOnly override
@@ -704,7 +704,7 @@ namespace Loggly.Config
     /// <summary>
     /// The Tags Configuration Element.
     /// </summary>
-    public partial class Tags : global::System.Configuration.ConfigurationElement
+    internal partial class Tags : global::System.Configuration.ConfigurationElement
     {
         
         #region IsReadOnly override
@@ -778,7 +778,7 @@ namespace Loggly.Config
     /// <summary>
     /// The Transport Configuration Element.
     /// </summary>
-    public partial class Transport : global::System.Configuration.ConfigurationElement
+    internal partial class Transport : global::System.Configuration.ConfigurationElement
     {
         
         #region IsReadOnly override
@@ -826,7 +826,7 @@ namespace Loggly.Config
     /// <summary>
     /// The HttpTransport Configuration Element.
     /// </summary>
-    public partial class HttpTransport : global::System.Configuration.ConfigurationElement
+    internal partial class HttpTransport : global::System.Configuration.ConfigurationElement
     {
         
         #region IsReadOnly override
@@ -848,7 +848,7 @@ namespace Loggly.Config
     /// <summary>
     /// The SearchAppConfig Configuration Element.
     /// </summary>
-    public partial class SearchAppConfig : global::System.Configuration.ConfigurationElement
+    internal partial class SearchAppConfig : global::System.Configuration.ConfigurationElement
     {
         
         #region IsReadOnly override

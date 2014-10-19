@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Loggly.Config
 {
-    public partial class SearchAppConfig : ISearchConfiguration
+    internal partial class SearchAppConfig : ISearchConfiguration
     {
     }
 }
