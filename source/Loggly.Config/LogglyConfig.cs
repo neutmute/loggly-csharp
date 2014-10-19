@@ -149,6 +149,7 @@ namespace Loggly.Config
             foreach (ComplexTagAppConfig complexTagConfig in LogglyAppConfig.Instance.Tags.Complex)
             {
                 var complexTag = (ComplexTag) Activator.CreateInstance(complexTagConfig.Assembly, complexTagConfig.Type).Unwrap();
+                complexTag.Formatter = complexTagConfig.Formatter;
                 config.Tags.ComplexTags.Add(complexTag);
             }
 
