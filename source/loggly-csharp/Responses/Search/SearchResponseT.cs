@@ -37,9 +37,8 @@ namespace Loggly.Responses
 
         protected override EntryJsonResponseBase GetEntryJsonResponse(int page)
         {
-            EntryJsonResponse<TMessage> entryResonse = this.Communicator.GetPayload<EntryJsonResponse<TMessage>>(
-                "apiv2/events",
-                new Dictionary<string, object>() { { "rsid", this.RSID.Id }, { "page", page } });
+            var eventQuery = new EventQuery { Rsid = this.RSID.Id, Page = page };
+            var entryResonse = this.Transport.Search(eventQuery);
             return entryResonse;
         }
     }

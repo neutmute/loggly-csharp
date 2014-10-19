@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Web.UI;
 using Newtonsoft.Json;
 
 namespace Loggly.Responses
@@ -38,7 +39,8 @@ namespace Loggly.Responses
 
         protected override EntryJsonResponseBase GetEntryJsonResponse(int page)
         {
-            var entryResonse = this.Communicator.Search(new Dictionary<string, object>() {{"rsid", this.RSID.Id}, {"page", page}});
+            var eventQuery = new EventQuery {Rsid = this.RSID.Id, Page = page};
+            var entryResonse = this.Transport.Search(eventQuery);
             return entryResonse;
         }
     }

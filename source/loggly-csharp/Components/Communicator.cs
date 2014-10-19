@@ -29,6 +29,7 @@ namespace Loggly
     public interface ISearchTransport
     {
         SearchResponse Search(SearchQuery query);
+        EntryJsonResponseBase Search(EventQuery query);
 
         SearchResponse<T> Search<T>(SearchQuery query);
 
@@ -48,6 +49,12 @@ namespace Loggly
         {
             var parameters = query.ToParameters();
             return Search<SearchResponse<T>>("apiv2/search", parameters);
+        }
+        
+        public EntryJsonResponseBase Search(EventQuery query)
+        {
+            var parameters = query.ToParameters();
+            return Search<EntryJsonResponseBase>("apiv2/events", parameters);
         }
 
         public FieldResponse Search(FieldQuery query)
@@ -75,7 +82,7 @@ namespace Loggly
                     if (responseObject is SearchResponseBase)
                     {
                         var searchResponse = responseObject as SearchResponseBase;
-                        searchResponse.Communicator = this;
+                        searchResponse.Transport = this;
                     }
 
                     return responseObject;

@@ -7,7 +7,7 @@ namespace Loggly.Responses
         protected EntryJsonResponseBase FirstEntryResponse { get; set; }
 
         [JsonIgnore]
-        internal ISearchTransport Communicator { get; set; }
+        internal ISearchTransport Transport { get; set; }
 
         [JsonProperty("rsid")]
         public RSID RSID { get; set; }
