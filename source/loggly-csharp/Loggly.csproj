@@ -47,7 +47,7 @@
     <Compile Include="..\..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="Components\Communicator.cs" />
+    <Compile Include="Transports\LogglyMessage.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
     <Compile Include="Interfaces\IConfigurationData.cs" />
     <Compile Include="Interfaces\ILogglyConfiguration.cs" />
@@ -72,6 +72,11 @@
     <Compile Include="Search\Searcher.cs" />
     <Compile Include="Search\SearchQuery.cs" />
     <Compile Include="Responses\Search\SearchResponse.cs" />
+    <Compile Include="Transports\HttpTransportBase.cs" />
+    <Compile Include="Transports\HttpTransporter.cs" />
+    <Compile Include="Transports\IMessageTransport.cs" />
+    <Compile Include="Transports\ISearchTransport.cs" />
+    <Compile Include="Transports\SearchTransport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
