@@ -100,6 +100,7 @@ namespace Loggly.Transports.Syslog
             syslogMessage.Text = message.Content;
             syslogMessage.Facility = 1;
             syslogMessage.Level = (int) Level.Information;
+            Send(syslogMessage);
         }
 
         
@@ -112,7 +113,7 @@ namespace Loggly.Transports.Syslog
         public SyslogMessageTransport()
         {
             _ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            _ipAddress = _ipHostInfo.AddressList[0];
+            _ipAddress = _ipHostInfo.AddressList.First(ip => ip.AddressFamily == AddressFamily.InterNetwork);
             _ipLocalEndPoint = new IPEndPoint(_ipAddress, 0);
             _udpClient= new UdpClientEx(_ipLocalEndPoint);
         }
