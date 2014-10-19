@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using Loggly.Responses;
+using Loggly.Transports.Syslog;
 using Newtonsoft.Json;
 
 namespace Loggly
@@ -17,7 +18,7 @@ namespace Loggly
 
         public void Log(Action<LogResponse> callback, string plainTextFormat, params object[] plainTextArgs)
         {
-            IMessageTransport transporter = new HttpMessageTransport();
+            IMessageTransport transporter = GetTransport();
             var callbackWrapper = GetCallbackWrapper(callback);
             var messageText = string.Format(plainTextFormat, plainTextArgs);
             var message = new LogglyMessage { Type = MessageType.Plain, Content = messageText};
@@ -60,7 +61,7 @@ namespace Loggly
             var message = new LogglyMessage { Type = MessageType.Plain, Content = ToJson(logObject) };
             var callbackWrapper = GetCallbackWrapper(callback);
 
-            IMessageTransport transporter = new HttpMessageTransport();
+            IMessageTransport transporter = GetTransport();
             transporter.Send(message, callbackWrapper);
         }
 
@@ -75,6 +76,12 @@ namespace Loggly
 
             var asJson = JsonConvert.SerializeObject(objectToLog, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
             return asJson;
+        }
+
+        private IMessageTransport GetTransport()
+        {
+            //return new HttpMessageTransport();
+            return new SyslogMessageTransport();
         }
     }
 }

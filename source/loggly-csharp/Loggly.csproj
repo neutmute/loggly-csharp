@@ -56,7 +56,6 @@
     <Compile Include="Interfaces\ISearchClient.cs" />
     <Compile Include="LogglyClient.cs" />
     <Compile Include="LogglyException.cs" />
-    <Compile Include="Order.cs" />
     <Compile Include="Properties\AssemblyInfoUnique.cs" />
     <Compile Include="Responses\Search\EntryJsonResponse.cs" />
     <Compile Include="Responses\ErrorMessage.cs" />
@@ -69,7 +68,7 @@
     <Compile Include="Responses\Search\RSID.cs" />
     <Compile Include="Responses\Search\SearchResponseBase.cs" />
     <Compile Include="Responses\Search\SearchResponseT.cs" />
-    <Compile Include="Search\LogglySearchClient.cs" />
+    <Compile Include="LogglySearchClient.cs" />
     <Compile Include="Search\SearchQuery.cs" />
     <Compile Include="Responses\Search\SearchResponse.cs" />
     <Compile Include="Transports\HttpTransportBase.cs" />
@@ -77,6 +76,7 @@
     <Compile Include="Transports\IMessageTransport.cs" />
     <Compile Include="Transports\ISearchTransport.cs" />
     <Compile Include="Transports\SearchTransport.cs" />
+    <Compile Include="Transports\SyslogMessageTransport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
