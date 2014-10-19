@@ -3,7 +3,7 @@ using Loggly.Responses;
 
 namespace Loggly
 {
-   public interface ISearcher
+   public interface ISearchClient
    {
        SearchResponse Search(string query);
        SearchResponse Search(string query, DateTime start, DateTime until);

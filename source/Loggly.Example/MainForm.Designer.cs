@@ -31,6 +31,11 @@
             this.btnPlainText = new System.Windows.Forms.Button();
             this.btnPlainWithCallback = new System.Windows.Forms.Button();
             this.btnSendJson = new System.Windows.Forms.Button();
+            this.groupBoxSearch = new System.Windows.Forms.GroupBox();
+            this.btnSearch = new System.Windows.Forms.Button();
+            this.txtSearchResult = new System.Windows.Forms.TextBox();
+            this.btnSearchEvents = new System.Windows.Forms.Button();
+            this.groupBoxSearch.SuspendLayout();
             this.SuspendLayout();
             // 
             // btnPlainText
@@ -63,16 +68,59 @@
             this.btnSendJson.UseVisualStyleBackColor = true;
             this.btnSendJson.Click += new System.EventHandler(this.btnSendJson_Click);
             // 
+            // groupBoxSearch
+            // 
+            this.groupBoxSearch.Controls.Add(this.btnSearchEvents);
+            this.groupBoxSearch.Controls.Add(this.txtSearchResult);
+            this.groupBoxSearch.Controls.Add(this.btnSearch);
+            this.groupBoxSearch.Location = new System.Drawing.Point(305, 2);
+            this.groupBoxSearch.Name = "groupBoxSearch";
+            this.groupBoxSearch.Size = new System.Drawing.Size(350, 379);
+            this.groupBoxSearch.TabIndex = 4;
+            this.groupBoxSearch.TabStop = false;
+            this.groupBoxSearch.Text = "Search";
+            // 
+            // btnSearch
+            // 
+            this.btnSearch.Location = new System.Drawing.Point(15, 19);
+            this.btnSearch.Name = "btnSearch";
+            this.btnSearch.Size = new System.Drawing.Size(178, 23);
+            this.btnSearch.TabIndex = 4;
+            this.btnSearch.Text = "Search";
+            this.btnSearch.UseVisualStyleBackColor = true;
+            this.btnSearch.Click += new System.EventHandler(this.btnSearch_Click);
+            // 
+            // txtSearchResult
+            // 
+            this.txtSearchResult.Location = new System.Drawing.Point(15, 50);
+            this.txtSearchResult.Multiline = true;
+            this.txtSearchResult.Name = "txtSearchResult";
+            this.txtSearchResult.Size = new System.Drawing.Size(178, 87);
+            this.txtSearchResult.TabIndex = 5;
+            // 
+            // btnSearchEvents
+            // 
+            this.btnSearchEvents.Location = new System.Drawing.Point(15, 158);
+            this.btnSearchEvents.Name = "btnSearchEvents";
+            this.btnSearchEvents.Size = new System.Drawing.Size(178, 23);
+            this.btnSearchEvents.TabIndex = 6;
+            this.btnSearchEvents.Text = "Find Events";
+            this.btnSearchEvents.UseVisualStyleBackColor = true;
+            this.btnSearchEvents.Click += new System.EventHandler(this.btnSearchEvents_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(658, 380);
+            this.Controls.Add(this.groupBoxSearch);
             this.Controls.Add(this.btnSendJson);
             this.Controls.Add(this.btnPlainWithCallback);
             this.Controls.Add(this.btnPlainText);
             this.Name = "MainForm";
             this.Text = "Loggly Example Application";
+            this.groupBoxSearch.ResumeLayout(false);
+            this.groupBoxSearch.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -82,6 +130,10 @@
         private System.Windows.Forms.Button btnPlainText;
         private System.Windows.Forms.Button btnPlainWithCallback;
         private System.Windows.Forms.Button btnSendJson;
+        private System.Windows.Forms.GroupBox groupBoxSearch;
+        private System.Windows.Forms.Button btnSearch;
+        private System.Windows.Forms.TextBox txtSearchResult;
+        private System.Windows.Forms.Button btnSearchEvents;
     }
 }
 

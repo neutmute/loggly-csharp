@@ -1,26 +1,24 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Loggly.Config;
 using Loggly.Responses;
 
 namespace Loggly
 {
-    public class Searcher : ISearcher, IRequestContext
+    public class LogglySearchClient : ISearchClient
     {
-        private const string _domain = ".loggly.com/";
-        private readonly string _url;
         private ISearchTransport _transport;
 
-        public Searcher(string subdomain)
+        public LogglySearchClient(ISearchConfiguration config)
         {
-            _url = string.Concat(subdomain, _domain);
-            _transport = new SearchTransport();
+            _transport = new SearchTransport(config);
         }
 
-        public string Url
+        public LogglySearchClient() : this(LogglyConfig.Instance.Search)
         {
-            get { return _url; }
         }
+
 
         public SearchResponse Search(string query)
         {

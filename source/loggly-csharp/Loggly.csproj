@@ -47,13 +47,13 @@
     <Compile Include="..\..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Search\FieldQuery.cs" />
     <Compile Include="Transports\LogglyMessage.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
     <Compile Include="Interfaces\IConfigurationData.cs" />
     <Compile Include="Interfaces\ILogglyConfiguration.cs" />
-    <Compile Include="Interfaces\IRequestContext.cs" />
     <Compile Include="Interfaces\ILogglyClient.cs" />
-    <Compile Include="Interfaces\ISearcher.cs" />
+    <Compile Include="Interfaces\ISearchClient.cs" />
     <Compile Include="LogglyClient.cs" />
     <Compile Include="LogglyException.cs" />
     <Compile Include="Order.cs" />
@@ -69,11 +69,11 @@
     <Compile Include="Responses\Search\RSID.cs" />
     <Compile Include="Responses\Search\SearchResponseBase.cs" />
     <Compile Include="Responses\Search\SearchResponseT.cs" />
-    <Compile Include="Search\Searcher.cs" />
+    <Compile Include="Search\LogglySearchClient.cs" />
     <Compile Include="Search\SearchQuery.cs" />
     <Compile Include="Responses\Search\SearchResponse.cs" />
     <Compile Include="Transports\HttpTransportBase.cs" />
-    <Compile Include="Transports\HttpTransporter.cs" />
+    <Compile Include="Transports\HttpMessageTransport.cs" />
     <Compile Include="Transports\IMessageTransport.cs" />
     <Compile Include="Transports\ISearchTransport.cs" />
     <Compile Include="Transports\SearchTransport.cs" />

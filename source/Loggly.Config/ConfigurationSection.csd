@@ -35,9 +35,14 @@
             <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Transport" />
           </type>
         </elementProperty>
+        <elementProperty name="Search" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="search" isReadOnly="false">
+          <type>
+            <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/SearchAppConfig" />
+          </type>
+        </elementProperty>
       </elementProperties>
     </configurationSection>
-    <configurationElementCollection name="ComplexTagCollection" namespace="Loggly.Config" xmlItemName="complex" codeGenOptions="AddMethod, RemoveMethod, GetItemMethods">
+    <configurationElementCollection name="ComplexTagCollection" namespace="Loggly.Config" xmlItemName="tag" codeGenOptions="AddMethod, RemoveMethod, GetItemMethods">
       <itemType>
         <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/ComplexTagAppConfig" />
       </itemType>
@@ -101,27 +106,22 @@
             <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/HttpTransport" />
           </type>
         </elementProperty>
-        <elementProperty name="Credentials" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="credentials" isReadOnly="false">
-          <type>
-            <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Credentials" />
-          </type>
-        </elementProperty>
       </elementProperties>
     </configurationElement>
     <configurationElement name="HttpTransport" />
-    <configurationElement name="Credentials">
+    <configurationElement name="SearchAppConfig">
       <attributeProperties>
+        <attributeProperty name="Account" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="account" isReadOnly="false">
+          <type>
+            <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/String" />
+          </type>
+        </attributeProperty>
         <attributeProperty name="Username" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="username" isReadOnly="false">
           <type>
             <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/String" />
           </type>
         </attributeProperty>
         <attributeProperty name="Password" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="password" isReadOnly="false">
-          <type>
-            <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/String" />
-          </type>
-        </attributeProperty>
-        <attributeProperty name="Domain" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="domain" isReadOnly="false">
           <type>
             <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/String" />
           </type>

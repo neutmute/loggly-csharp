@@ -21,6 +21,11 @@
 					<xs:documentation>The Transport.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
+			<xs:element minOccurs="0" name="search" type="tns:Loggly.Config.SearchAppConfigCT">
+				<xs:annotation>
+					<xs:documentation>The Search.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
 		</xs:choice>
 		<xs:attribute name="customerToken" use="required" type="xs:string">
 			<xs:annotation>
@@ -35,7 +40,7 @@
 	</xs:complexType>
 	<xs:complexType name="Loggly.Config.ComplexTagCollectionCT">
 		<xs:choice minOccurs="0" maxOccurs="unbounded">
-			<xs:element minOccurs="0" maxOccurs="unbounded" name="complex" type="tns:Loggly.Config.ComplexTagAppConfigCT">
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="tag" type="tns:Loggly.Config.ComplexTagAppConfigCT">
 				<xs:annotation>
 					<xs:documentation>The ComplexTagAppConfig Configuration Element.</xs:documentation>
 				</xs:annotation>
@@ -101,16 +106,16 @@
 					<xs:documentation>The Http.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element minOccurs="0" name="credentials" type="tns:Loggly.Config.CredentialsCT">
-				<xs:annotation>
-					<xs:documentation>The Credentials.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 		</xs:choice>
 	</xs:complexType>
 	<xs:complexType name="Loggly.Config.HttpTransportCT">
 	</xs:complexType>
-	<xs:complexType name="Loggly.Config.CredentialsCT">
+	<xs:complexType name="Loggly.Config.SearchAppConfigCT">
+		<xs:attribute name="account" use="optional" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The Account.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 		<xs:attribute name="username" use="optional" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>The Username.</xs:documentation>
@@ -119,11 +124,6 @@
 		<xs:attribute name="password" use="optional" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>The Password.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="domain" use="optional" type="xs:string">
-			<xs:annotation>
-				<xs:documentation>The Domain.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>

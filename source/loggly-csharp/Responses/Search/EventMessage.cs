@@ -6,6 +6,11 @@ namespace Loggly.Responses
     {
         [JsonProperty("logmsg")]
         public string Message { get; set; }
+
+        public override string ToString()
+        {
+            return Message;
+        }
     }
 
     public class EventMessage<TMessage> : EventBase
@@ -14,5 +19,10 @@ namespace Loggly.Responses
         public string Json { get; set; }
         [JsonIgnore]
         public TMessage Message { get { return JsonConvert.DeserializeObject<TMessage>(this.Json); } }
+
+        public override string ToString()
+        {
+            return Json;
+        }
     }
 }

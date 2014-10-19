@@ -6,7 +6,7 @@ using Loggly.Responses;
 
 namespace Loggly
 {
-    public class HttpTransporter : HttpTransportBase, IMessageTransport
+    public class HttpMessageTransport : HttpTransportBase, IMessageTransport
     {
         public void Send(LogglyMessage message)
         {
@@ -34,7 +34,24 @@ namespace Loggly
 
         private HttpWebRequest CreateRequest(LogglyMessage message)
         {
-            return CreateRequest(GetSendUrl(), HttpRequestType.Post, message, LogglyConfig.Instance.Tags.RenderedTagCsv);
+            var request = CreateRequest(GetSendUrl(), HttpRequestType.Post);
+
+            if (!string.IsNullOrEmpty(LogglyConfig.Instance.Tags.RenderedTagCsv))
+            {
+                request.Headers.Add("X-LOGGLY-TAG", LogglyConfig.Instance.Tags.RenderedTagCsv);
+            }
+
+            switch (message.Type)
+            {
+                case MessageType.Plain:
+                    request.ContentType = "content-type:text/plain";
+                    break;
+                case MessageType.Json:
+                    request.ContentType = "application/json";
+                    break;
+            }
+
+            return request;
         }
 
         private string GetSendUrl()

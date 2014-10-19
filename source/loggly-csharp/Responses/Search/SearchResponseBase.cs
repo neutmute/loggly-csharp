@@ -28,5 +28,9 @@ namespace Loggly.Responses
 
         protected abstract EntryJsonResponseBase GetEntryJsonResponse(int page);
 
+        public override string ToString()
+        {
+            return string.Format("RSID={0}", RSID);
+        }
     }
 }

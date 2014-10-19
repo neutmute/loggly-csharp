@@ -91,7 +91,7 @@
 //            while (true)
 //            {
 //               Thread.Sleep(3000);
-//               response = new Searcher(ConfigurationManager.AppSettings["IntegrationAccount"]).Search(randomString);
+//               response = new LogglySearchClient(ConfigurationManager.AppSettings["IntegrationAccount"]).Search(randomString);
 //               if (response.TotalEvents > 0) { break; }
 //            }
 //            signal.Set();
@@ -111,7 +111,7 @@
 //            while (true)
 //            {
 //               Thread.Sleep(3000);
-//               response = new Searcher(ConfigurationManager.AppSettings["IntegrationAccount"]).Search(
+//               response = new LogglySearchClient(ConfigurationManager.AppSettings["IntegrationAccount"]).Search(
 //                   string.Format("json.{0}:{1}", property, randomString));
 //               if (response.TotalEvents > 0) { break; }
 //            }

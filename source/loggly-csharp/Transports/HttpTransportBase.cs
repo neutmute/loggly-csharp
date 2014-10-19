@@ -8,33 +8,12 @@ namespace Loggly
 {
     public abstract class HttpTransportBase
     {
-        protected HttpWebRequest CreateRequest(string url, HttpRequestType requestType, LogglyMessage message, string headerLogglyTag = null)
+        protected HttpWebRequest CreateRequest(string url, HttpRequestType requestType)
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = requestType.ToString().ToUpper();
             request.UserAgent = "loggly-csharp"; //todo: reflect version info
             request.KeepAlive = false;
-
-            if (!string.IsNullOrEmpty(LogglyConfig.Instance.Tags.RenderedTagCsv))
-            {
-                request.Headers.Add("X-LOGGLY-TAG", LogglyConfig.Instance.Tags.RenderedTagCsv);
-            }
-
-            if (LogglyConfig.Instance.Transport.Credentials != null)
-            {
-                request.Credentials = LogglyConfig.Instance.Transport.Credentials;
-            }
-
-            switch (message.Type)
-            {
-                case MessageType.Plain:
-                    request.ContentType = "content-type:text/plain";
-                    break;
-                case MessageType.Json:
-                    request.ContentType = "application/json";
-                    break;
-            }
-
             return request;
         }
         protected static void GetRequestStream(IAsyncResult result)

@@ -183,6 +183,32 @@ namespace Loggly.Config
             }
         }
         #endregion
+        
+        #region Search Property
+        /// <summary>
+        /// The XML name of the <see cref="Search"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string SearchPropertyName = "search";
+        
+        /// <summary>
+        /// Gets or sets the Search.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The Search.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.LogglyAppConfig.SearchPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::Loggly.Config.SearchAppConfig Search
+        {
+            get
+            {
+                return ((global::Loggly.Config.SearchAppConfig)(base[global::Loggly.Config.LogglyAppConfig.SearchPropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.LogglyAppConfig.SearchPropertyName] = value;
+            }
+        }
+        #endregion
     }
 }
 namespace Loggly.Config
@@ -201,7 +227,7 @@ namespace Loggly.Config
         /// The XML name of the individual <see cref="global::Loggly.Config.ComplexTagAppConfig"/> instances in this collection.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        internal const string ComplexTagAppConfigPropertyName = "complex";
+        internal const string ComplexTagAppConfigPropertyName = "tag";
         #endregion
         
         #region Overrides
@@ -273,11 +299,11 @@ namespace Loggly.Config
         /// <summary>
         /// Adds the specified <see cref="global::Loggly.Config.ComplexTagAppConfig"/> to the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
         /// </summary>
-        /// <param name="complex">The <see cref="global::Loggly.Config.ComplexTagAppConfig"/> to add.</param>
+        /// <param name="tag">The <see cref="global::Loggly.Config.ComplexTagAppConfig"/> to add.</param>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        public void Add(global::Loggly.Config.ComplexTagAppConfig complex)
+        public void Add(global::Loggly.Config.ComplexTagAppConfig tag)
         {
-            base.BaseAdd(complex);
+            base.BaseAdd(tag);
         }
         #endregion
         
@@ -285,11 +311,11 @@ namespace Loggly.Config
         /// <summary>
         /// Removes the specified <see cref="global::Loggly.Config.ComplexTagAppConfig"/> from the <see cref="global::System.Configuration.ConfigurationElementCollection"/>.
         /// </summary>
-        /// <param name="complex">The <see cref="global::Loggly.Config.ComplexTagAppConfig"/> to remove.</param>
+        /// <param name="tag">The <see cref="global::Loggly.Config.ComplexTagAppConfig"/> to remove.</param>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        public void Remove(global::Loggly.Config.ComplexTagAppConfig complex)
+        public void Remove(global::Loggly.Config.ComplexTagAppConfig tag)
         {
-            base.BaseRemove(this.GetElementKey(complex));
+            base.BaseRemove(this.GetElementKey(tag));
         }
         #endregion
         
@@ -791,32 +817,6 @@ namespace Loggly.Config
             }
         }
         #endregion
-        
-        #region Credentials Property
-        /// <summary>
-        /// The XML name of the <see cref="Credentials"/> property.
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        internal const string CredentialsPropertyName = "credentials";
-        
-        /// <summary>
-        /// Gets or sets the Credentials.
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        [global::System.ComponentModel.DescriptionAttribute("The Credentials.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.Transport.CredentialsPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
-        public virtual global::Loggly.Config.Credentials Credentials
-        {
-            get
-            {
-                return ((global::Loggly.Config.Credentials)(base[global::Loggly.Config.Transport.CredentialsPropertyName]));
-            }
-            set
-            {
-                base[global::Loggly.Config.Transport.CredentialsPropertyName] = value;
-            }
-        }
-        #endregion
     }
 }
 namespace Loggly.Config
@@ -846,9 +846,9 @@ namespace Loggly.Config
     
     
     /// <summary>
-    /// The Credentials Configuration Element.
+    /// The SearchAppConfig Configuration Element.
     /// </summary>
-    public partial class Credentials : global::System.Configuration.ConfigurationElement
+    public partial class SearchAppConfig : global::System.Configuration.ConfigurationElement
     {
         
         #region IsReadOnly override
@@ -859,6 +859,32 @@ namespace Loggly.Config
         public override bool IsReadOnly()
         {
             return false;
+        }
+        #endregion
+        
+        #region Account Property
+        /// <summary>
+        /// The XML name of the <see cref="Account"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string AccountPropertyName = "account";
+        
+        /// <summary>
+        /// Gets or sets the Account.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The Account.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.SearchAppConfig.AccountPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual string Account
+        {
+            get
+            {
+                return ((string)(base[global::Loggly.Config.SearchAppConfig.AccountPropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.SearchAppConfig.AccountPropertyName] = value;
+            }
         }
         #endregion
         
@@ -874,16 +900,16 @@ namespace Loggly.Config
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
         [global::System.ComponentModel.DescriptionAttribute("The Username.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.Credentials.UsernamePropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.SearchAppConfig.UsernamePropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
         public virtual string Username
         {
             get
             {
-                return ((string)(base[global::Loggly.Config.Credentials.UsernamePropertyName]));
+                return ((string)(base[global::Loggly.Config.SearchAppConfig.UsernamePropertyName]));
             }
             set
             {
-                base[global::Loggly.Config.Credentials.UsernamePropertyName] = value;
+                base[global::Loggly.Config.SearchAppConfig.UsernamePropertyName] = value;
             }
         }
         #endregion
@@ -900,42 +926,16 @@ namespace Loggly.Config
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
         [global::System.ComponentModel.DescriptionAttribute("The Password.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.Credentials.PasswordPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.SearchAppConfig.PasswordPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
         public virtual string Password
         {
             get
             {
-                return ((string)(base[global::Loggly.Config.Credentials.PasswordPropertyName]));
+                return ((string)(base[global::Loggly.Config.SearchAppConfig.PasswordPropertyName]));
             }
             set
             {
-                base[global::Loggly.Config.Credentials.PasswordPropertyName] = value;
-            }
-        }
-        #endregion
-        
-        #region Domain Property
-        /// <summary>
-        /// The XML name of the <see cref="Domain"/> property.
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        internal const string DomainPropertyName = "domain";
-        
-        /// <summary>
-        /// Gets or sets the Domain.
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        [global::System.ComponentModel.DescriptionAttribute("The Domain.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.Credentials.DomainPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
-        public virtual string Domain
-        {
-            get
-            {
-                return ((string)(base[global::Loggly.Config.Credentials.DomainPropertyName]));
-            }
-            set
-            {
-                base[global::Loggly.Config.Credentials.DomainPropertyName] = value;
+                base[global::Loggly.Config.SearchAppConfig.PasswordPropertyName] = value;
             }
         }
         #endregion

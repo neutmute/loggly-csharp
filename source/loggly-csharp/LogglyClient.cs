@@ -17,7 +17,7 @@ namespace Loggly
 
         public void Log(Action<LogResponse> callback, string plainTextFormat, params object[] plainTextArgs)
         {
-            IMessageTransport transporter = new HttpTransporter();
+            IMessageTransport transporter = new HttpMessageTransport();
             var callbackWrapper = GetCallbackWrapper(callback);
             var messageText = string.Format(plainTextFormat, plainTextArgs);
             var message = new LogglyMessage { Type = MessageType.Plain, Content = messageText};
@@ -60,7 +60,7 @@ namespace Loggly
             var message = new LogglyMessage { Type = MessageType.Plain, Content = ToJson(logObject) };
             var callbackWrapper = GetCallbackWrapper(callback);
 
-            IMessageTransport transporter = new HttpTransporter();
+            IMessageTransport transporter = new HttpMessageTransport();
             transporter.Send(message, callbackWrapper);
         }
 

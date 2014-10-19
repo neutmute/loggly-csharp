@@ -15,5 +15,10 @@ namespace Loggly.Responses
         public double ElapsedTime { get; set; }
         [JsonProperty("id")]
         public string Id { get; set; }
+
+        public override string ToString()
+        {
+            return string.Format("Id={0}, Status={1}", Id, Status);
+        }
     }
 }

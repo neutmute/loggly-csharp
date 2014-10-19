@@ -15,6 +15,7 @@ namespace Loggly.Example
     public partial class MainForm : Form
     {
         ILogglyClient _loggly = new LogglyClient();
+        private SearchResponse _searchResponse;
         public MainForm()
         {
             InitializeComponent();
@@ -38,5 +39,24 @@ namespace Loggly.Example
         {
             _loggly.Log(new LogObject());
         }
+
+        private void btnSearch_Click(object sender, EventArgs e)
+        {
+            var searchClient = new LogglySearchClient();
+            _searchResponse = searchClient.Search(new SearchQuery { Query = "mysimpletag" });
+            txtSearchResult.Text = _searchResponse.ToString();
+        }
+
+        private void btnSearchEvents_Click(object sender, EventArgs e)
+        {
+            var sb = new StringBuilder();
+
+            foreach (EventMessage m in _searchResponse)
+            {
+                sb.Append(m);
+            }
+            txtSearchResult.Text = sb.ToString();
+        }
+
     }
 }

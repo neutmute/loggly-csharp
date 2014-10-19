@@ -1,3 +1,4 @@
+using Loggly.Config;
 using Loggly.Responses;
 
 namespace Loggly

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Net;
 
@@ -22,7 +23,6 @@ namespace Loggly.Config
 
     public interface ITransportConfiguration
     {
-        ICredentials Credentials {get;set;}
     }
 
     public interface ISimpleTag
@@ -71,12 +71,24 @@ namespace Loggly.Config
         }
     }
 
+    public interface ISearchConfiguration
+    {
+        string Account { get; set; }
+        string Username { get; set; }
+        string Password { get; set; }
+    }
+
+    public class SearchConfiguration : ISearchConfiguration
+    {
+        public string Account { get; set; }
+        public string Username { get; set; }
+        public string Password { get; set; }
+    }
+
     public class TransportConfiguration : ITransportConfiguration
     {
         //public IHttpTransport Http { get; private set; }
-
-        public ICredentials Credentials { get; set; }
-
+        
     }
 
     public interface ILogglyConfig
@@ -89,6 +101,7 @@ namespace Loggly.Config
 
         ITagConfiguration Tags { get;  }
         ITransportConfiguration Transport { get;  }
+        ISearchConfiguration Search { get; }
     }
 
     public class LogglyConfig : ILogglyConfig
@@ -97,6 +110,7 @@ namespace Loggly.Config
         public bool ThrowExceptions { get; set; }
         public ITagConfiguration Tags { get; private set; }
         public ITransportConfiguration Transport { get; private set; }
+        public ISearchConfiguration Search { get; private set; }
 
         public bool IsValid
         {
@@ -153,11 +167,8 @@ namespace Loggly.Config
                 config.Tags.ComplexTags.Add(complexTag);
             }
 
-            var username = LogglyAppConfig.Instance.Transport.Credentials.Username;
-            var password = LogglyAppConfig.Instance.Transport.Credentials.Password;
-            var domain = LogglyAppConfig.Instance.Transport.Credentials.Domain;
-    
-            config.Transport.Credentials = new NetworkCredential(username, password, domain);
+            config.Search = LogglyAppConfig.Instance.Search;
+
             return config;
         }
     }
