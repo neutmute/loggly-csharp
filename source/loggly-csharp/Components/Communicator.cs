@@ -21,37 +21,57 @@ namespace Loggly
         public string Content { get; set; }
     }
 
-    public interface ISendTransport
+    public interface IMessageTransport
     {
-        void Send(LogglyMessage message);
+        void Send(LogglyMessage message, Action<Response> callback);
     }
 
-    public class HttpTransporter : ISendTransport
+    public interface ISearchTransport
     {
-        public const string POST = "POST";
-        public const string GET = "GET";
+        SearchResponse Search(SearchQuery query);
 
+        SearchResponse<T> Search<T>(SearchQuery query);
 
-        public void SendPayload(string method, string endPoint, string message, bool json, Action<Response> callback)
+        FieldResponse Search(FieldQuery query);
+    }
+
+    public class SearchTransport : HttpTransportBase, ISearchTransport
+    {
+
+        public SearchResponse Search(SearchQuery query)
         {
-            var request = CreateRequest(method, endPoint, false, json, new string[0]);
-            var state = new RequestState { Request = request, Payload = message == null ? null : Encoding.UTF8.GetBytes(message), Callback = callback };
-            request.BeginGetRequestStream(GetRequestStream, state);
+            var parameters = query.ToParameters();
+            return Search<SearchResponse>("apiv2/search", parameters);
         }
 
-        public T GetPayload<T>(string endPoint, IDictionary<string, object> parameters)
+        public SearchResponse<T> Search<T>(SearchQuery query)
+        {
+            var parameters = query.ToParameters();
+            return Search<SearchResponse<T>>("apiv2/search", parameters);
+        }
+
+        public FieldResponse Search(FieldQuery query)
+        {
+
+            var parameters = query.ToParameters();
+            return Search<FieldResponse>("apiv2/fields", parameters);
+        }
+
+
+        private T Search<T>(string endPoint, IDictionary<string, object> parameters)
             where T : class
         {
             try
             {
                 var searchPathAndQuery = BuildPathAndQuery(endPoint, parameters);
-                var searchRequest = CreateRequest(GET, searchPathAndQuery, true, null);
+                var searchRequest = CreateRequest(searchPathAndQuery, HttpRequestType.Post, null, null);
 
                 using (var response = searchRequest.GetResponse())
                 {
                     T responseObject = typeof(T) == typeof(FieldResponse)
                         ? new FieldResponse(JObject.Parse(GetResponseBody(response)), parameters["fieldname"].ToString()) as T
                         : JsonConvert.DeserializeObject<T>(GetResponseBody(response));
+
                     if (responseObject is SearchResponseBase)
                     {
                         var searchResponse = responseObject as SearchResponseBase;
@@ -93,36 +113,40 @@ namespace Loggly
             }
             return sb.Remove(sb.Length - 1, 1).ToString();
         }
+    }
 
-        private HttpWebRequest CreateRequest(string method, string endPoint, bool withCredentials, string[] tags)
+    public abstract class HttpTransportBase
+    {
+        protected HttpWebRequest CreateRequest(string url, HttpRequestType requestType, LogglyMessage message, string headerLogglyTag = null)
         {
-            return CreateRequest(method, endPoint, withCredentials, false, tags);
-        }
-
-        private HttpWebRequest CreateRequest(string method, string endPoint, bool withCredentials, bool json, string[] tags)
-        {
-            var data = LogglyConfiguration.Data;
-
-            var request = (HttpWebRequest)WebRequest.Create(GetSendUrl());
-            request.Method = POST;
-            request.Timeout = data.Timeout;
-            request.ReadWriteTimeout = data.Timeout;
+            var request = (HttpWebRequest)WebRequest.Create(url);
+            request.Method = requestType.ToString().ToUpper();
             request.UserAgent = "loggly-csharp"; //todo: reflect version info
             request.KeepAlive = false;
-            if (tags != null && tags.Length > 0)
-                request.Headers.Add("X-LOGGLY-TAG", string.Join(",", tags));
-            if (withCredentials) { request.Credentials = data.Credentials; }
-            if (json) { request.ContentType = "application/json"; }
+
+            if (!string.IsNullOrEmpty(LogglyConfig.Instance.Tags.RenderedTagCsv))
+            {
+                request.Headers.Add("X-LOGGLY-TAG", LogglyConfig.Instance.Tags.RenderedTagCsv);
+            }
+
+            if (LogglyConfig.Instance.Transport.Credentials != null)
+            {
+                request.Credentials = LogglyConfig.Instance.Transport.Credentials;
+            }
+
+            switch (message.Type)
+            {
+                case MessageType.Plain:
+                    request.ContentType = "content-type:text/plain";
+                    break;
+                case MessageType.Json:
+                    request.ContentType = "application/json";
+                    break;
+            }
+
             return request;
         }
-
-        private string GetSendUrl()
-        {
-            var url = "https://logs-01.loggly.com/inputs/" + LogglyConfig.Instance.CustomerToken;
-            return url;
-        }
-
-        private static void GetRequestStream(IAsyncResult result)
+        protected static void GetRequestStream(IAsyncResult result)
         {
             var state = (RequestState)result.AsyncState;
             try
@@ -169,7 +193,7 @@ namespace Loggly
             }
         }
 
-        private static string GetResponseBody(WebResponse response)
+        protected static string GetResponseBody(WebResponse response)
         {
             if (response == null)
             {
@@ -199,20 +223,54 @@ namespace Loggly
             return new ErrorMessage { Error = "Unknown Error", InnerException = exception };
         }
 
-        private class RequestState : ResponseState
-        {
-            public byte[] Payload { get; set; }
-        }
+    }
 
-        private class ResponseState
-        {
-            public HttpWebRequest Request { get; set; }
-            public Action<Response> Callback { get; set; }
-        }
 
+    public enum HttpRequestType
+    {
+        Get
+        ,Post
+    }
+
+    class RequestState : ResponseState
+    {
+        public byte[] Payload { get; set; }
+    }
+
+    class ResponseState
+    {
+        public HttpWebRequest Request { get; set; }
+        public Action<Response> Callback { get; set; }
+    }
+
+    public class HttpTransporter : HttpTransportBase, IMessageTransport
+    {
         public void Send(LogglyMessage message)
         {
-            throw new NotImplementedException();
+            Send(message, null);
+        }
+        
+        public void Send(LogglyMessage message, Action<Response> callback)
+        {
+            var request = CreateRequest(message);
+            var requestState = new RequestState();
+
+            requestState.Request = request;
+            requestState.Payload = message == null ? null : Encoding.UTF8.GetBytes(message.Content);
+            requestState.Callback = callback;
+
+            request.BeginGetRequestStream(GetRequestStream, requestState);
+        }
+
+        private HttpWebRequest CreateRequest(LogglyMessage message)
+        {
+            return CreateRequest(GetSendUrl(), HttpRequestType.Get, message, LogglyConfig.Instance.Tags.RenderedTagCsv);
+        }
+
+        private string GetSendUrl()
+        {
+            var url = "https://logs-01.loggly.com/inputs/" + LogglyConfig.Instance.CustomerToken;
+            return url;
         }
     }
 }

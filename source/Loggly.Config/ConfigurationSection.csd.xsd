@@ -8,8 +8,8 @@
 </auto-generated>
 -->
 <xs:schema xmlns:tns="Loggly" elementFormDefault="qualified" targetNamespace="Loggly" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-	<xs:element name="loggly" type="tns:Loggly.Config.LogglyConfigCT" />
-	<xs:complexType name="Loggly.Config.LogglyConfigCT">
+	<xs:element name="loggly" type="tns:Loggly.Config.LogglyAppConfigCT" />
+	<xs:complexType name="Loggly.Config.LogglyAppConfigCT">
 		<xs:choice minOccurs="0" maxOccurs="unbounded">
 			<xs:element minOccurs="0" name="tags" type="tns:Loggly.Config.TagsCT">
 				<xs:annotation>
@@ -27,17 +27,22 @@
 				<xs:documentation>The CustomerToken.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+		<xs:attribute name="throwException" use="optional" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>The ThrowException.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 	</xs:complexType>
-	<xs:complexType name="Loggly.Config.ComplexTagsCT">
+	<xs:complexType name="Loggly.Config.ComplexTagCollectionCT">
 		<xs:choice minOccurs="0" maxOccurs="unbounded">
-			<xs:element minOccurs="0" maxOccurs="unbounded" name="complex" type="tns:Loggly.Config.ComplexTagConfigCT">
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="complex" type="tns:Loggly.Config.ComplexTagAppConfigCT">
 				<xs:annotation>
-					<xs:documentation>The ComplexTagConfig Configuration Element.</xs:documentation>
+					<xs:documentation>The ComplexTagAppConfig Configuration Element.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:choice>
 	</xs:complexType>
-	<xs:complexType name="Loggly.Config.ComplexTagConfigCT">
+	<xs:complexType name="Loggly.Config.ComplexTagAppConfigCT">
 		<xs:attribute name="name" use="required" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>The Name.</xs:documentation>
@@ -59,16 +64,16 @@
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>
-	<xs:complexType name="Loggly.Config.SimpleTagsCT">
+	<xs:complexType name="Loggly.Config.SimpleTagCollectionCT">
 		<xs:choice minOccurs="0" maxOccurs="unbounded">
-			<xs:element minOccurs="0" maxOccurs="unbounded" name="tag" type="tns:Loggly.Config.TagCT">
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="tag" type="tns:Loggly.Config.SimpleTagAppConfigCT">
 				<xs:annotation>
-					<xs:documentation>The Tag Configuration Element.</xs:documentation>
+					<xs:documentation>The SimpleTagAppConfig Configuration Element.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:choice>
 	</xs:complexType>
-	<xs:complexType name="Loggly.Config.TagCT">
+	<xs:complexType name="Loggly.Config.SimpleTagAppConfigCT">
 		<xs:attribute name="value" use="required" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>The Value.</xs:documentation>
@@ -77,12 +82,12 @@
 	</xs:complexType>
 	<xs:complexType name="Loggly.Config.TagsCT">
 		<xs:choice minOccurs="0" maxOccurs="unbounded">
-			<xs:element minOccurs="0" name="simple" type="tns:Loggly.Config.SimpleTagsCT">
+			<xs:element minOccurs="0" name="simple" type="tns:Loggly.Config.SimpleTagCollectionCT">
 				<xs:annotation>
 					<xs:documentation>The Simple.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element minOccurs="0" name="complex" type="tns:Loggly.Config.ComplexTagsCT">
+			<xs:element minOccurs="0" name="complex" type="tns:Loggly.Config.ComplexTagCollectionCT">
 				<xs:annotation>
 					<xs:documentation>The Complex.</xs:documentation>
 				</xs:annotation>
@@ -93,12 +98,12 @@
 		<xs:choice minOccurs="0" maxOccurs="unbounded">
 			<xs:element minOccurs="0" name="http" type="tns:Loggly.Config.HttpTransportCT">
 				<xs:annotation>
-					<xs:documentation>The http.</xs:documentation>
+					<xs:documentation>The Http.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 			<xs:element minOccurs="0" name="credentials" type="tns:Loggly.Config.CredentialsCT">
 				<xs:annotation>
-					<xs:documentation>The credentials.</xs:documentation>
+					<xs:documentation>The Credentials.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:choice>
@@ -106,19 +111,19 @@
 	<xs:complexType name="Loggly.Config.HttpTransportCT">
 	</xs:complexType>
 	<xs:complexType name="Loggly.Config.CredentialsCT">
-		<xs:attribute name="domain" use="optional" type="xs:string">
-			<xs:annotation>
-				<xs:documentation>The domain.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
 		<xs:attribute name="username" use="optional" type="xs:string">
 			<xs:annotation>
-				<xs:documentation>The username.</xs:documentation>
+				<xs:documentation>The Username.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 		<xs:attribute name="password" use="optional" type="xs:string">
 			<xs:annotation>
-				<xs:documentation>The password.</xs:documentation>
+				<xs:documentation>The Password.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="domain" use="optional" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The Domain.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>

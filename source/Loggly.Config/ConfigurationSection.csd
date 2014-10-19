@@ -11,11 +11,16 @@
     <externalType name="TimeSpan" namespace="System" />
   </typeDefinitions>
   <configurationElements>
-    <configurationSection name="LogglyConfig" namespace="Loggly.Config" codeGenOptions="Singleton, XmlnsProperty" xmlSectionName="loggly">
+    <configurationSection name="LogglyAppConfig" namespace="Loggly.Config" codeGenOptions="Singleton, XmlnsProperty" xmlSectionName="loggly">
       <attributeProperties>
         <attributeProperty name="CustomerToken" isRequired="true" isKey="false" isDefaultCollection="false" xmlName="customerToken" isReadOnly="false">
           <type>
             <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/String" />
+          </type>
+        </attributeProperty>
+        <attributeProperty name="ThrowException" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="throwException" isReadOnly="false">
+          <type>
+            <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Boolean" />
           </type>
         </attributeProperty>
       </attributeProperties>
@@ -32,12 +37,12 @@
         </elementProperty>
       </elementProperties>
     </configurationSection>
-    <configurationElementCollection name="ComplexTags" namespace="Loggly.Config" xmlItemName="complex" codeGenOptions="AddMethod, RemoveMethod, GetItemMethods">
+    <configurationElementCollection name="ComplexTagCollection" namespace="Loggly.Config" xmlItemName="complex" codeGenOptions="AddMethod, RemoveMethod, GetItemMethods">
       <itemType>
-        <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/ComplexTagConfig" />
+        <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/ComplexTagAppConfig" />
       </itemType>
     </configurationElementCollection>
-    <configurationElement name="ComplexTagConfig" namespace="Loggly.Config">
+    <configurationElement name="ComplexTagAppConfig" namespace="Loggly.Config">
       <attributeProperties>
         <attributeProperty name="Name" isRequired="true" isKey="true" isDefaultCollection="false" xmlName="name" isReadOnly="false">
           <type>
@@ -61,12 +66,12 @@
         </attributeProperty>
       </attributeProperties>
     </configurationElement>
-    <configurationElementCollection name="SimpleTags" xmlItemName="tag" codeGenOptions="Indexer, AddMethod, RemoveMethod, GetItemMethods">
+    <configurationElementCollection name="SimpleTagCollection" xmlItemName="tag" codeGenOptions="Indexer, AddMethod, RemoveMethod, GetItemMethods">
       <itemType>
-        <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Tag" />
+        <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/SimpleTagAppConfig" />
       </itemType>
     </configurationElementCollection>
-    <configurationElement name="Tag" namespace="Loggly.Config">
+    <configurationElement name="SimpleTagAppConfig" namespace="Loggly.Config">
       <attributeProperties>
         <attributeProperty name="Value" isRequired="true" isKey="true" isDefaultCollection="false" xmlName="value" isReadOnly="false">
           <type>
@@ -79,24 +84,24 @@
       <elementProperties>
         <elementProperty name="Simple" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="simple" isReadOnly="false">
           <type>
-            <configurationElementCollectionMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/SimpleTags" />
+            <configurationElementCollectionMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/SimpleTagCollection" />
           </type>
         </elementProperty>
         <elementProperty name="Complex" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="complex" isReadOnly="false">
           <type>
-            <configurationElementCollectionMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/ComplexTags" />
+            <configurationElementCollectionMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/ComplexTagCollection" />
           </type>
         </elementProperty>
       </elementProperties>
     </configurationElement>
     <configurationElement name="Transport">
       <elementProperties>
-        <elementProperty name="http" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="http" isReadOnly="false">
+        <elementProperty name="Http" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="http" isReadOnly="false">
           <type>
             <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/HttpTransport" />
           </type>
         </elementProperty>
-        <elementProperty name="credentials" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="credentials" isReadOnly="false">
+        <elementProperty name="Credentials" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="credentials" isReadOnly="false">
           <type>
             <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Credentials" />
           </type>
@@ -106,17 +111,17 @@
     <configurationElement name="HttpTransport" />
     <configurationElement name="Credentials">
       <attributeProperties>
-        <attributeProperty name="domain" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="domain" isReadOnly="false">
+        <attributeProperty name="Username" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="username" isReadOnly="false">
           <type>
             <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/String" />
           </type>
         </attributeProperty>
-        <attributeProperty name="username" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="username" isReadOnly="false">
+        <attributeProperty name="Password" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="password" isReadOnly="false">
           <type>
             <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/String" />
           </type>
         </attributeProperty>
-        <attributeProperty name="password" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="password" isReadOnly="false">
+        <attributeProperty name="Domain" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="domain" isReadOnly="false">
           <type>
             <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/String" />
           </type>

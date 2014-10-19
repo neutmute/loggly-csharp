@@ -9,10 +9,12 @@ namespace Loggly
     {
         private const string _domain = ".loggly.com/";
         private readonly string _url;
+        private ISearchTransport _transport;
 
         public Searcher(string subdomain)
         {
             _url = string.Concat(subdomain, _domain);
+            _transport = new SearchTransport();
         }
 
         public string Url
@@ -37,8 +39,7 @@ namespace Loggly
 
         public SearchResponse Search(SearchQuery query)
         {
-            var communicator = new Communicator(this);
-            return communicator.GetPayload<SearchResponse>("apiv2/search", query.ToParameters());
+            return _transport.Search(query);
         }
 
         public SearchResponse<TMessage> Search<TMessage>(string query)
@@ -58,14 +59,12 @@ namespace Loggly
 
         public SearchResponse<TMessage> Search<TMessage>(SearchQuery query)
         {
-            var communicator = new Communicator(this);
-            return communicator.GetPayload<SearchResponse<TMessage>>("apiv2/search", query.ToParameters());
+            return _transport.Search<TMessage>(query);
         }
 
         public FieldResponse Field(FieldQuery query)
         {
-            var communicator = new Communicator(this);
-            return communicator.GetPayload<FieldResponse>("apiv2/fields/" + query.FieldName, query.ToParameters());
+            return _transport.Search(query);
         }
 
     }

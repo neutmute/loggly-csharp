@@ -49,6 +49,8 @@
       <DependentUpon>ConfigurationSection.csd</DependentUpon>
     </Compile>
     <Compile Include="ComplexTags\HostnameTag.cs" />
+    <Compile Include="LogglyConfig.cs" />
+    <Compile Include="Partials\SimpleTagAppConfig.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -62,6 +64,7 @@
     </None>
     <None Include="ConfigurationSection.csd.diagram">
       <DependentUpon>ConfigurationSection.csd</DependentUpon>
+      <SubType>Designer</SubType>
     </None>
     <None Include="ConfigurationSection.csd.xsd">
       <DependentUpon>ConfigurationSection.csd</DependentUpon>
