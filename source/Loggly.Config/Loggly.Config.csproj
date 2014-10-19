@@ -53,6 +53,7 @@
     </Compile>
     <Compile Include="ComplexTags\HostnameTag.cs" />
     <Compile Include="LogglyConfig.cs" />
+    <Compile Include="Partials\LogglyConfig.cs" />
     <Compile Include="Partials\SimpleTagAppConfig.cs" />
     <Compile Include="Properties\AssemblyInfoUnique.cs" />
   </ItemGroup>

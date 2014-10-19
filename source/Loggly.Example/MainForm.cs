@@ -16,5 +16,11 @@ namespace Loggly.Example
         {
             InitializeComponent();
         }
+
+        private void btnPlainText_Click(object sender, EventArgs e)
+        {
+            var client = new LogglyClient();
+            client.Log("Simple message at {0}", DateTime.Now);
+        }
     }
 }

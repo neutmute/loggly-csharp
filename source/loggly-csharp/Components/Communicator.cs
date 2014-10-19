@@ -90,11 +90,13 @@ namespace Loggly
             }
             catch (WebException ex)
             {
-                throw new LogglyException(GetResponseBody(ex.Response), ex);
+                LogglyException.Throw(ex, GetResponseBody(ex.Response));
+                return null;
             }
             catch (Exception ex)
             {
-                throw new LogglyException(ex.Message, ex);
+                LogglyException.Throw(ex, ex.Message);
+                return null;
             }
         }
 
@@ -259,14 +261,21 @@ namespace Loggly
         
         public void Send(LogglyMessage message, Action<Response> callback)
         {
-            var request = CreateRequest(message);
-            var requestState = new RequestState();
+            if (LogglyConfig.Instance.IsValid)
+            {
+                var request = CreateRequest(message);
+                var requestState = new RequestState();
 
-            requestState.Request = request;
-            requestState.Payload = message == null ? null : Encoding.UTF8.GetBytes(message.Content);
-            requestState.Callback = callback;
+                requestState.Request = request;
+                requestState.Payload = message == null ? null : Encoding.UTF8.GetBytes(message.Content);
+                requestState.Callback = callback;
 
-            request.BeginGetRequestStream(GetRequestStream, requestState);
+                request.BeginGetRequestStream(GetRequestStream, requestState);
+            }
+            else
+            {
+                LogglyException.Throw("Loggly configuration is missing or invalid. Did you specify a customer token?");
+            }
         }
 
         private HttpWebRequest CreateRequest(LogglyMessage message)

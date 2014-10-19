@@ -27,9 +27,9 @@
 				<xs:documentation>The CustomerToken.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
-		<xs:attribute name="throwException" use="optional" type="xs:boolean">
+		<xs:attribute name="throwExceptions" use="optional" type="xs:boolean">
 			<xs:annotation>
-				<xs:documentation>The ThrowException.</xs:documentation>
+				<xs:documentation>The ThrowExceptions.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>

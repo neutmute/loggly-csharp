@@ -106,28 +106,28 @@ namespace Loggly.Config
         }
         #endregion
         
-        #region ThrowException Property
+        #region ThrowExceptions Property
         /// <summary>
-        /// The XML name of the <see cref="ThrowException"/> property.
+        /// The XML name of the <see cref="ThrowExceptions"/> property.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        internal const string ThrowExceptionPropertyName = "throwException";
+        internal const string ThrowExceptionsPropertyName = "throwExceptions";
         
         /// <summary>
-        /// Gets or sets the ThrowException.
+        /// Gets or sets the ThrowExceptions.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        [global::System.ComponentModel.DescriptionAttribute("The ThrowException.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.LogglyAppConfig.ThrowExceptionPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
-        public virtual bool ThrowException
+        [global::System.ComponentModel.DescriptionAttribute("The ThrowExceptions.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.LogglyAppConfig.ThrowExceptionsPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual bool ThrowExceptions
         {
             get
             {
-                return ((bool)(base[global::Loggly.Config.LogglyAppConfig.ThrowExceptionPropertyName]));
+                return ((bool)(base[global::Loggly.Config.LogglyAppConfig.ThrowExceptionsPropertyName]));
             }
             set
             {
-                base[global::Loggly.Config.LogglyAppConfig.ThrowExceptionPropertyName] = value;
+                base[global::Loggly.Config.LogglyAppConfig.ThrowExceptionsPropertyName] = value;
             }
         }
         #endregion

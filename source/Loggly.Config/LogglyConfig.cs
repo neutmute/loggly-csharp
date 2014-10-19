@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Net;
@@ -8,7 +9,6 @@ namespace Loggly.Config
 {
     public interface ITagConfiguration
     {
-
         List<ISimpleTag> SimpleTags { get;  }
 
         List<ComplexTag> ComplexTags { get;  }
@@ -82,6 +82,11 @@ namespace Loggly.Config
     public interface ILogglyConfig
     {
         string CustomerToken { get; set; }
+
+        bool ThrowExceptions { get; set; }
+
+        bool IsValid { get;  }
+
         ITagConfiguration Tags { get;  }
         ITransportConfiguration Transport { get;  }
     }
@@ -89,8 +94,14 @@ namespace Loggly.Config
     public class LogglyConfig : ILogglyConfig
     {
         public string CustomerToken { get; set; }
+        public bool ThrowExceptions { get; set; }
         public ITagConfiguration Tags { get; private set; }
         public ITransportConfiguration Transport { get; private set; }
+
+        public bool IsValid
+        {
+            get { return !string.IsNullOrEmpty(CustomerToken); }
+        }
 
         private LogglyConfig()
         {
@@ -106,11 +117,23 @@ namespace Loggly.Config
             {
                 if (_instance == null)
                 {
-                    _instance = FromAppConfig();
+                    if (LogglyAppConfig.HasAppCopnfig)
+                    {
+                        _instance = FromAppConfig();
+                    }
+                    else
+                    {
+                        _instance = GetNullConfig();
+                    }
                 }
                 return _instance;
             }
             set { _instance = value; }
+        }
+
+        private static ILogglyConfig GetNullConfig()
+        {
+            return new LogglyConfig();
         }
 
         private static ILogglyConfig FromAppConfig()
@@ -118,6 +141,7 @@ namespace Loggly.Config
             var config = new LogglyConfig();
 
             config.CustomerToken = LogglyAppConfig.Instance.CustomerToken;
+            config.ThrowExceptions = LogglyAppConfig.Instance.ThrowExceptions;
             foreach (ISimpleTag simpleTag in LogglyAppConfig.Instance.Tags.Simple)
             {
                 config.Tags.SimpleTags.Add(simpleTag);

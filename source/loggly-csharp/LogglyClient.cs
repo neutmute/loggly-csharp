@@ -10,16 +10,17 @@ namespace Loggly
 {
     public class LogglyClient : ILogglyClient
     {
-        public void Log(string message)
+        public void Log(string plainTextFormat, params object[] plainTextArgs)
         {
-            Log(message, null);
+            Log(null, plainTextFormat, plainTextArgs);
         }
 
-        public void Log(string plainText, Action<LogResponse> callback)
+        public void Log(Action<LogResponse> callback, string plainTextFormat, params object[] plainTextArgs)
         {
             IMessageTransport transporter = new HttpTransporter();
             var callbackWrapper = GetCallbackWrapper(callback);
-            var message = new LogglyMessage { Type = MessageType.Plain, Content = plainText};
+            var messageText = string.Format(plainTextFormat, plainTextArgs);
+            var message = new LogglyMessage { Type = MessageType.Plain, Content = messageText};
 
             transporter.Send(message, callbackWrapper);
         }

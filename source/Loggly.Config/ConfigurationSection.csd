@@ -18,7 +18,7 @@
             <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/String" />
           </type>
         </attributeProperty>
-        <attributeProperty name="ThrowException" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="throwException" isReadOnly="false">
+        <attributeProperty name="ThrowExceptions" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="throwExceptions" isReadOnly="false">
           <type>
             <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Boolean" />
           </type>
