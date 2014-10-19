@@ -41,7 +41,7 @@ namespace Loggly
                     }
                     else
                     {
-                        var res = new LogResponse {Success = false};
+                        var res = new LogResponse {Success = false, Message = r.Error.Message};
                         callback(res);
                     }
                 };

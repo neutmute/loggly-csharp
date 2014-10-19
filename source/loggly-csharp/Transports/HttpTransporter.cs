@@ -34,7 +34,7 @@ namespace Loggly
 
         private HttpWebRequest CreateRequest(LogglyMessage message)
         {
-            return CreateRequest(GetSendUrl(), HttpRequestType.Get, message, LogglyConfig.Instance.Tags.RenderedTagCsv);
+            return CreateRequest(GetSendUrl(), HttpRequestType.Post, message, LogglyConfig.Instance.Tags.RenderedTagCsv);
         }
 
         private string GetSendUrl()

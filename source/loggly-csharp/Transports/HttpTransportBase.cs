@@ -106,12 +106,13 @@ namespace Loggly
 
         private static ErrorMessage HandleException(Exception exception)
         {
-            if (exception is WebException)
+            var exceptionAsWebException = exception as WebException;
+            if (exceptionAsWebException != null)
             {
-                var body = GetResponseBody(((WebException)exception).Response);
-                return new ErrorMessage { Error = body, InnerException = exception };
+                var body = GetResponseBody(exceptionAsWebException.Response);
+                return new ErrorMessage { Message = body, InnerException = exception };
             }
-            return new ErrorMessage { Error = "Unknown Error", InnerException = exception };
+            return new ErrorMessage { Message = "Unknown Error", InnerException = exception };
         }
 
     }
