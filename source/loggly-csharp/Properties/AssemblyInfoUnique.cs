@@ -5,5 +5,3 @@ using System.Security;
 
 [assembly: AssemblyTitle("loggly-csharp")]
 [assembly: AssemblyDescription(".NET client for loggly.com")]
-
-

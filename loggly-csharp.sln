@@ -18,6 +18,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loggly.Config", "source\log
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loggly.Tests", "source\Loggly.Tests\Loggly.Tests.csproj", "{EDACB38E-0484-4212-8F70-16D5EC63CB49}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loggly.Example", "source\Loggly.Example\Loggly.Example.csproj", "{38D8CC5E-6E59-437C-B33E-430AE1E4E760}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -40,6 +42,10 @@ Global
 		{EDACB38E-0484-4212-8F70-16D5EC63CB49}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDACB38E-0484-4212-8F70-16D5EC63CB49}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EDACB38E-0484-4212-8F70-16D5EC63CB49}.Release|Any CPU.Build.0 = Release|Any CPU
+		{38D8CC5E-6E59-437C-B33E-430AE1E4E760}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{38D8CC5E-6E59-437C-B33E-430AE1E4E760}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{38D8CC5E-6E59-437C-B33E-430AE1E4E760}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{38D8CC5E-6E59-437C-B33E-430AE1E4E760}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
