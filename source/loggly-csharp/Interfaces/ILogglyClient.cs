@@ -4,7 +4,7 @@ using Loggly.Responses;
 
 namespace Loggly
 {
-   public interface ILogger
+   public interface ILogglyClient
    {
       /// <summary>
       /// Asynchronously logs a message
@@ -24,6 +24,5 @@ namespace Loggly
       
       void Log<TLogAsJson>(TLogAsJson logObject);
       void Log<TLogAsJson>(TLogAsJson logObject, Action<LogResponse> callback);
-      
    }
 }

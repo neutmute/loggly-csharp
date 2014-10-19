@@ -3,23 +3,34 @@ using System.Collections.Generic;
 using System.Net;
 using System.Text;
 using System.Web;
+using Loggly.Config;
 using Loggly.Responses;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Loggly
 {
-    public class Communicator
+    public enum MessageType
+    {
+        Plain,
+        Json
+    }
+    public class LogglyMessage
+    {
+        public MessageType Type { get; set; }
+        public string Content { get; set; }
+    }
+
+    public interface ISendTransport
+    {
+        void Send(LogglyMessage message);
+    }
+
+    public class HttpTransporter : ISendTransport
     {
         public const string POST = "POST";
         public const string GET = "GET";
 
-        private readonly IRequestContext _context;
-
-        public Communicator(IRequestContext context)
-        {
-            _context = context;
-        }
 
         public void SendPayload(string method, string endPoint, string message, bool json, Action<Response> callback)
         {
@@ -91,18 +102,24 @@ namespace Loggly
         private HttpWebRequest CreateRequest(string method, string endPoint, bool withCredentials, bool json, string[] tags)
         {
             var data = LogglyConfiguration.Data;
-            var url = data.ForcedUrl ?? string.Concat(data.Https ? "https://" : "http://", _context.Url);
-            var request = (HttpWebRequest)WebRequest.Create(string.Concat(url, endPoint));
-            request.Method = method;
+
+            var request = (HttpWebRequest)WebRequest.Create(GetSendUrl());
+            request.Method = POST;
             request.Timeout = data.Timeout;
             request.ReadWriteTimeout = data.Timeout;
-            request.UserAgent = "loggly-csharp";
+            request.UserAgent = "loggly-csharp"; //todo: reflect version info
             request.KeepAlive = false;
             if (tags != null && tags.Length > 0)
                 request.Headers.Add("X-LOGGLY-TAG", string.Join(",", tags));
             if (withCredentials) { request.Credentials = data.Credentials; }
             if (json) { request.ContentType = "application/json"; }
             return request;
+        }
+
+        private string GetSendUrl()
+        {
+            var url = "https://logs-01.loggly.com/inputs/" + LogglyConfig.Instance.CustomerToken;
+            return url;
         }
 
         private static void GetRequestStream(IAsyncResult result)
@@ -191,6 +208,11 @@ namespace Loggly
         {
             public HttpWebRequest Request { get; set; }
             public Action<Response> Callback { get; set; }
+        }
+
+        public void Send(LogglyMessage message)
+        {
+            throw new NotImplementedException();
         }
     }
 }

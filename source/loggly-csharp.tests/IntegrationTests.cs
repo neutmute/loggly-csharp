@@ -17,13 +17,12 @@ namespace Loggly.Tests
    {
        // Bumping up the timeout to 5 minutes as it seems Loggly may take longer than 1 minute to get things indexed
        private const int _searchTimeout = 5*60*1000; // 5 minutes -> milliseconds
-       private ILogger _logger;
+       private ILogglyClient _logglyClient;
 
       [SetUp]
       public void SetUp()
       {
-         LogglyConfiguration.Configure(c => c.AuthenticateWith(ConfigurationManager.AppSettings["IntegrationUser"], ConfigurationManager.AppSettings["IntegrationPassword"]));
-         _logger = new Logger(ConfigurationManager.AppSettings["IntegrationKey"]);
+         _logglyClient = new LogglyClient(ConfigurationManager.AppSettings["CustomerToken"]);
       }
 
       //[Test, Category("Integration")]
@@ -48,7 +47,7 @@ namespace Loggly.Tests
       public void AsyncLogToPlainTextInput()
       {
          var randomString = GenerateRandomString(8);
-         _logger.Log(new TestLogEntry() { Message = randomString });
+         _logglyClient.Log(new TestLogEntry() { Message = randomString });
          var response = StartJsonThread(randomString, "Message");
          Assert.IsNotNull(response);
          Assert.AreEqual(1, response.TotalEvents);
