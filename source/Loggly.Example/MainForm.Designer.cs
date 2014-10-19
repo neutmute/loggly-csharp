@@ -30,13 +30,14 @@
         {
             this.btnPlainText = new System.Windows.Forms.Button();
             this.btnPlainWithCallback = new System.Windows.Forms.Button();
+            this.btnSendJson = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // btnPlainText
             // 
             this.btnPlainText.Location = new System.Drawing.Point(12, 21);
             this.btnPlainText.Name = "btnPlainText";
-            this.btnPlainText.Size = new System.Drawing.Size(114, 23);
+            this.btnPlainText.Size = new System.Drawing.Size(173, 23);
             this.btnPlainText.TabIndex = 0;
             this.btnPlainText.Text = "Plain text message";
             this.btnPlainText.UseVisualStyleBackColor = true;
@@ -52,11 +53,22 @@
             this.btnPlainWithCallback.UseVisualStyleBackColor = true;
             this.btnPlainWithCallback.Click += new System.EventHandler(this.btnPlainWithCallback_Click);
             // 
+            // btnSendJson
+            // 
+            this.btnSendJson.Location = new System.Drawing.Point(12, 79);
+            this.btnSendJson.Name = "btnSendJson";
+            this.btnSendJson.Size = new System.Drawing.Size(114, 23);
+            this.btnSendJson.TabIndex = 2;
+            this.btnSendJson.Text = "Send JSON";
+            this.btnSendJson.UseVisualStyleBackColor = true;
+            this.btnSendJson.Click += new System.EventHandler(this.btnSendJson_Click);
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(658, 380);
+            this.Controls.Add(this.btnSendJson);
             this.Controls.Add(this.btnPlainWithCallback);
             this.Controls.Add(this.btnPlainText);
             this.Name = "MainForm";
@@ -69,6 +81,7 @@
 
         private System.Windows.Forms.Button btnPlainText;
         private System.Windows.Forms.Button btnPlainWithCallback;
+        private System.Windows.Forms.Button btnSendJson;
     }
 }
 

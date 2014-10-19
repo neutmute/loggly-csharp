@@ -33,5 +33,10 @@ namespace Loggly.Example
             };
             _loggly.Log(callback, "Simple message at {0} with callback", DateTime.Now);
         }
+
+        private void btnSendJson_Click(object sender, EventArgs e)
+        {
+            _loggly.Log(new LogObject());
+        }
     }
 }
