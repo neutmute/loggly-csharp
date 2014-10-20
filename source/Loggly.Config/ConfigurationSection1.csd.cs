@@ -106,6 +106,32 @@ namespace Loggly.Config
         }
         #endregion
         
+        #region ApplicationName Property
+        /// <summary>
+        /// The XML name of the <see cref="ApplicationName"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string ApplicationNamePropertyName = "applicationName";
+        
+        /// <summary>
+        /// Gets or sets the ApplicationName.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The ApplicationName.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.LogglyAppConfig.ApplicationNamePropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual string ApplicationName
+        {
+            get
+            {
+                return ((string)(base[global::Loggly.Config.LogglyAppConfig.ApplicationNamePropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.LogglyAppConfig.ApplicationNamePropertyName] = value;
+            }
+        }
+        #endregion
+        
         #region ThrowExceptions Property
         /// <summary>
         /// The XML name of the <see cref="ThrowExceptions"/> property.
@@ -279,7 +305,7 @@ namespace Loggly.Config
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
         protected override object GetElementKey(global::System.Configuration.ConfigurationElement element)
         {
-            return ((global::Loggly.Config.ComplexTagAppConfig)(element)).Name;
+            return ((global::Loggly.Config.ComplexTagAppConfig)(element)).Type;
         }
         
         /// <summary>
@@ -333,11 +359,11 @@ namespace Loggly.Config
         /// <summary>
         /// Gets the <see cref="global::Loggly.Config.ComplexTagAppConfig"/> with the specified key.
         /// </summary>
-        /// <param name="name">The key of the <see cref="global::Loggly.Config.ComplexTagAppConfig"/> to retrieve.</param>
+        /// <param name="type">The key of the <see cref="global::Loggly.Config.ComplexTagAppConfig"/> to retrieve.</param>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        public global::Loggly.Config.ComplexTagAppConfig GetItemByKey(string name)
+        public global::Loggly.Config.ComplexTagAppConfig GetItemByKey(string type)
         {
-            return ((global::Loggly.Config.ComplexTagAppConfig)(base.BaseGet(((object)(name)))));
+            return ((global::Loggly.Config.ComplexTagAppConfig)(base.BaseGet(((object)(type)))));
         }
         #endregion
         
@@ -374,28 +400,28 @@ namespace Loggly.Config
         }
         #endregion
         
-        #region Name Property
+        #region Type Property
         /// <summary>
-        /// The XML name of the <see cref="Name"/> property.
+        /// The XML name of the <see cref="Type"/> property.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        internal const string NamePropertyName = "name";
+        internal const string TypePropertyName = "type";
         
         /// <summary>
-        /// Gets or sets the Name.
+        /// Gets or sets the Type.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        [global::System.ComponentModel.DescriptionAttribute("The Name.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.ComplexTagAppConfig.NamePropertyName, IsRequired=true, IsKey=true, IsDefaultCollection=false)]
-        public virtual string Name
+        [global::System.ComponentModel.DescriptionAttribute("The Type.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.ComplexTagAppConfig.TypePropertyName, IsRequired=true, IsKey=true, IsDefaultCollection=false)]
+        public virtual string Type
         {
             get
             {
-                return ((string)(base[global::Loggly.Config.ComplexTagAppConfig.NamePropertyName]));
+                return ((string)(base[global::Loggly.Config.ComplexTagAppConfig.TypePropertyName]));
             }
             set
             {
-                base[global::Loggly.Config.ComplexTagAppConfig.NamePropertyName] = value;
+                base[global::Loggly.Config.ComplexTagAppConfig.TypePropertyName] = value;
             }
         }
         #endregion
@@ -412,7 +438,7 @@ namespace Loggly.Config
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
         [global::System.ComponentModel.DescriptionAttribute("The Assembly.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.ComplexTagAppConfig.AssemblyPropertyName, IsRequired=true, IsKey=false, IsDefaultCollection=false)]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.ComplexTagAppConfig.AssemblyPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
         public virtual string Assembly
         {
             get
@@ -422,32 +448,6 @@ namespace Loggly.Config
             set
             {
                 base[global::Loggly.Config.ComplexTagAppConfig.AssemblyPropertyName] = value;
-            }
-        }
-        #endregion
-        
-        #region Type Property
-        /// <summary>
-        /// The XML name of the <see cref="Type"/> property.
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        internal const string TypePropertyName = "type";
-        
-        /// <summary>
-        /// Gets or sets the Type.
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        [global::System.ComponentModel.DescriptionAttribute("The Type.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.ComplexTagAppConfig.TypePropertyName, IsRequired=true, IsKey=false, IsDefaultCollection=false)]
-        public virtual string Type
-        {
-            get
-            {
-                return ((string)(base[global::Loggly.Config.ComplexTagAppConfig.TypePropertyName]));
-            }
-            set
-            {
-                base[global::Loggly.Config.ComplexTagAppConfig.TypePropertyName] = value;
             }
         }
         #endregion

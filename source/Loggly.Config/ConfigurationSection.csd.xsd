@@ -32,6 +32,11 @@
 				<xs:documentation>The CustomerToken.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+		<xs:attribute name="applicationName" use="optional" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The ApplicationName.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 		<xs:attribute name="throwExceptions" use="optional" type="xs:boolean">
 			<xs:annotation>
 				<xs:documentation>The ThrowExceptions.</xs:documentation>
@@ -48,19 +53,14 @@
 		</xs:choice>
 	</xs:complexType>
 	<xs:complexType name="Loggly.Config.ComplexTagAppConfigCT">
-		<xs:attribute name="name" use="required" type="xs:string">
-			<xs:annotation>
-				<xs:documentation>The Name.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="assembly" use="required" type="xs:string">
-			<xs:annotation>
-				<xs:documentation>The Assembly.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
 		<xs:attribute name="type" use="required" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>The Type.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="assembly" use="optional" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The Assembly.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 		<xs:attribute name="formatter" use="optional" type="xs:string">

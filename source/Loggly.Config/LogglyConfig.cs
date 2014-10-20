@@ -94,6 +94,7 @@ namespace Loggly.Config
     public interface ILogglyConfig
     {
         string CustomerToken { get; set; }
+        string ApplicationName { get; set; }
 
         bool ThrowExceptions { get; set; }
 
@@ -106,6 +107,7 @@ namespace Loggly.Config
 
     public class LogglyConfig : ILogglyConfig
     {
+        public string ApplicationName { get; set; }
         public string CustomerToken { get; set; }
         public bool ThrowExceptions { get; set; }
         public ITagConfiguration Tags { get; private set; }
@@ -156,13 +158,22 @@ namespace Loggly.Config
 
             config.CustomerToken = LogglyAppConfig.Instance.CustomerToken;
             config.ThrowExceptions = LogglyAppConfig.Instance.ThrowExceptions;
+            config.ApplicationName = LogglyAppConfig.Instance.ApplicationName;
+
             foreach (ISimpleTag simpleTag in LogglyAppConfig.Instance.Tags.Simple)
             {
                 config.Tags.SimpleTags.Add(simpleTag);
             }
+
             foreach (ComplexTagAppConfig complexTagConfig in LogglyAppConfig.Instance.Tags.Complex)
             {
-                var complexTag = (ComplexTag) Activator.CreateInstance(complexTagConfig.Assembly, complexTagConfig.Type).Unwrap();
+                var assembly = complexTagConfig.Assembly;
+                if (string.IsNullOrEmpty(assembly))
+                {
+                    // Support minimal config with a default when unspecified
+                    assembly = "Loggly.Config";
+                }
+                var complexTag = (ComplexTag)Activator.CreateInstance(assembly, complexTagConfig.Type).Unwrap();
                 complexTag.Formatter = complexTagConfig.Formatter;
                 config.Tags.ComplexTags.Add(complexTag);
             }
