@@ -17,7 +17,6 @@ namespace Loggly
         {
             Log(null, plainTextFormat, plainTextArgs);
         }
-
         public void Log(Action<LogResponse> callback, string plainTextFormat, params object[] plainTextArgs)
         {
             IMessageTransport transporter = GetTransport();

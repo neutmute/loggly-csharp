@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Loggly.Config;
 using Loggly.Responses;
 
 namespace Loggly.Example
@@ -15,6 +16,7 @@ namespace Loggly.Example
     public partial class MainForm : Form
     {
         ILogglyClient _loggly = new LogglyClient();
+
         private SearchResponse _searchResponse;
         public MainForm()
         {
@@ -23,16 +25,13 @@ namespace Loggly.Example
 
         private void btnPlainText_Click(object sender, EventArgs e)
         {
-            _loggly.Log("Simple message at {0}", DateTime.Now);
+            _loggly.Log("Simple message at {0} using {1}", DateTime.Now, LogglyConfig.Instance.MessageTransport);
         }
 
         private void btnPlainWithCallback_Click(object sender, EventArgs e)
         {
-            Action<LogResponse> callback = lr =>
-            {
-                Debug.WriteLine(lr);
-            };
-            _loggly.Log(callback, "Simple message at {0} with callback", DateTime.Now);
+            Action<LogResponse> callback = lr => Debug.WriteLine(lr);
+            _loggly.Log(callback, "Simple message at {0} with callback using {1}", DateTime.Now, LogglyConfig.Instance.MessageTransport);
         }
 
         private void btnSendJson_Click(object sender, EventArgs e)
