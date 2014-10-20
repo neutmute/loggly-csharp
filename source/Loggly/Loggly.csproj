@@ -75,6 +75,7 @@
     <Compile Include="Transports\Interfaces\ISearchTransport.cs" />
     <Compile Include="Transports\SearchTransport.cs" />
     <Compile Include="Transports\SyslogMessageTransport.cs" />
+    <Compile Include="Transports\SyslogTlsMessageTransport.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Loggly.nuspec" />

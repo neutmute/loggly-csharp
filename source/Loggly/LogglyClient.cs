@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using Loggly.Responses;
+using Loggly.Transports;
 using Loggly.Transports.Syslog;
 using Newtonsoft.Json;
 
@@ -80,8 +81,9 @@ namespace Loggly
 
         private IMessageTransport GetTransport()
         {
-            return new HttpMessageTransport();
+            //return new HttpMessageTransport();
             //return new SyslogMessageTransport();
+            return new SyslogTlsMessageTransport();
         }
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -20,7 +21,6 @@ namespace Loggly.Transports.Syslog
         Debug=7, 
     }
 
-
     public enum Facility
     {
         Kernel=0, 
@@ -31,7 +31,7 @@ namespace Loggly.Transports.Syslog
         Syslog=5, 
         Lpr=6, 
         News=7, 
-        UUCP=8, 
+        Uucp=8, 
         Cron=9, 
         Local0=10, 
         Local1=11, 
@@ -46,36 +46,43 @@ namespace Loggly.Transports.Syslog
 
     public class SyslogMessage
     {
-        private int _facility; 
-        public int Facility
-        {
-            get { return _facility;}
-            set { _facility=value; }
-        }
-        private int _level; 
-        public int Level
-        {
-            get { return _level;}
-            set { _level=value; }
-        }
-        private string _text; 
-        public string Text
-        {
-            get { return _text;}
-            set { _text=value; }
-        }
+        public Facility Facility { get; set; }
+
+        public Level Level { get; set; }
+
+        public string Text { get; set; }
+
         public SyslogMessage() {}
-        public SyslogMessage (int facility, int level, string text)
+        public SyslogMessage(Facility facility, Level level, string text)
         {
-            _facility= facility;
-            _level= level;
-            _text= text;
+            Facility= facility;
+            Level= level;
+            Text= text;
+        }
+
+        public byte[] GetBytes()
+        {
+            int priority = (((int)Facility) * 8) + ((int)Level);
+            string msg = String.Format(
+                "<{0}>1 {1} {2} {3} {4} {5} [{6}] {7}\n"
+                , priority
+                , DateTime.Now.ToLogglyDateTime()
+                , Environment.MachineName
+                , LogglyConfig.Instance.ApplicationName
+                , Process.GetCurrentProcess().Id
+                , "2" // messageId
+                , LogglyConfig.Instance.CustomerToken
+                , Text
+                );
+            byte[] bytes = Encoding.ASCII.GetBytes(msg);
+            return bytes;
         }
     }
 
 
-    /// need this helper class to expose the Active propery of UdpClient
-    /// (why is it protected, anyway?) 
+    /// <summary>
+    /// Exposes the Active propery of UdpClient
+    /// </summary>
     public class UdpClientEx : UdpClient
     {
         public UdpClientEx() : base() { }
@@ -91,27 +98,31 @@ namespace Loggly.Transports.Syslog
         }
     }
 
-
-    internal class SyslogMessageTransport : IMessageTransport
+    internal abstract class SyslogTransportBase : IMessageTransport
     {
         public void Send(LogglyMessage message, Action<Responses.Response> callback)
         {
             var syslogMessage = new SyslogMessage();
             syslogMessage.Text = message.Content;
-            syslogMessage.Facility = 1;
-            syslogMessage.Level = (int) Level.Information;
+            syslogMessage.Facility = Facility.User;
+            syslogMessage.Level = Level.Information;
             Send(syslogMessage);
         }
 
-        
+        protected abstract void Send(SyslogMessage syslogMessage);
+    }
+
+    internal class SyslogMessageTransport : SyslogTransportBase
+    {
         private IPHostEntry _ipHostInfo;
         private IPAddress _ipAddress;
         private IPEndPoint      _ipLocalEndPoint;
         private UdpClientEx _udpClient;
-        private int _port= 514;
+        public int Port { get; set; }
 
         public SyslogMessageTransport()
         {
+            Port = 514;
             _ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
             _ipAddress = _ipHostInfo.AddressList.First(ip => ip.AddressFamily == AddressFamily.InterNetwork);
             _ipLocalEndPoint = new IPEndPoint(_ipAddress, 0);
@@ -125,43 +136,36 @@ namespace Loggly.Transports.Syslog
 
         public void Close()
         {
-            if (_udpClient.IsActive) _udpClient.Close();
+            if (_udpClient.IsActive)
+            {
+                _udpClient.Close();
+            }
         }
 
-        public int Port
-        {
-            set {_port= value; }
-            get {return _port; } 
-        }
 
-        public void Send(SyslogMessage syslogMessage)
+        protected override void Send(SyslogMessage syslogMessage)
         {
             if (!_udpClient.IsActive)
             {
                 var logglyEndpointIp = Dns.GetHostEntry("logs-01.loggly.com").AddressList[0];
-                _udpClient.Connect(logglyEndpointIp, _port);
+                _udpClient.Connect(logglyEndpointIp, Port);
             }
 
-            if (_udpClient.IsActive)
+            try
             {
-                int priority = syslogMessage.Facility*8 + syslogMessage.Level;
-                string msg = String.Format(
-                    "<{0}>1 {1} {2} {3} {4} {5} [{6}] {7}\n"
-                    ,priority
-                    ,DateTime.Now.ToLogglyDateTime()
-                    ,Environment.MachineName
-                    ,"yourAppName"
-                    ,"1" // processId
-                    ,"2" // messageId
-                    ,LogglyConfig.Instance.CustomerToken
-                    ,syslogMessage.Text
-                    );
-                byte[] bytes = Encoding.ASCII.GetBytes(msg);
-                _udpClient.Send(bytes, bytes.Length);
+                if (_udpClient.IsActive)
+                {
+                    var bytes = syslogMessage.GetBytes();
+                    _udpClient.Send(bytes, bytes.Length);
+                }
+                else
+                {
+                    LogglyException.Throw("Syslog client Socket is not connected.");
+                }
             }
-            else
+            finally
             {
-                throw new Exception ("Syslog client Socket is not connected. Please set the SysLogServerIp property");
+                Close();
             }
         }
     }
