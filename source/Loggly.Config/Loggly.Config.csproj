@@ -41,10 +41,12 @@
     <Compile Include="..\..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="ComplexTags\ApplicationNameTag.cs" />
-    <Compile Include="ComplexTags\ComplexTag.cs" />
-    <Compile Include="ComplexTags\OperatingSystemPlatformTag.cs" />
-    <Compile Include="ComplexTags\OperatingSystemVersionTag.cs" />
+    <Compile Include="SearchConfiguration.cs" />
+    <Compile Include="Tags\SimpleTag.cs" />
+    <Compile Include="Tags\ComplexTags\ApplicationNameTag.cs" />
+    <Compile Include="Tags\ComplexTags\ComplexTag.cs" />
+    <Compile Include="Tags\ComplexTags\OperatingSystemPlatformTag.cs" />
+    <Compile Include="Tags\ComplexTags\OperatingSystemVersionTag.cs" />
     <Compile Include="ConfigurationSection.csd.cs">
       <DependentUpon>ConfigurationSection.csd.xsd</DependentUpon>
     </Compile>
@@ -53,12 +55,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ConfigurationSection.csd</DependentUpon>
     </Compile>
-    <Compile Include="ComplexTags\HostnameTag.cs" />
+    <Compile Include="Tags\ComplexTags\HostnameTag.cs" />
+    <Compile Include="ILogglyConfig.cs" />
     <Compile Include="LogglyConfig.cs" />
-    <Compile Include="Partials\LogglyConfig.cs" />
-    <Compile Include="Partials\SearchAppConfig.cs" />
-    <Compile Include="Partials\SimpleTagAppConfig.cs" />
+    <Compile Include="AppConfigPartials\LogglyConfig.cs" />
+    <Compile Include="AppConfigPartials\SearchAppConfig.cs" />
+    <Compile Include="AppConfigPartials\SimpleTagAppConfig.cs" />
     <Compile Include="Properties\AssemblyInfoUnique.cs" />
+    <Compile Include="TagConfiguration.cs" />
+    <Compile Include="TransportConfiguration.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ConfigurationSection.csd">
