@@ -8,6 +8,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionIt
 		license.txt = license.txt
 		loggly.nuspec = loggly.nuspec
 		package.cmd = package.cmd
+		readme.md = readme.md
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loggly.Tests.Integration", "source\loggly-csharp.tests\Loggly.Tests.Integration.csproj", "{8276BB03-DBCC-4A94-8111-5D333F49FECD}"
