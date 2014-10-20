@@ -19,6 +19,13 @@ namespace Loggly.Config
             var renderedTags = new List<string>();
             SimpleTags.ForEach(st => renderedTags.Add(st.Value));
             ComplexTags.ForEach(ct => renderedTags.Add(ct.FormattedValue));
+
+            // conform tags to loggly rules. no spaces.
+            for (int i = 0; i < renderedTags.Count; i++)
+            {
+                renderedTags[i] = renderedTags[i].Replace(" ", string.Empty);
+            }
+
             return renderedTags;
         }
     }

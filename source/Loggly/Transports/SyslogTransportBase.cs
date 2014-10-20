@@ -9,9 +9,9 @@ namespace Loggly.Transports.Syslog
         public void Send(LogglyMessage message, Action<Responses.Response> callback)
         {
             var syslogMessage = new SyslogMessage();
-            syslogMessage.Text = message.Content;
             syslogMessage.Facility = Facility.User;
-            syslogMessage.Level = Level.Information;
+            syslogMessage.Text = message.Content;
+            syslogMessage.Level = message.Level;
             syslogMessage.MessageId = message.MessageId;
             Send(syslogMessage);
         }
