@@ -45,7 +45,6 @@ namespace Loggly.Transports.Syslog
             catch (AuthenticationException e)
             {
                 LogglyException.Throw(e, e.Message);
-                return;
             }
             finally
             {

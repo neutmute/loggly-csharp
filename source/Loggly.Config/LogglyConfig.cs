@@ -69,7 +69,7 @@ namespace Loggly.Config
             }
             else
             {
-                config.MessageTransport = (MessageTransport) Enum.Parse(typeof (MessageTransport), LogglyAppConfig.Instance.MessageTransport);
+                config.MessageTransport = (MessageTransport) Enum.Parse(typeof(MessageTransport), LogglyAppConfig.Instance.MessageTransport);
             }
 
             foreach (ISimpleTag simpleTag in LogglyAppConfig.Instance.Tags.Simple)
