@@ -50,8 +50,6 @@
     <Compile Include="Search\FieldQuery.cs" />
     <Compile Include="LogglyMessage.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
-    <Compile Include="Interfaces\IConfigurationData.cs" />
-    <Compile Include="Interfaces\ILogglyConfiguration.cs" />
     <Compile Include="Interfaces\ILogglyClient.cs" />
     <Compile Include="Interfaces\ISearchClient.cs" />
     <Compile Include="LogglyClient.cs" />
