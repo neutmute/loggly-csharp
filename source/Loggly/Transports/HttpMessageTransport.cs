@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using System.Net;
 using System.Text;
 using Loggly.Config;
@@ -36,9 +37,9 @@ namespace Loggly
         {
             var request = CreateRequest(GetSendUrl(), HttpRequestType.Post);
 
-            if (!string.IsNullOrEmpty(LogglyConfig.Instance.Tags.RenderedTagCsv))
+            if (!string.IsNullOrEmpty(RenderedTags))
             {
-                request.Headers.Add("X-LOGGLY-TAG", LogglyConfig.Instance.Tags.RenderedTagCsv);
+                request.Headers.Add("X-LOGGLY-TAG", RenderedTags);
             }
 
             switch (message.Type)
@@ -58,6 +59,12 @@ namespace Loggly
         {
             var url = "https://logs-01.loggly.com/inputs/" + LogglyConfig.Instance.CustomerToken;
             return url;
+        }
+
+        protected override string GetRenderedTags()
+        {
+            var tags = string.Join(",", LogglyConfig.Instance.Tags.GetRenderedTags().ToArray());
+            return tags;
         }
     }
 }

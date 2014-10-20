@@ -4,10 +4,11 @@ using System.Reflection;
 using System.Text;
 using Loggly.Config;
 using Loggly.Responses;
+using Loggly.Transports;
 
 namespace Loggly
 {
-    internal abstract class HttpTransportBase
+    internal abstract class HttpTransportBase : TransportBase
     {
         private static readonly string _userAgent;
         static HttpTransportBase ()

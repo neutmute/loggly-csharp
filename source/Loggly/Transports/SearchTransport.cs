@@ -106,5 +106,10 @@ namespace Loggly
 
             return sb.ToString();
         }
+
+        protected override string GetRenderedTags()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

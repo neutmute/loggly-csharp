@@ -6,5 +6,7 @@ namespace Loggly
     internal interface IMessageTransport
     {
         void Send(LogglyMessage message, Action<Response> callback);
+
+        
     }
 }

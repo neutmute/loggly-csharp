@@ -27,19 +27,17 @@ namespace Loggly.Transports.Syslog
 
     internal class SyslogUdpTransport : SyslogTransportBase
     {
-        private IPHostEntry _ipHostInfo;
-        private IPAddress _ipAddress;
-        private IPEndPoint      _ipLocalEndPoint;
-        private UdpClientEx _udpClient;
+        private readonly UdpClientEx _udpClient;
         public int Port { get; set; }
 
         public SyslogUdpTransport()
         {
             Port = 514;
-            _ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
-            _ipAddress = _ipHostInfo.AddressList.First(ip => ip.AddressFamily == AddressFamily.InterNetwork);
-            _ipLocalEndPoint = new IPEndPoint(_ipAddress, 0);
-            _udpClient= new UdpClientEx(_ipLocalEndPoint);
+            
+            var ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+            var ipAddress = ipHostInfo.AddressList.First(ip => ip.AddressFamily == AddressFamily.InterNetwork);
+            var ipLocalEndPoint = new IPEndPoint(ipAddress, 0);
+            _udpClient= new UdpClientEx(ipLocalEndPoint);
         }
 
         public bool IsActive
@@ -68,7 +66,7 @@ namespace Loggly.Transports.Syslog
             {
                 if (_udpClient.IsActive)
                 {
-                    var bytes = syslogMessage.GetBytes();
+                    var bytes = syslogMessage.GetBytes(RenderedTags);
                     _udpClient.Send(bytes, bytes.Length);
                 }
                 else

@@ -16,7 +16,7 @@ namespace Loggly.Config
 
         List<ComplexTag> ComplexTags { get; }
 
-        string RenderedTagCsv { get; }
+        List<string> GetRenderedTags();
     }
 
     public interface IHttpTransport

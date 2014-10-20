@@ -55,18 +55,21 @@ namespace Loggly.Transports.Syslog
             Text= text;
         }
 
-        public byte[] GetBytes()
+        public byte[] GetBytes(string tagString)
         {
             int priority = (((int)Facility) * 8) + ((int)Level);
+            var appName = LogglyConfig.Instance.ApplicationName.Replace(" ", "");
+            var logglyStructuredData = string.Format("[{0} {1}]", LogglyConfig.Instance.CustomerToken, tagString);
+
             string msg = String.Format(
-                "<{0}>1 {1} {2} {3} {4} {5} [{6}] {7}"
+                "<{0}>1 {1} {2} {3} {4} {5} {6} {7}"
                 , priority
                 , DateTime.Now.ToLogglyDateTime()
                 , Environment.MachineName
-                , LogglyConfig.Instance.ApplicationName
+                , appName
                 , Process.GetCurrentProcess().Id
                 , "2" // messageId
-                , LogglyConfig.Instance.CustomerToken
+                , logglyStructuredData
                 , Text
                 );
             byte[] bytes = Encoding.ASCII.GetBytes(msg);
