@@ -11,7 +11,7 @@ using Newtonsoft.Json.Linq;
 
 namespace Loggly
 {
-    public class SearchTransport : HttpTransportBase, ISearchTransport
+    internal class SearchTransport : HttpTransportBase, ISearchTransport
     {
         private readonly ISearchConfiguration _config;
         public SearchTransport(ISearchConfiguration config)

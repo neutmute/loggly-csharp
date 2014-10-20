@@ -7,7 +7,7 @@ using Loggly.Responses;
 
 namespace Loggly
 {
-    public abstract class HttpTransportBase
+    internal abstract class HttpTransportBase
     {
         private static readonly string _userAgent;
         static HttpTransportBase ()

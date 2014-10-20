@@ -48,7 +48,7 @@
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Search\FieldQuery.cs" />
-    <Compile Include="Transports\LogglyMessage.cs" />
+    <Compile Include="LogglyMessage.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
     <Compile Include="Interfaces\IConfigurationData.cs" />
     <Compile Include="Interfaces\ILogglyConfiguration.cs" />
@@ -73,8 +73,8 @@
     <Compile Include="Responses\Search\SearchResponse.cs" />
     <Compile Include="Transports\HttpTransportBase.cs" />
     <Compile Include="Transports\HttpMessageTransport.cs" />
-    <Compile Include="Transports\IMessageTransport.cs" />
-    <Compile Include="Transports\ISearchTransport.cs" />
+    <Compile Include="Transports\Interfaces\IMessageTransport.cs" />
+    <Compile Include="Transports\Interfaces\ISearchTransport.cs" />
     <Compile Include="Transports\SearchTransport.cs" />
     <Compile Include="Transports\SyslogMessageTransport.cs" />
   </ItemGroup>

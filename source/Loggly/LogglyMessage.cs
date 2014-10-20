@@ -4,19 +4,18 @@ using Loggly.Responses;
 
 namespace Loggly
 {
-    public enum MessageType
+    internal enum MessageType
     {
         Plain,
         Json
     }
-    public class LogglyMessage
+    internal class LogglyMessage
     {
         public MessageType Type { get; set; }
         public string Content { get; set; }
     }
 
-
-    public enum HttpRequestType
+    internal enum HttpRequestType
     {
         Get
         ,Post

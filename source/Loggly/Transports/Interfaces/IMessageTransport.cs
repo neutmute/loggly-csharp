@@ -3,7 +3,7 @@ using Loggly.Responses;
 
 namespace Loggly
 {
-    public interface IMessageTransport
+    internal interface IMessageTransport
     {
         void Send(LogglyMessage message, Action<Response> callback);
     }

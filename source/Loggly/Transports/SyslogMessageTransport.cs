@@ -92,7 +92,7 @@ namespace Loggly.Transports.Syslog
     }
 
 
-    public class SyslogMessageTransport : IMessageTransport
+    internal class SyslogMessageTransport : IMessageTransport
     {
         public void Send(LogglyMessage message, Action<Responses.Response> callback)
         {

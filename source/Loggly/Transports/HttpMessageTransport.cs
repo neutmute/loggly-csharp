@@ -6,7 +6,7 @@ using Loggly.Responses;
 
 namespace Loggly
 {
-    public class HttpMessageTransport : HttpTransportBase, IMessageTransport
+    internal class HttpMessageTransport : HttpTransportBase, IMessageTransport
     {
         public void Send(LogglyMessage message)
         {
