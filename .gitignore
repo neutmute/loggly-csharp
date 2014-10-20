@@ -20,3 +20,4 @@ _ReSharper*
 *.userprefs
 packages/
 source/Loggly.Example/loggly.user.config
+SolutionItems/Thumbs.db
