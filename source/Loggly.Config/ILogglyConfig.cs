@@ -1,7 +1,15 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Loggly.Config
 {
+    public enum MessageTransport
+    {
+        Unspecified =0,
+        Http = 1,
+        SyslogUdp = 2,
+        SyslogSecure= 3
+    }
     public interface ITagConfiguration
     {
         List<ISimpleTag> SimpleTags { get; }
@@ -38,8 +46,10 @@ namespace Loggly.Config
 
         bool IsValid { get;  }
 
+        MessageTransport MessageTransport { get; set; }
+
         ITagConfiguration Tags { get;  }
-        ITransportConfiguration Transport { get;  }
+        
         ISearchConfiguration Search { get; }
     }
 }

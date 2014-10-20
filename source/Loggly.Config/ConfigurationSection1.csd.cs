@@ -158,6 +158,32 @@ namespace Loggly.Config
         }
         #endregion
         
+        #region MessageTransport Property
+        /// <summary>
+        /// The XML name of the <see cref="MessageTransport"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string MessageTransportPropertyName = "messageTransport";
+        
+        /// <summary>
+        /// Gets or sets the MessageTransport.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The MessageTransport.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.LogglyAppConfig.MessageTransportPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual string MessageTransport
+        {
+            get
+            {
+                return ((string)(base[global::Loggly.Config.LogglyAppConfig.MessageTransportPropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.LogglyAppConfig.MessageTransportPropertyName] = value;
+            }
+        }
+        #endregion
+        
         #region Tags Property
         /// <summary>
         /// The XML name of the <see cref="Tags"/> property.
@@ -180,32 +206,6 @@ namespace Loggly.Config
             set
             {
                 base[global::Loggly.Config.LogglyAppConfig.TagsPropertyName] = value;
-            }
-        }
-        #endregion
-        
-        #region Transport Property
-        /// <summary>
-        /// The XML name of the <see cref="Transport"/> property.
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        internal const string TransportPropertyName = "transport";
-        
-        /// <summary>
-        /// Gets or sets the Transport.
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        [global::System.ComponentModel.DescriptionAttribute("The Transport.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.LogglyAppConfig.TransportPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
-        public virtual global::Loggly.Config.Transport Transport
-        {
-            get
-            {
-                return ((global::Loggly.Config.Transport)(base[global::Loggly.Config.LogglyAppConfig.TransportPropertyName]));
-            }
-            set
-            {
-                base[global::Loggly.Config.LogglyAppConfig.TransportPropertyName] = value;
             }
         }
         #endregion
@@ -789,32 +789,6 @@ namespace Loggly.Config
         public override bool IsReadOnly()
         {
             return false;
-        }
-        #endregion
-        
-        #region Http Property
-        /// <summary>
-        /// The XML name of the <see cref="Http"/> property.
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        internal const string HttpPropertyName = "http";
-        
-        /// <summary>
-        /// Gets or sets the Http.
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        [global::System.ComponentModel.DescriptionAttribute("The Http.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.Transport.HttpPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
-        public virtual global::Loggly.Config.HttpTransport Http
-        {
-            get
-            {
-                return ((global::Loggly.Config.HttpTransport)(base[global::Loggly.Config.Transport.HttpPropertyName]));
-            }
-            set
-            {
-                base[global::Loggly.Config.Transport.HttpPropertyName] = value;
-            }
         }
         #endregion
     }

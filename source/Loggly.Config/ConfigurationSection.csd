@@ -28,16 +28,16 @@
             <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Boolean" />
           </type>
         </attributeProperty>
+        <attributeProperty name="MessageTransport" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="messageTransport" isReadOnly="false">
+          <type>
+            <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/String" />
+          </type>
+        </attributeProperty>
       </attributeProperties>
       <elementProperties>
         <elementProperty name="Tags" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="tags" isReadOnly="false">
           <type>
             <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Tags" />
-          </type>
-        </elementProperty>
-        <elementProperty name="Transport" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="transport" isReadOnly="false">
-          <type>
-            <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Transport" />
           </type>
         </elementProperty>
         <elementProperty name="Search" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="search" isReadOnly="false">
@@ -99,15 +99,7 @@
         </elementProperty>
       </elementProperties>
     </configurationElement>
-    <configurationElement name="Transport" accessModifier="Internal">
-      <elementProperties>
-        <elementProperty name="Http" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="http" isReadOnly="false">
-          <type>
-            <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/HttpTransport" />
-          </type>
-        </elementProperty>
-      </elementProperties>
-    </configurationElement>
+    <configurationElement name="Transport" accessModifier="Internal" />
     <configurationElement name="HttpTransport" accessModifier="Internal" />
     <configurationElement name="SearchAppConfig" accessModifier="Internal">
       <attributeProperties>

@@ -16,11 +16,6 @@
 					<xs:documentation>The Tags.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
-			<xs:element minOccurs="0" name="transport" type="tns:Loggly.Config.TransportCT">
-				<xs:annotation>
-					<xs:documentation>The Transport.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
 			<xs:element minOccurs="0" name="search" type="tns:Loggly.Config.SearchAppConfigCT">
 				<xs:annotation>
 					<xs:documentation>The Search.</xs:documentation>
@@ -40,6 +35,11 @@
 		<xs:attribute name="throwExceptions" use="optional" type="xs:boolean">
 			<xs:annotation>
 				<xs:documentation>The ThrowExceptions.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="messageTransport" use="optional" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The MessageTransport.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>
@@ -100,13 +100,6 @@
 		</xs:choice>
 	</xs:complexType>
 	<xs:complexType name="Loggly.Config.TransportCT">
-		<xs:choice minOccurs="0" maxOccurs="unbounded">
-			<xs:element minOccurs="0" name="http" type="tns:Loggly.Config.HttpTransportCT">
-				<xs:annotation>
-					<xs:documentation>The Http.</xs:documentation>
-				</xs:annotation>
-			</xs:element>
-		</xs:choice>
 	</xs:complexType>
 	<xs:complexType name="Loggly.Config.HttpTransportCT">
 	</xs:complexType>

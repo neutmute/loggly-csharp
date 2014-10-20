@@ -20,7 +20,7 @@ $ActionSendStreamDriverPermittedPeer *.loggly.com
 
 *.* @@logs-01.loggly.com:6514;LogglyFormat
      */
-    class SyslogTlsMessageTransport : SyslogTransportBase
+    class SyslogSecureTransport : SyslogTransportBase
     {
         // The following method is invoked by the RemoteCertificateValidationDelegate. 
         private static bool ValidateServerCertificate(
@@ -57,6 +57,13 @@ $ActionSendStreamDriverPermittedPeer *.loggly.com
             try
             {
                 sslStream.AuthenticateAsClient(endpoint);
+                byte[] messageBytes = syslogMessage.GetBytes();
+
+                sslStream.Write(messageBytes);
+                sslStream.Flush();
+
+               // var serverMessage = ReadMessage(sslStream);
+               // Console.WriteLine("Server says: {0}", serverMessage);
             }
             catch (AuthenticationException e)
             {
@@ -67,16 +74,6 @@ $ActionSendStreamDriverPermittedPeer *.loggly.com
             {
                 client.Close();
             }
-
-            byte[] messageBytes = syslogMessage.GetBytes();
-
-            sslStream.Write(messageBytes);
-            sslStream.Flush();
-            
-            var serverMessage = ReadMessage(sslStream);
-            Console.WriteLine("Server says: {0}", serverMessage);
-            // Close the client connection.
-            client.Close();
         }
 
 

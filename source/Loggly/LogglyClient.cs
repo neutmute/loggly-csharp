@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading;
+using Loggly.Config;
 using Loggly.Responses;
 using Loggly.Transports;
 using Loggly.Transports.Syslog;
@@ -81,9 +82,13 @@ namespace Loggly
 
         private IMessageTransport GetTransport()
         {
-            //return new HttpMessageTransport();
-            //return new SyslogMessageTransport();
-            return new SyslogTlsMessageTransport();
+            switch (LogglyConfig.Instance.MessageTransport)
+            {
+                case MessageTransport.Http:         return new HttpMessageTransport();
+                case MessageTransport.SyslogUdp:    return new SyslogUdpTransport();
+                case MessageTransport.SyslogSecure: return new SyslogSecureTransport();
+                default: throw new NotSupportedException("Unsupported transport: " + LogglyConfig.Instance.MessageTransport);
+            }
         }
     }
 }
