@@ -47,13 +47,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\loggly-csharp\Loggly.csproj">
-      <Project>{f66349ba-29a6-4336-ba81-993170fc9963}</Project>
-      <Name>Loggly</Name>
-    </ProjectReference>
     <ProjectReference Include="..\loggly.Config\Loggly.Config.csproj">
       <Project>{58a100ce-cc7e-43bf-a054-d28648f092ac}</Project>
       <Name>Loggly.Config</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Loggly\Loggly.csproj">
+      <Project>{f66349ba-29a6-4336-ba81-993170fc9963}</Project>
+      <Name>Loggly</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

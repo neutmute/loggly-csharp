@@ -62,7 +62,7 @@
     <Compile Include="SearchTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\loggly-csharp\Loggly.csproj">
+    <ProjectReference Include="..\Loggly\Loggly.csproj">
       <Project>{F66349BA-29A6-4336-BA81-993170FC9963}</Project>
       <Name>Loggly</Name>
     </ProjectReference>

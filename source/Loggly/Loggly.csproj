@@ -79,6 +79,7 @@
     <Compile Include="Transports\SyslogMessageTransport.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Loggly.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
