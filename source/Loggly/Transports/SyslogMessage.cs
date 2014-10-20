@@ -41,6 +41,7 @@ namespace Loggly.Transports.Syslog
 
     public class SyslogMessage
     {
+        public int MessageId { get; set; }
         public Facility Facility { get; set; }
 
         public Level Level { get; set; }
@@ -68,7 +69,7 @@ namespace Loggly.Transports.Syslog
                 , Environment.MachineName
                 , appName
                 , Process.GetCurrentProcess().Id
-                , "2" // messageId
+                , MessageId
                 , logglyStructuredData
                 , Text
                 );

@@ -11,6 +11,7 @@ namespace Loggly
     }
     internal class LogglyMessage
     {
+        public int MessageId { get; set; }
         public MessageType Type { get; set; }
         public string Content { get; set; }
     }

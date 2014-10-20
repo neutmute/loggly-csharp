@@ -17,9 +17,9 @@ namespace Loggly
       /// <remarks>
       /// Callback can be null which will give great performance, at the cost of not knowing if a failure occured.
       /// </remarks>
-      void Log(Action<LogResponse> callback, string messageFormat, params object[] messageArgs);
+      void Log(MessageOptions options, string messageFormat, params object[] messageArgs);
       
       void Log<TLogAsJson>(TLogAsJson logObject);
-      void Log<TLogAsJson>(TLogAsJson logObject, Action<LogResponse> callback);
+      void Log<TLogAsJson>(TLogAsJson logObject, MessageOptions options);
    }
 }

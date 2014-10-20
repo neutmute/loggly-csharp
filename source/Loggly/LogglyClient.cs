@@ -11,18 +11,32 @@ using Newtonsoft.Json;
 
 namespace Loggly
 {
+    public class MessageOptions
+    {
+        /// <summary>
+        /// Only valid for Http transport
+        /// </summary>
+        public Action<LogResponse> Callback { get; set; }
+
+        /// <summary>
+        /// Only valid for syslog transport
+        /// </summary>
+        public int MessageId { get; set; }
+    }
+
+
     public class LogglyClient : ILogglyClient
     {
         public void Log(string plainTextFormat, params object[] plainTextArgs)
         {
-            Log(null, plainTextFormat, plainTextArgs);
+            Log(new MessageOptions(), plainTextFormat, plainTextArgs);
         }
-        public void Log(Action<LogResponse> callback, string plainTextFormat, params object[] plainTextArgs)
+        public void Log(MessageOptions options, string plainTextFormat, params object[] plainTextArgs)
         {
             IMessageTransport transporter = GetTransport();
-            var callbackWrapper = GetCallbackWrapper(callback);
+            var callbackWrapper = GetCallbackWrapper(options.Callback);
             var messageText = string.Format(plainTextFormat, plainTextArgs);
-            var message = new LogglyMessage { Type = MessageType.Plain, Content = messageText};
+            var message = new LogglyMessage {MessageId= options.MessageId, Type = MessageType.Plain, Content = messageText};
 
             transporter.Send(message, callbackWrapper);
         }
@@ -57,10 +71,10 @@ namespace Loggly
             Log(logObject, null);
         }
 
-        public void Log<TMessage>(TMessage logObject, Action<LogResponse> callback)
+        public void Log<TMessage>(TMessage logObject, MessageOptions options)
         {
-            var message = new LogglyMessage { Type = MessageType.Plain, Content = ToJson(logObject) };
-            var callbackWrapper = GetCallbackWrapper(callback);
+            var message = new LogglyMessage { MessageId = options.MessageId, Type = MessageType.Plain, Content = ToJson(logObject) };
+            var callbackWrapper = GetCallbackWrapper(options.Callback);
 
             IMessageTransport transporter = GetTransport();
             transporter.Send(message, callbackWrapper);

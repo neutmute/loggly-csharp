@@ -12,6 +12,7 @@ namespace Loggly.Transports.Syslog
             syslogMessage.Text = message.Content;
             syslogMessage.Facility = Facility.User;
             syslogMessage.Level = Level.Information;
+            syslogMessage.MessageId = message.MessageId;
             Send(syslogMessage);
         }
 

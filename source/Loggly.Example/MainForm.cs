@@ -30,8 +30,8 @@ namespace Loggly.Example
 
         private void btnPlainWithCallback_Click(object sender, EventArgs e)
         {
-            Action<LogResponse> callback = lr => Debug.WriteLine(lr);
-            _loggly.Log(callback, "Simple message at {0} with callback using {1}", DateTime.Now, LogglyConfig.Instance.MessageTransport);
+            var options = new MessageOptions {Callback = lr => Debug.WriteLine(lr)};
+            _loggly.Log(options, "Simple message at {0} with callback using {1}", DateTime.Now, LogglyConfig.Instance.MessageTransport);
         }
 
         private void btnSendJson_Click(object sender, EventArgs e)
