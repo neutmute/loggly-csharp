@@ -5,7 +5,7 @@
         <version>$version$</version>
         <authors>Karl Seguin</authors>
         <owners>Karl Seguin</owners>
-        <licenseUrl>https://github.com/karlseguin/loggly-csharp/blob/master/license.txt</licenseUrl>
+        <licenseUrl>https://raw.githubusercontent.com/karlseguin/loggly-csharp/master/license.txt</licenseUrl>
         <projectUrl>https://github.com/karlseguin/loggly-csharp</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>$description$</description>

@@ -4,4 +4,4 @@ using System.Runtime.InteropServices;
 using System.Security;
 
 [assembly: AssemblyTitle("Loggly.Config")]
-[assembly: AssemblyDescription("Configuration reader for Loggly")]
+[assembly: AssemblyDescription("Configuration handlers for Loggly")]
