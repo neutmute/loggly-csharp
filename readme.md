@@ -1,75 +1,90 @@
-# Loggly .NET Driver
+# .NET Client for Loggly  #
 
-This is a .NET driver for [loggly.com](http://loggly.com).
+This is a .NET client for [loggly.com](http://loggly.com).
 
-## Logging Events
+Install via nuget with
 
-**Please note that as of the 2.0 release, async logging is the default. To log synchronously, use the corresponding `Sync` methods (`Log` vs `LogSync`)**
+	Install-Package loggly-csharp
 
-Create a new `Logger` with your input key:
+**Note** Version 3.5 has completely broken compatibility with prior versions to bring major improvements.
+Any existing code will need fixing.
 
-	var logger = new Logger("my-long-key-that-i-got-when-setting-up-my-http-input");
+## Configuration ##
+Configuration is done via app.config. The minimal amount config you require is to specify your customer token: 
 
-OR
-	
-	var logger = new Logger("my-long-key-that-i-got-when-setting-up-my-http-input", "your-application-name");
-	
-	
-Passing application name will help you to track your application easily in loggly dashboard if you use loggly-csharp library in multiple projects.
+	<configuration>
+	  <configSections>
+	    <section name="loggly" type="Loggly.Config.LogglyAppConfig, Loggly.Config, Version=3.5.0.0, Culture=neutral, PublicKeyToken=null"/>
+	  </configSections>
+	  <loggly xmlns="Loggly" customerToken="your token" />
+	</configuration>
+ 
+When you get that working, take the training wheels off and go crazy:
 
-For JSON logging you can use `LogInfo`, `LogVerbose`, `LogWarning`, `LogError` methods that will create json objects with properties like category, message, exception (if applicable), extra data that you provide.
+	<loggly 
+	  xmlns="Loggly" 
+	  applicationName="Loggly.Example" 
+	  customerToken="!!!!your token here!!!!" 
+	  messageTransport="SyslogUdp"
+	  throwExceptions="true">
+	  <search account="your_loggly_account" username="your_loggly_username" password="myLittleP0ny!"/>  
+	  <tags>
+	    <simple>
+	      <tag value="winforms"/>
+	    </simple>
+	    <complex>
+	      <tag type="Loggly.HostnameTag" formatter="host-{0}"/>
+	      <tag type="Loggly.ApplicationNameTag" formatter="application-{0}"/>
+	      <tag type="Loggly.OperatingSystemVersionTag" formatter="os-{0}"/>
+	      <tag type="Loggly.OperatingSystemPlatformTag" formatter="platform-{0}"/>
+	    </complex>
+	  </tags>
+	</loggly>
 
-Use either a synchronous or asynchronous `Log` method.
+Complex tags have the `formatter` attribute so you may specify your own `string.Format`.
+The `Assembly` attribute is available as an optional parameter so you can roll your own tags too.
 
+If you don't need programatially driven tags, just write your simple tags. If your tags don't appear, check the [Loggly restrictions](https://www.loggly.com/docs/tags/) for tag formats. 
 
-## Searching Events on Loggly Dashboad
+As long as you keep the `xmlns` attribute, Visual Studio will provide auto completion.
+If you prefer to set configuration programatically, specify the values via the static `LogglyConfig.Instance` at application startup.
 
-You can see logs on Loggly dashboard by using facet 
+## Transports ##
+Three different transports may be specified with the `messageTransport` attribute:
 
-	userAgent:"loggly-csharp"
+### Http ###
+The default transport is HTTP posting to Loggly on port 443. Note that the application and host attributes [are not supported by HTTP](https://community.loggly.com/customer/portal/questions/8416949--host-field-for-source-groups?b_id=50).
 
-OR
+### SyslogUdp
+If you specify an `applicationName` in the config, the syslog UDP transport will populate the field so it may be filtered in a source group. Host is also automatically populated by  the client. Udp messages are sent in plain text.  
 
-	userAgent:"your-application-name"
+### SyslogSecure
+Has the advantages of SyslogUdp as well as transmitting via the secure TLS TCP channel so that your logs are encrypted over the wire.
 
-## Searching Events using code
+## Loggly.Example
+This project has sample code to demonstrate the client.
+Before starting, copy the example config into the user config, eg:
 
-First, setup the username/password you want to connect with:
+	C:\loggly-csharp>copy .\source\Loggly.Example\example.loggly.user.config .\source\Loggly.Example\loggly.user.config
 
-	LogglyConfiguration.Configure(c => c.AuthenticateWith("username", "password"));
+And configure the file with your own customer token.
 
-Next, create a searcher with your domain:
+Of course, there is no need to have a config source in your real app, this is just a convenience for this public repository.
 
-	var searcher = new Searcher("mydomain");
+## LogglyClient
+Send simple text messages with something like this.
 
-Finally, use the various `Search` methods.
+	ILogglyClient _loggly = new LogglyClient();
+	_loggly.Log("A simple text message at {0}", DateTime.Now);
 
-For JSON search you can use `SearchJson` methods.
+Or log an entire object and let the client send it as structured JSON
 
-Note that searching happens synchronously.
+	_loggly.Log(new MyAwesomeObjectToLog());
 
+## SearchClient
 
-## Facets
+Currently broken but not far from working. 
+Feel free to submit a Pull Request with a fix.
 
-First, setup the username/password you want to connect with:
-
-	LogglyConfiguration.Configure(c => c.AuthenticateWith("username", "password"));
-
-Next, create a facet with your domain:
-
-	var facet = new Facet("mydomain");
-
-Finally, use the various `GetDate`, `GetIp` and `GetInput* methods.
-
-Getting facts is always synchronous
-
-
-## Integration Tests
-
-To run the integration tests, you'll need to place a `config.user` file in the test's debug folder (assuming you are running tests in debug). The file should look something like:
-
-	<appSettings>
-		<add key="IntegrationKey" value="YOUR KEY"></add>
-		<add key="IntegrationUser" value="YOUR USERNAME"></add>
-		<add key="IntegrationPassword" value="YOUR PASSWORD"></add>
-	</appSettings>
+## Logging Adapters
+See [nlog-targets-loggly](https://github.com/joefitzgerald/nlog-targets-loggly) for a ready made NLog target that uses this package
