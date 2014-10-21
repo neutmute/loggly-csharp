@@ -18,3 +18,7 @@ _ReSharper*
 .DS_Store
 *.usertasks
 *.userprefs
+packages/
+source/Loggly.Example/loggly.user.config
+SolutionItems/Thumbs.db
+*.nupkg

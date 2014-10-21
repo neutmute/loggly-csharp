@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+    <metadata>
+        <id>loggly-csharp</id>
+        <version>$version$</version>
+        <title>$title$</title>
+        <authors>Karl Seguin</authors>
+        <owners>Karl Seguin</owners>
+        <licenseUrl>https://raw.githubusercontent.com/karlseguin/loggly-csharp/master/license.txt</licenseUrl>
+        <projectUrl>https://github.com/karlseguin/loggly-csharp</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>$description$</description>
+        <language>en-US</language>
+        <tags>LOGGLY</tags>
+    </metadata>
+</package>
