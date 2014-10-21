@@ -3,6 +3,7 @@
     <metadata>
         <id>loggly-csharp</id>
         <version>$version$</version>
+        <title>$title$</title>
         <authors>Karl Seguin</authors>
         <owners>Karl Seguin</owners>
         <licenseUrl>https://raw.githubusercontent.com/karlseguin/loggly-csharp/master/license.txt</licenseUrl>
