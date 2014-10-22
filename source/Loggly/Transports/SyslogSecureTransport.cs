@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Security.Authentication;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using Loggly.Config;
 using Loggly.Responses;
 
 namespace Loggly.Transports.Syslog
@@ -24,8 +25,8 @@ namespace Loggly.Transports.Syslog
 
         protected override void Send(SyslogMessage syslogMessage)
         {
-            const string endpoint = "logs-01.loggly.com";
-            var client = new TcpClient(endpoint, 6514);
+            var hostname = LogglyConfig.Instance.Transport.EndpointHostname;
+            var client = new TcpClient(hostname, LogglyConfig.Instance.Transport.EndpointPort);
             
             var sslStream = new SslStream(
                 client.GetStream(),
@@ -36,7 +37,7 @@ namespace Loggly.Transports.Syslog
 
             try
             {
-                sslStream.AuthenticateAsClient(endpoint);
+                sslStream.AuthenticateAsClient(hostname);
                 byte[] messageBytes = syslogMessage.GetBytes(RenderedTags);
 
                 sslStream.Write(messageBytes);

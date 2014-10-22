@@ -60,7 +60,7 @@ namespace Loggly.Config
 
             config.CustomerToken = LogglyAppConfig.Instance.CustomerToken;
             config.ThrowExceptions = LogglyAppConfig.Instance.ThrowExceptions;
-            config.ApplicationName = LogglyAppConfig.Instance.ApplicationName;
+            config.ApplicationName = new ApplicationNameProvider().GetName();
 
             if (LogglyAppConfig.Instance.HasTagConfig)
             {

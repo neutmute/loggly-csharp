@@ -9,6 +9,24 @@ namespace Loggly
 {
     internal class HttpMessageTransport : HttpTransportBase, IMessageTransport
     {
+        private static string __url;
+
+        private static string Url
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(__url))
+                {
+                    __url = string.Format("https://{0}:{1}/inputs/{2}"
+                        , LogglyConfig.Instance.Transport.EndpointHostname
+                        , LogglyConfig.Instance.Transport.EndpointPort
+                        , LogglyConfig.Instance.CustomerToken);
+                }
+                return __url;
+            }
+        }
+
+
         public void Send(LogglyMessage message)
         {
             Send(message, null);
@@ -35,7 +53,7 @@ namespace Loggly
 
         private HttpWebRequest CreateRequest(LogglyMessage message)
         {
-            var request = CreateRequest(GetSendUrl(), HttpRequestType.Post);
+            var request = CreateRequest(Url, HttpRequestType.Post);
 
             if (!string.IsNullOrEmpty(RenderedTags))
             {
@@ -53,12 +71,6 @@ namespace Loggly
             }
 
             return request;
-        }
-
-        private string GetSendUrl()
-        {
-            var url = "https://logs-01.loggly.com/inputs/" + LogglyConfig.Instance.CustomerToken;
-            return url;
         }
 
         protected override string GetRenderedTags()

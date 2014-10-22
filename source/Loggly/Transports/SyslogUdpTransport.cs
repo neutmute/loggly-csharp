@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using Loggly.Config;
 
 namespace Loggly.Transports.Syslog
 {
@@ -28,12 +29,8 @@ namespace Loggly.Transports.Syslog
     internal class SyslogUdpTransport : SyslogTransportBase
     {
         private readonly UdpClientEx _udpClient;
-        public int Port { get; set; }
-
         public SyslogUdpTransport()
         {
-            Port = 514;
-            
             var ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
             var ipAddress = ipHostInfo.AddressList.First(ip => ip.AddressFamily == AddressFamily.InterNetwork);
             var ipLocalEndPoint = new IPEndPoint(ipAddress, 0);
@@ -58,8 +55,8 @@ namespace Loggly.Transports.Syslog
         {
             if (!_udpClient.IsActive)
             {
-                var logglyEndpointIp = Dns.GetHostEntry("logs-01.loggly.com").AddressList[0];
-                _udpClient.Connect(logglyEndpointIp, Port);
+                var logglyEndpointIp = Dns.GetHostEntry(LogglyConfig.Instance.Transport.EndpointHostname).AddressList[0];
+                _udpClient.Connect(logglyEndpointIp, LogglyConfig.Instance.Transport.EndpointPort);
             }
 
             try

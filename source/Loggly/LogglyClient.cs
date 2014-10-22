@@ -27,6 +27,11 @@ namespace Loggly
         /// Only valid for syslog transport
         /// </summary>
         public Level Level { get; set; }
+
+        public MessageOptions()
+        {
+            Level = Level.Information;
+        }
     }
 
 
@@ -78,6 +83,10 @@ namespace Loggly
 
         public void Log<TMessage>(MessageOptions options, TMessage logObject)
         {
+            if (options == null)
+            {
+                options = new MessageOptions();
+            }
             var message = new LogglyMessage { MessageId = options.MessageId, Level=options.Level, Type = MessageType.Plain, Content = ToJson(logObject) };
             var callbackWrapper = GetCallbackWrapper(options.Callback);
 
