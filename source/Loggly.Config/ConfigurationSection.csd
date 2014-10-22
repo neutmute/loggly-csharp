@@ -9,6 +9,13 @@
     <externalType name="Double" namespace="System" />
     <externalType name="DateTime" namespace="System" />
     <externalType name="TimeSpan" namespace="System" />
+    <enumeratedType name="LogTransport" namespace="Loggly.Config">
+      <literals>
+        <enumerationLiteral name="Https" />
+        <enumerationLiteral name="SyslogSecure" />
+        <enumerationLiteral name="SyslogUdp" />
+      </literals>
+    </enumeratedType>
   </typeDefinitions>
   <configurationElements>
     <configurationSection name="LogglyAppConfig" namespace="Loggly.Config" accessModifier="Internal" codeGenOptions="Singleton, XmlnsProperty" xmlSectionName="loggly">
@@ -28,21 +35,21 @@
             <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Boolean" />
           </type>
         </attributeProperty>
-        <attributeProperty name="MessageTransport" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="messageTransport" isReadOnly="false">
-          <type>
-            <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/String" />
-          </type>
-        </attributeProperty>
       </attributeProperties>
       <elementProperties>
         <elementProperty name="Tags" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="tags" isReadOnly="false">
           <type>
-            <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Tags" />
+            <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/TagAppConfig" />
           </type>
         </elementProperty>
         <elementProperty name="Search" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="search" isReadOnly="false">
           <type>
             <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/SearchAppConfig" />
+          </type>
+        </elementProperty>
+        <elementProperty name="Transport" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="transport" isReadOnly="false">
+          <type>
+            <configurationElementMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/TransportAppConfig" />
           </type>
         </elementProperty>
       </elementProperties>
@@ -85,7 +92,7 @@
         </attributeProperty>
       </attributeProperties>
     </configurationElement>
-    <configurationElement name="Tags" accessModifier="Internal">
+    <configurationElement name="TagAppConfig" accessModifier="Internal">
       <elementProperties>
         <elementProperty name="Simple" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="simple" isReadOnly="false">
           <type>
@@ -99,8 +106,25 @@
         </elementProperty>
       </elementProperties>
     </configurationElement>
-    <configurationElement name="Transport" accessModifier="Internal" />
-    <configurationElement name="HttpTransport" accessModifier="Internal" />
+    <configurationElement name="TransportAppConfig" accessModifier="Internal">
+      <attributeProperties>
+        <attributeProperty name="LogTransport" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="logTransport" isReadOnly="false">
+          <type>
+            <enumeratedTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/LogTransport" />
+          </type>
+        </attributeProperty>
+        <attributeProperty name="EndpointHostname" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="endpointHostname" isReadOnly="false">
+          <type>
+            <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/String" />
+          </type>
+        </attributeProperty>
+        <attributeProperty name="EndpointPort" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="endpointPort" isReadOnly="false">
+          <type>
+            <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Int32" />
+          </type>
+        </attributeProperty>
+      </attributeProperties>
+    </configurationElement>
     <configurationElement name="SearchAppConfig" accessModifier="Internal">
       <attributeProperties>
         <attributeProperty name="Account" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="account" isReadOnly="false">

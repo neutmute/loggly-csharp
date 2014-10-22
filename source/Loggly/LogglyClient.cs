@@ -38,7 +38,7 @@ namespace Loggly
         }
         public void Log(MessageOptions options, string plainTextFormat, params object[] plainTextArgs)
         {
-            IMessageTransport transporter = GetTransport();
+            IMessageTransport transporter = TransportFactory();
             var callbackWrapper = GetCallbackWrapper(options.Callback);
             var messageText = string.Format(plainTextFormat, plainTextArgs);
             var message = new LogglyMessage {MessageId= options.MessageId, Type = MessageType.Plain, Content = messageText};
@@ -81,7 +81,7 @@ namespace Loggly
             var message = new LogglyMessage { MessageId = options.MessageId, Level=options.Level, Type = MessageType.Plain, Content = ToJson(logObject) };
             var callbackWrapper = GetCallbackWrapper(options.Callback);
 
-            IMessageTransport transporter = GetTransport();
+            IMessageTransport transporter = TransportFactory();
             transporter.Send(message, callbackWrapper);
         }
 
@@ -98,14 +98,15 @@ namespace Loggly
             return asJson;
         }
 
-        private IMessageTransport GetTransport()
+        private IMessageTransport TransportFactory()
         {
-            switch (LogglyConfig.Instance.MessageTransport)
+            var transport = LogglyConfig.Instance.Transport.LogTransport;
+            switch (transport)
             {
-                case MessageTransport.Http:         return new HttpMessageTransport();
-                case MessageTransport.SyslogUdp:    return new SyslogUdpTransport();
-                case MessageTransport.SyslogSecure: return new SyslogSecureTransport();
-                default: throw new NotSupportedException("Unsupported transport: " + LogglyConfig.Instance.MessageTransport);
+                case LogTransport.Https: return new HttpMessageTransport();
+                case LogTransport.SyslogUdp: return new SyslogUdpTransport();
+                case LogTransport.SyslogSecure: return new SyslogSecureTransport();
+                default: throw new NotSupportedException("Unsupported transport: " + transport);
             }
         }
     }

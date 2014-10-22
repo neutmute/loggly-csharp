@@ -41,6 +41,8 @@
     <Compile Include="..\..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="AppConfigPartials\TransportAppConfig.cs" />
+    <Compile Include="AppConfigPartials\TagAppConfig.cs" />
     <Compile Include="SearchConfiguration.cs" />
     <Compile Include="Tags\SimpleTag.cs" />
     <Compile Include="Tags\ComplexTags\ApplicationNameTag.cs" />

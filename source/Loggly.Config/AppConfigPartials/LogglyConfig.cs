@@ -11,5 +11,15 @@ namespace Loggly.Config
         {
             get { return Instance != null; }
         }
+
+        public bool HasTagConfig
+        {
+            get { return Tags != null; }
+        }
+
+        public bool HasSearchConfig
+        {
+            get { return Search != null; }
+        }
     }
 }

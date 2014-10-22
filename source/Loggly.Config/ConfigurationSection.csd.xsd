@@ -11,7 +11,7 @@
 	<xs:element name="loggly" type="tns:Loggly.Config.LogglyAppConfigCT" />
 	<xs:complexType name="Loggly.Config.LogglyAppConfigCT">
 		<xs:choice minOccurs="0" maxOccurs="unbounded">
-			<xs:element minOccurs="0" name="tags" type="tns:Loggly.Config.TagsCT">
+			<xs:element minOccurs="0" name="tags" type="tns:Loggly.Config.TagAppConfigCT">
 				<xs:annotation>
 					<xs:documentation>The Tags.</xs:documentation>
 				</xs:annotation>
@@ -19,6 +19,11 @@
 			<xs:element minOccurs="0" name="search" type="tns:Loggly.Config.SearchAppConfigCT">
 				<xs:annotation>
 					<xs:documentation>The Search.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element minOccurs="0" name="transport" type="tns:Loggly.Config.TransportAppConfigCT">
+				<xs:annotation>
+					<xs:documentation>The Transport.</xs:documentation>
 				</xs:annotation>
 			</xs:element>
 		</xs:choice>
@@ -35,11 +40,6 @@
 		<xs:attribute name="throwExceptions" use="optional" type="xs:boolean">
 			<xs:annotation>
 				<xs:documentation>The ThrowExceptions.</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="messageTransport" use="optional" type="xs:string">
-			<xs:annotation>
-				<xs:documentation>The MessageTransport.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>
@@ -85,7 +85,7 @@
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>
-	<xs:complexType name="Loggly.Config.TagsCT">
+	<xs:complexType name="Loggly.Config.TagAppConfigCT">
 		<xs:choice minOccurs="0" maxOccurs="unbounded">
 			<xs:element minOccurs="0" name="simple" type="tns:Loggly.Config.SimpleTagCollectionCT">
 				<xs:annotation>
@@ -99,9 +99,22 @@
 			</xs:element>
 		</xs:choice>
 	</xs:complexType>
-	<xs:complexType name="Loggly.Config.TransportCT">
-	</xs:complexType>
-	<xs:complexType name="Loggly.Config.HttpTransportCT">
+	<xs:complexType name="Loggly.Config.TransportAppConfigCT">
+		<xs:attribute name="logTransport" use="optional" type="tns:LogTransport">
+			<xs:annotation>
+				<xs:documentation>The LogTransport.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="endpointHostname" use="optional" type="xs:string">
+			<xs:annotation>
+				<xs:documentation>The EndpointHostname.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="endpointPort" use="optional" type="xs:int">
+			<xs:annotation>
+				<xs:documentation>The EndpointPort.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 	</xs:complexType>
 	<xs:complexType name="Loggly.Config.SearchAppConfigCT">
 		<xs:attribute name="account" use="optional" type="xs:string">
@@ -120,4 +133,26 @@
 			</xs:annotation>
 		</xs:attribute>
 	</xs:complexType>
+	<xs:simpleType name="LogTransport">
+		<xs:annotation>
+			<xs:documentation>LogTransport.</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Https">
+				<xs:annotation>
+					<xs:documentation>Https.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SyslogSecure">
+				<xs:annotation>
+					<xs:documentation>SyslogSecure.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SyslogUdp">
+				<xs:annotation>
+					<xs:documentation>SyslogUdp.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
 </xs:schema>

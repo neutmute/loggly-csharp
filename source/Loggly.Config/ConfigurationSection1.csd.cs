@@ -158,32 +158,6 @@ namespace Loggly.Config
         }
         #endregion
         
-        #region MessageTransport Property
-        /// <summary>
-        /// The XML name of the <see cref="MessageTransport"/> property.
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        internal const string MessageTransportPropertyName = "messageTransport";
-        
-        /// <summary>
-        /// Gets or sets the MessageTransport.
-        /// </summary>
-        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        [global::System.ComponentModel.DescriptionAttribute("The MessageTransport.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.LogglyAppConfig.MessageTransportPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
-        public virtual string MessageTransport
-        {
-            get
-            {
-                return ((string)(base[global::Loggly.Config.LogglyAppConfig.MessageTransportPropertyName]));
-            }
-            set
-            {
-                base[global::Loggly.Config.LogglyAppConfig.MessageTransportPropertyName] = value;
-            }
-        }
-        #endregion
-        
         #region Tags Property
         /// <summary>
         /// The XML name of the <see cref="Tags"/> property.
@@ -197,11 +171,11 @@ namespace Loggly.Config
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
         [global::System.ComponentModel.DescriptionAttribute("The Tags.")]
         [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.LogglyAppConfig.TagsPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
-        public virtual global::Loggly.Config.Tags Tags
+        public virtual global::Loggly.Config.TagAppConfig Tags
         {
             get
             {
-                return ((global::Loggly.Config.Tags)(base[global::Loggly.Config.LogglyAppConfig.TagsPropertyName]));
+                return ((global::Loggly.Config.TagAppConfig)(base[global::Loggly.Config.LogglyAppConfig.TagsPropertyName]));
             }
             set
             {
@@ -232,6 +206,32 @@ namespace Loggly.Config
             set
             {
                 base[global::Loggly.Config.LogglyAppConfig.SearchPropertyName] = value;
+            }
+        }
+        #endregion
+        
+        #region Transport Property
+        /// <summary>
+        /// The XML name of the <see cref="Transport"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string TransportPropertyName = "transport";
+        
+        /// <summary>
+        /// Gets or sets the Transport.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The Transport.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.LogglyAppConfig.TransportPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::Loggly.Config.TransportAppConfig Transport
+        {
+            get
+            {
+                return ((global::Loggly.Config.TransportAppConfig)(base[global::Loggly.Config.LogglyAppConfig.TransportPropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.LogglyAppConfig.TransportPropertyName] = value;
             }
         }
         #endregion
@@ -702,9 +702,9 @@ namespace Loggly.Config
     
     
     /// <summary>
-    /// The Tags Configuration Element.
+    /// The TagAppConfig Configuration Element.
     /// </summary>
-    internal partial class Tags : global::System.Configuration.ConfigurationElement
+    internal partial class TagAppConfig : global::System.Configuration.ConfigurationElement
     {
         
         #region IsReadOnly override
@@ -730,16 +730,16 @@ namespace Loggly.Config
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
         [global::System.ComponentModel.DescriptionAttribute("The Simple.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.Tags.SimplePropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.TagAppConfig.SimplePropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
         public virtual global::Loggly.Config.SimpleTagCollection Simple
         {
             get
             {
-                return ((global::Loggly.Config.SimpleTagCollection)(base[global::Loggly.Config.Tags.SimplePropertyName]));
+                return ((global::Loggly.Config.SimpleTagCollection)(base[global::Loggly.Config.TagAppConfig.SimplePropertyName]));
             }
             set
             {
-                base[global::Loggly.Config.Tags.SimplePropertyName] = value;
+                base[global::Loggly.Config.TagAppConfig.SimplePropertyName] = value;
             }
         }
         #endregion
@@ -756,16 +756,16 @@ namespace Loggly.Config
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
         [global::System.ComponentModel.DescriptionAttribute("The Complex.")]
-        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.Tags.ComplexPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.TagAppConfig.ComplexPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
         public virtual global::Loggly.Config.ComplexTagCollection Complex
         {
             get
             {
-                return ((global::Loggly.Config.ComplexTagCollection)(base[global::Loggly.Config.Tags.ComplexPropertyName]));
+                return ((global::Loggly.Config.ComplexTagCollection)(base[global::Loggly.Config.TagAppConfig.ComplexPropertyName]));
             }
             set
             {
-                base[global::Loggly.Config.Tags.ComplexPropertyName] = value;
+                base[global::Loggly.Config.TagAppConfig.ComplexPropertyName] = value;
             }
         }
         #endregion
@@ -776,9 +776,9 @@ namespace Loggly.Config
     
     
     /// <summary>
-    /// The Transport Configuration Element.
+    /// The TransportAppConfig Configuration Element.
     /// </summary>
-    internal partial class Transport : global::System.Configuration.ConfigurationElement
+    internal partial class TransportAppConfig : global::System.Configuration.ConfigurationElement
     {
         
         #region IsReadOnly override
@@ -791,26 +791,82 @@ namespace Loggly.Config
             return false;
         }
         #endregion
-    }
-}
-namespace Loggly.Config
-{
-    
-    
-    /// <summary>
-    /// The HttpTransport Configuration Element.
-    /// </summary>
-    internal partial class HttpTransport : global::System.Configuration.ConfigurationElement
-    {
         
-        #region IsReadOnly override
+        #region LogTransport Property
         /// <summary>
-        /// Gets a value indicating whether the element is read-only.
+        /// The XML name of the <see cref="LogTransport"/> property.
         /// </summary>
         [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
-        public override bool IsReadOnly()
+        internal const string LogTransportPropertyName = "logTransport";
+        
+        /// <summary>
+        /// Gets or sets the LogTransport.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The LogTransport.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.TransportAppConfig.LogTransportPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual global::Loggly.Config.LogTransport LogTransport
         {
-            return false;
+            get
+            {
+                return ((global::Loggly.Config.LogTransport)(base[global::Loggly.Config.TransportAppConfig.LogTransportPropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.TransportAppConfig.LogTransportPropertyName] = value;
+            }
+        }
+        #endregion
+        
+        #region EndpointHostname Property
+        /// <summary>
+        /// The XML name of the <see cref="EndpointHostname"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string EndpointHostnamePropertyName = "endpointHostname";
+        
+        /// <summary>
+        /// Gets or sets the EndpointHostname.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The EndpointHostname.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.TransportAppConfig.EndpointHostnamePropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual string EndpointHostname
+        {
+            get
+            {
+                return ((string)(base[global::Loggly.Config.TransportAppConfig.EndpointHostnamePropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.TransportAppConfig.EndpointHostnamePropertyName] = value;
+            }
+        }
+        #endregion
+        
+        #region EndpointPort Property
+        /// <summary>
+        /// The XML name of the <see cref="EndpointPort"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string EndpointPortPropertyName = "endpointPort";
+        
+        /// <summary>
+        /// Gets or sets the EndpointPort.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The EndpointPort.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.TransportAppConfig.EndpointPortPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false)]
+        public virtual int EndpointPort
+        {
+            get
+            {
+                return ((int)(base[global::Loggly.Config.TransportAppConfig.EndpointPortPropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.TransportAppConfig.EndpointPortPropertyName] = value;
+            }
         }
         #endregion
     }
@@ -913,5 +969,32 @@ namespace Loggly.Config
             }
         }
         #endregion
+    }
+}
+namespace Loggly.Config
+{
+    
+    
+    /// <summary>
+    /// LogTransport.
+    /// </summary>
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+    public enum LogTransport
+    {
+        
+        /// <summary>
+        /// Https.
+        /// </summary>
+        Https,
+        
+        /// <summary>
+        /// SyslogSecure.
+        /// </summary>
+        SyslogSecure,
+        
+        /// <summary>
+        /// SyslogUdp.
+        /// </summary>
+        SyslogUdp,
     }
 }

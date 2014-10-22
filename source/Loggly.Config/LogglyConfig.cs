@@ -10,7 +10,6 @@ namespace Loggly.Config
     public class LogglyConfig : ILogglyConfig
     {
         public string ApplicationName { get; set; }
-        public MessageTransport MessageTransport { get; set; }
         public string CustomerToken { get; set; }
         public bool ThrowExceptions { get; set; }
         public ITagConfiguration Tags { get; private set; }
@@ -63,32 +62,13 @@ namespace Loggly.Config
             config.ThrowExceptions = LogglyAppConfig.Instance.ThrowExceptions;
             config.ApplicationName = LogglyAppConfig.Instance.ApplicationName;
 
-            if (string.IsNullOrEmpty(LogglyAppConfig.Instance.MessageTransport))
+            if (LogglyAppConfig.Instance.HasTagConfig)
             {
-                config.MessageTransport = MessageTransport.Http;
-            }
-            else
-            {
-                config.MessageTransport = (MessageTransport) Enum.Parse(typeof(MessageTransport), LogglyAppConfig.Instance.MessageTransport);
+                config.Tags.SimpleTags.AddRange(LogglyAppConfig.Instance.Tags.Simple.Cast<ISimpleTag>().ToList());
+                config.Tags.ComplexTags.AddRange(LogglyAppConfig.Instance.Tags.GetComplexTags());
             }
 
-            foreach (ISimpleTag simpleTag in LogglyAppConfig.Instance.Tags.Simple)
-            {
-                config.Tags.SimpleTags.Add(simpleTag);
-            }
-
-            foreach (ComplexTagAppConfig complexTagConfig in LogglyAppConfig.Instance.Tags.Complex)
-            {
-                var assembly = complexTagConfig.Assembly;
-                if (string.IsNullOrEmpty(assembly))
-                {
-                    // Support minimal config with a default when unspecified
-                    assembly = "Loggly.Config";
-                }
-                var complexTag = (ComplexTag)Activator.CreateInstance(assembly, complexTagConfig.Type).Unwrap();
-                complexTag.Formatter = complexTagConfig.Formatter;
-                config.Tags.ComplexTags.Add(complexTag);
-            }
+            config.Transport = TransportAppConfig.ConformToValidConfig(LogglyAppConfig.Instance.Transport);
 
             config.Search = LogglyAppConfig.Instance.Search;
 

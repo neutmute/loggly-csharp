@@ -2,6 +2,10 @@
 {
     public class TransportConfiguration : ITransportConfiguration
     {
-        //public IHttpTransport Http { get; private set; }
+        public LogTransport LogTransport { get; set; }
+
+        public string EndpointHostname { get; set; }
+
+        public int EndpointPort { get; set; }
     }
 }

@@ -25,13 +25,13 @@ namespace Loggly.Example
 
         private void btnPlainText_Click(object sender, EventArgs e)
         {
-            _loggly.Log("Simple message at {0} using {1}", DateTime.Now, LogglyConfig.Instance.MessageTransport);
+            _loggly.Log("Simple message at {0} using {1}", DateTime.Now, LogglyConfig.Instance.Transport.LogTransport);
         }
 
         private void btnPlainWithCallback_Click(object sender, EventArgs e)
         {
             var options = new MessageOptions {Callback = lr => Debug.WriteLine(lr)};
-            _loggly.Log(options, "Simple message at {0} with callback using {1}", DateTime.Now, LogglyConfig.Instance.MessageTransport);
+            _loggly.Log(options, "Simple message at {0} with callback using {1}", DateTime.Now, LogglyConfig.Instance.Transport.LogTransport);
         }
 
         private void btnSendJson_Click(object sender, EventArgs e)

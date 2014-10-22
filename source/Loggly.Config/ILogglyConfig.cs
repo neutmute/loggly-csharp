@@ -3,13 +3,6 @@ using System.Collections.Generic;
 
 namespace Loggly.Config
 {
-    public enum MessageTransport
-    {
-        Unspecified =0,
-        Http = 1,
-        SyslogUdp = 2,
-        SyslogSecure= 3
-    }
     public interface ITagConfiguration
     {
         List<ISimpleTag> SimpleTags { get; }
@@ -25,6 +18,9 @@ namespace Loggly.Config
 
     public interface ITransportConfiguration
     {
+        string EndpointHostname { get; set; }
+        int EndpointPort { get; set; }
+        LogTransport LogTransport { get; set; }
     }
 
     public interface ISimpleTag
@@ -45,11 +41,11 @@ namespace Loggly.Config
         bool ThrowExceptions { get; set; }
 
         bool IsValid { get;  }
-
-        MessageTransport MessageTransport { get; set; }
-
+        
         ITagConfiguration Tags { get;  }
         
         ISearchConfiguration Search { get; }
+
+        ITransportConfiguration Transport { get; }
     }
 }
