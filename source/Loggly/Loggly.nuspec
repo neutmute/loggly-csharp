@@ -4,7 +4,7 @@
         <id>loggly-csharp</id>
         <version>$version$</version>
         <title>loggly-csharp</title>
-        <authors>Karl Seguin, neutmute &amp; contributors</authors>
+        <authors>KSeguin,neutmute</authors>
         <projectUrl>https://github.com/neutmute/loggly-csharp</projectUrl>
         <iconUrl>https://raw.githubusercontent.com/neutmute/loggly-csharp/master/SolutionItems/loggly.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
