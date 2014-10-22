@@ -1,0 +1,1 @@
+AppSettings handler generated with [Configuration Section Designer](https://csd.codeplex.com/)

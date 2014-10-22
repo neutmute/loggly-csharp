@@ -3,14 +3,13 @@
     <metadata>
         <id>loggly-csharp</id>
         <version>$version$</version>
-        <title>$title$</title>
-        <authors>Karl Seguin</authors>
-        <owners>Karl Seguin</owners>
-        <licenseUrl>https://raw.githubusercontent.com/karlseguin/loggly-csharp/master/license.txt</licenseUrl>
-        <projectUrl>https://github.com/karlseguin/loggly-csharp</projectUrl>
+        <title>loggly-csharp</title>
+        <authors>Karl Seguin, neutmute &amp; contributors</authors>
+        <projectUrl>https://github.com/neutmute/loggly-csharp</projectUrl>
+        <iconUrl>https://raw.githubusercontent.com/neutmute/loggly-csharp/master/SolutionItems/loggly.png</iconUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
         <description>$description$</description>
         <language>en-US</language>
-        <tags>LOGGLY</tags>
+        <tags>loggly</tags>
     </metadata>
 </package>
