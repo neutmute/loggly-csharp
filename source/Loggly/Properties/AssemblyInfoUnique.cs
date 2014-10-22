@@ -4,4 +4,4 @@ using System.Runtime.InteropServices;
 using System.Security;
 
 [assembly: AssemblyTitle("loggly-csharp")]
-[assembly: AssemblyDescription(".NET client for loggly.com. Supports Http, Syslog UDP and Syslog TCP with TLS transports.")]
+[assembly: AssemblyDescription("A .NET client for loggly. Supporting Https, Syslog UDP and encrypted Syslog TCP transports.")]
