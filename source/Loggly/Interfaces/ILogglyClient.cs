@@ -20,6 +20,7 @@ namespace Loggly
       void Log(MessageOptions options, string messageFormat, params object[] messageArgs);
       
       void Log<TLogAsJson>(TLogAsJson logObject);
+
       void Log<TLogAsJson>(MessageOptions options, TLogAsJson logObject);
    }
 }
