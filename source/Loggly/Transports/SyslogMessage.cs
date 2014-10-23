@@ -65,7 +65,7 @@ namespace Loggly.Transports.Syslog
             string msg = String.Format(
                 "<{0}>1 {1} {2} {3} {4} {5} {6} {7}"
                 , priority
-                , DateTime.UtcNow.ToSyslog()
+                , DateTime.Now.ToSyslog()
                 , Environment.MachineName
                 , appName
                 , Process.GetCurrentProcess().Id
