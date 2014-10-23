@@ -4,9 +4,14 @@ namespace Loggly
 {
    public static class LogglyExtensions
    {
-      public static string ToLogglyDateTime(this DateTime date)
+       public static string ToJsonIso8601(this DateTime date)
+       {
+           return date.ToString(@"yyyy-MM-ddTHH\:mm\:ss.ffffffZ"); 
+       }
+
+      public static string ToSyslog(this DateTime date)
       {
-         return date.ToUniversalTime().ToString("yyyy-MM-ddTHH:mm:ss.000Z");
+          return date.ToString(@"yyyy-MM-ddTHH\:mm\:ss.ffffffzzz"); 
       }
    }
 }

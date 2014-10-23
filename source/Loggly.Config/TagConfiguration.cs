@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 
 namespace Loggly.Config
 {
@@ -20,13 +21,29 @@ namespace Loggly.Config
             SimpleTags.ForEach(st => renderedTags.Add(st.Value));
             ComplexTags.ForEach(ct => renderedTags.Add(ct.FormattedValue));
 
-            // conform tags to loggly rules. no spaces.
-            for (int i = 0; i < renderedTags.Count; i++)
-            {
-                renderedTags[i] = renderedTags[i].Replace(" ", string.Empty);
-            }
+            CoerceLegalTags(renderedTags);
 
             return renderedTags;
+        }
+
+        /// <summary>
+        /// https://www.loggly.com/docs/tags/
+        /// </summary>
+        internal static void CoerceLegalTags(List<string> tags)
+        {
+            const string illegalCharRegex = @"[^A-z0-9\.\-_]";
+            var regex = new Regex(illegalCharRegex, RegexOptions.None);
+
+            for (int i = 0; i < tags.Count; i++)
+            {
+                tags[i] = regex.Replace(tags[i], "_");
+
+                // needs to be an alpha numeric prefix
+                if (tags[i].StartsWith(".") || tags[i].StartsWith("-") || tags[i].StartsWith("_"))
+                {
+                    tags[i] = "z" + tags[i];
+                }
+            }
         }
     }
 }

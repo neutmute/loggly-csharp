@@ -17,8 +17,8 @@ namespace Loggly
                 {
                    { "q", Query },
                    { "size", NumberOfRows },
-                   { "from", From == null ? null : From.Value.ToLogglyDateTime() },
-                   { "until", Until == null ? null : Until.Value.ToLogglyDateTime() }
+                   { "from", From == null ? null : From.Value.ToJsonIso8601() },
+                   { "until", Until == null ? null : Until.Value.ToJsonIso8601() }
                 };
       }
    }
