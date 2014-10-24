@@ -39,7 +39,7 @@ namespace Loggly.Responses
 
         protected override EntryJsonResponseBase GetEntryJsonResponse(int page)
         {
-            var eventQuery = new EventQuery {Rsid = this.RSID.Id, Page = page};
+            var eventQuery = new EventQuery {Rsid = this.Rsid.Id, Page = page};
             var entryResonse = this.Transport.Search(eventQuery);
             return entryResonse;
         }

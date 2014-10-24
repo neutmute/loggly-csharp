@@ -63,7 +63,7 @@
     <Compile Include="Responses\Search\EventMessage.cs" />
     <Compile Include="Responses\Search\EventQuery.cs" />
     <Compile Include="Responses\Search\FieldResponse.cs" />
-    <Compile Include="Responses\Search\RSID.cs" />
+    <Compile Include="Responses\Search\Rsid.cs" />
     <Compile Include="Responses\Search\SearchResponseBase.cs" />
     <Compile Include="Responses\Search\SearchResponseT.cs" />
     <Compile Include="LogglySearchClient.cs" />

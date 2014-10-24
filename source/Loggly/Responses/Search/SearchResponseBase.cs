@@ -10,7 +10,7 @@ namespace Loggly.Responses
         internal ISearchTransport Transport { get; set; }
 
         [JsonProperty("rsid")]
-        public RSID RSID { get; set; }
+        public Rsid Rsid { get; set; }
 
         [JsonIgnore]
         public int TotalEvents
@@ -30,7 +30,7 @@ namespace Loggly.Responses
 
         public override string ToString()
         {
-            return string.Format("RSID={0}", RSID);
+            return string.Format("Rsid={0}", Rsid);
         }
     }
 }

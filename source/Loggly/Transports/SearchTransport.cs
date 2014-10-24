@@ -33,7 +33,7 @@ namespace Loggly
         public EntryJsonResponseBase Search(EventQuery query)
         {
             var parameters = query.ToParameters();
-            return Search<EntryJsonResponseBase>("apiv2/events", parameters);
+            return Search<EntryJsonResponse>("apiv2/events", parameters);
         }
 
         public FieldResponse Search(FieldQuery query)

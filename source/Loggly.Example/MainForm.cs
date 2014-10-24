@@ -42,20 +42,31 @@ namespace Loggly.Example
         private void btnSearch_Click(object sender, EventArgs e)
         {
             var searchClient = new LogglySearchClient();
-            _searchResponse = searchClient.Search(new SearchQuery { Query = "mysimpletag" });
+
+            var query = new SearchQuery();
+            query.Query = "*";
+            query.From = DateTime.Now.AddDays(-2);
+            query.Until = DateTime.Now;
+            query.Size = 2;
+
+            _searchResponse = searchClient.Search(query);
             txtSearchResult.Text = _searchResponse.ToString();
         }
 
         private void btnSearchEvents_Click(object sender, EventArgs e)
         {
-            var sb = new StringBuilder();
-
+            var i = 3;
             foreach (EventMessage m in _searchResponse)
             {
-                sb.Append(m);
+                txtSearchResult.Text += "\r\n\r\n" + m;
+                if (i++ > 3)
+                {
+                    break;
+                }
             }
-            txtSearchResult.Text = sb.ToString();
         }
+
+
 
     }
 }

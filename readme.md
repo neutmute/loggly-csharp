@@ -45,7 +45,7 @@ When you get that working, take the training wheels off and go crazy:
 
 ### ApplicationName
 This is an optional attribute. If you leave this attribute out but have `NewRelic.AppName` in your app.config, then it will pick that value up automatically.
-Render your application name as a tag by using the complex HostnameTag (keep reading).
+Render your application name as a tag by using the `HostnameTag` (keep reading).
 
 ### Transports ##
 Three different transports may be specified with the `logTransport` attribute in the `transport` element.
@@ -61,8 +61,12 @@ If you specify an `applicationName` in the config, the syslog UDP transport will
 Has the advantages of SyslogUdp as well as transmitting via the secure TLS TCP channel so that your logs are encrypted over the wire. Syslog supports JSON formatted messages just like Https.
 
 ### Tags 
-Complex tags have the `formatter` attribute so you may specify your own `string.Format`.
+Simple tags are string literals added to the app.config.
+
+Complex tags are types inheriting from `ComplexTag`. They have the `formatter` attribute so you may specify your own `string.Format`.
 The `Assembly` attribute is available as an optional parameter so you can roll your own tags too.
+
+Loggly has certain restrictions around characters allowed in tags. This library replaces illegal characters automatically with an underscore.
 
 If you don't need programatially driven tags, just write your simple tags. If your tags don't appear, check the [Loggly restrictions](https://www.loggly.com/docs/tags/) for tag formats. 
 
@@ -82,8 +86,7 @@ Or log an entire object and let the client send it as structured JSON
 
 ## Usage: SearchClient
 
-Currently broken but not far from working. 
-Feel free to submit a Pull Request with a fix.
+See example project below in conjunction with the [loggly docs](https://www.loggly.com/docs/api-retrieving-data/)
 
 ## Loggly.Example Project
 The solution has an example project with sample code to demonstrate the client.
@@ -97,4 +100,4 @@ Of course, there is no need to have a config source in your real app, this is ju
 
 
 ## Projects using this client
-[nlog-targets-loggly](https://github.com/joefitzgerald/nlog-targets-loggly) uses this library to provide an NLog target
+[nlog-targets-loggly](https://github.com/joefitzgerald/nlog-targets-loggly) An NLog target

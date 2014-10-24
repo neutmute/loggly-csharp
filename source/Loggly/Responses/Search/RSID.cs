@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 namespace Loggly.Responses
 {
     [JsonObject]
-    public class RSID
+    public class Rsid
     {
         [JsonProperty("status")]
         public string Status { get; set; }

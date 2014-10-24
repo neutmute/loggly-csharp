@@ -32,7 +32,7 @@ namespace Loggly
 
         public SearchResponse Search(string query, DateTime start, DateTime until, int numberOfRows)
         {
-            return Search(new SearchQuery { Query = query, From = start, Until = until, NumberOfRows = numberOfRows});
+            return Search(new SearchQuery { Query = query, From = start, Until = until, Size = numberOfRows});
         }
 
         public SearchResponse Search(SearchQuery query)
@@ -52,7 +52,7 @@ namespace Loggly
 
         public SearchResponse<TMessage> Search<TMessage>(string query, DateTime start, DateTime until, int numberOfRows)
         {
-            return Search<TMessage>(new SearchQuery { Query = query, From = start, Until = until, NumberOfRows = numberOfRows });
+            return Search<TMessage>(new SearchQuery { Query = query, From = start, Until = until, Size = numberOfRows });
         }
 
         public SearchResponse<TMessage> Search<TMessage>(SearchQuery query)

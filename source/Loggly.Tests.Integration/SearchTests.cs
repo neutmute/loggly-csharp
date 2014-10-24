@@ -35,12 +35,12 @@
 //            Server.Stub(new ApiExpectation { Response = responseJson });
 //            var r = new LogglySearchClient("mogade").Search("anything");
 //            Assert.IsNotNull(r);
-//            Assert.IsNotNull(r.RSID);
-//            Assert.AreEqual("SCHEDULED", r.RSID.Status);
-//            Assert.AreEqual(1379706043000, r.RSID.From);
-//            Assert.AreEqual(0.017975807189941406, r.RSID.ElapsedTime);
-//            Assert.AreEqual(1380570043000, r.RSID.To);
-//            Assert.AreEqual("1910175565", r.RSID.Id);
+//            Assert.IsNotNull(r.Rsid);
+//            Assert.AreEqual("SCHEDULED", r.Rsid.Status);
+//            Assert.AreEqual(1379706043000, r.Rsid.From);
+//            Assert.AreEqual(0.017975807189941406, r.Rsid.ElapsedTime);
+//            Assert.AreEqual(1380570043000, r.Rsid.To);
+//            Assert.AreEqual("1910175565", r.Rsid.Id);
 //        }
 //    }
 //}
