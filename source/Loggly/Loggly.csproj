@@ -79,6 +79,7 @@
     <Compile Include="Transports\SyslogUdpTransport.cs" />
     <Compile Include="Transports\SyslogSecureTransport.cs" />
     <Compile Include="Transports\TransportBase.cs" />
+    <Compile Include="Transports\UdpClientEx.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Loggly.nuspec" />
