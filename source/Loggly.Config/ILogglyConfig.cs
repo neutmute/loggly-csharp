@@ -40,6 +40,8 @@ namespace Loggly.Config
 
         bool ThrowExceptions { get; set; }
 
+        bool IsEnabled { get; }
+
         bool IsValid { get;  }
         
         ITagConfiguration Tags { get;  }

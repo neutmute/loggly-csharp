@@ -158,6 +158,32 @@ namespace Loggly.Config
         }
         #endregion
         
+        #region IsEnabled Property
+        /// <summary>
+        /// The XML name of the <see cref="IsEnabled"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string IsEnabledPropertyName = "isEnabled";
+        
+        /// <summary>
+        /// Gets or sets the IsEnabled.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The IsEnabled.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.LogglyAppConfig.IsEnabledPropertyName, IsRequired=false, IsKey=false, IsDefaultCollection=false, DefaultValue=true)]
+        public virtual bool IsEnabled
+        {
+            get
+            {
+                return ((bool)(base[global::Loggly.Config.LogglyAppConfig.IsEnabledPropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.LogglyAppConfig.IsEnabledPropertyName] = value;
+            }
+        }
+        #endregion
+        
         #region Tags Property
         /// <summary>
         /// The XML name of the <see cref="Tags"/> property.

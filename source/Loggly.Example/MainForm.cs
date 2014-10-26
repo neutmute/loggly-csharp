@@ -15,7 +15,7 @@ namespace Loggly.Example
 {
     public partial class MainForm : Form
     {
-        ILogglyClient _loggly = new LogglyClient();
+        readonly LogglyExample _logglyExample = new LogglyExample();
 
         private SearchResponse _searchResponse;
         public MainForm()
@@ -25,18 +25,19 @@ namespace Loggly.Example
 
         private void btnPlainText_Click(object sender, EventArgs e)
         {
-            _loggly.Log("Simple message at {0} using {1}", DateTime.Now, LogglyConfig.Instance.Transport.LogTransport);
+            _logglyExample.SendPlainMessage();
         }
 
         private void btnPlainWithCallback_Click(object sender, EventArgs e)
         {
-            var options = new MessageOptions {Callback = lr => Debug.WriteLine(lr)};
-            _loggly.Log(options, "Simple message at {0} with callback using {1}", DateTime.Now, LogglyConfig.Instance.Transport.LogTransport);
+
+            _logglyExample.SendWithCallback();
         }
 
         private void btnSendJson_Click(object sender, EventArgs e)
         {
-            _loggly.Log(new LogObject());
+            _logglyExample.SendCustomObject();
+
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -65,8 +66,5 @@ namespace Loggly.Example
                 }
             }
         }
-
-
-
     }
 }

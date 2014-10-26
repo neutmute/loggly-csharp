@@ -11,8 +11,9 @@ namespace Loggly.Transports.Syslog
             var syslogMessage = new SyslogMessage();
             syslogMessage.Facility = Facility.User;
             syslogMessage.Text = message.Content;
-            syslogMessage.Level = message.Level;
-            syslogMessage.MessageId = message.MessageId;
+            syslogMessage.Level = message.Syslog.Level;
+            syslogMessage.MessageId = message.Syslog.MessageId;
+            syslogMessage.Timestamp = message.Timestamp;
             Send(syslogMessage);
         }
 

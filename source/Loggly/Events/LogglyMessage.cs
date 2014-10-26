@@ -12,10 +12,15 @@ namespace Loggly
     }
     internal class LogglyMessage
     {
-        public Level Level { get; set; }
-        public int MessageId { get; set; }
+        public DateTimeOffset Timestamp { get; set; }
+        public SyslogHeader Syslog { get; set; }
         public MessageType Type { get; set; }
         public string Content { get; set; }
+
+        public LogglyMessage()
+        {
+            Syslog = new SyslogHeader();
+        }
     }
 
     internal enum HttpRequestType
