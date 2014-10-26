@@ -48,6 +48,7 @@
     <Compile Include="Loggly.Config\ComplexTags\HostnameTagFixture.cs" />
     <Compile Include="Loggly.Config\TagConfigurationFixture.cs" />
     <Compile Include="Loggly\ExtensionMethods\DateTimeExtensionsFixture.cs" />
+    <Compile Include="Loggly\LogglyMessageDataFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -11,44 +11,22 @@ using Newtonsoft.Json;
 
 namespace Loggly
 {
-    public class MessageOptions
-    {
-        /// <summary>
-        /// Only valid for Http transport
-        /// </summary>
-        public Action<LogResponse> Callback { get; set; }
-
-        /// <summary>
-        /// Only valid for syslog transport
-        /// </summary>
-        public int MessageId { get; set; }
-
-        /// <summary>
-        /// Only valid for syslog transport
-        /// </summary>
-        public Level Level { get; set; }
-
-        public MessageOptions()
-        {
-            Level = Level.Information;
-        }
-    }
-
 
     public class LogglyClient : ILogglyClient
     {
-        public void Log(string plainTextFormat, params object[] plainTextArgs)
+        public void Log(LogglyEvent logglyEvent)
         {
-            Log(new MessageOptions(), plainTextFormat, plainTextArgs);
-        }
-        public void Log(MessageOptions options, string plainTextFormat, params object[] plainTextArgs)
-        {
-            IMessageTransport transporter = TransportFactory();
-            var callbackWrapper = GetCallbackWrapper(options.Callback);
-            var messageText = string.Format(plainTextFormat, plainTextArgs);
-            var message = new LogglyMessage {MessageId= options.MessageId, Type = MessageType.Plain, Content = messageText};
+            logglyEvent.Data.AddSafe("timestamp", logglyEvent.Timestamp);
+            var message = new LogglyMessage { Syslog= logglyEvent.Syslog, Type = MessageType.Plain, Content = ToJson(logglyEvent.Data) };
+            var callbackWrapper = GetCallbackWrapper(logglyEvent.Options.Callback);
 
+            IMessageTransport transporter = TransportFactory();
             transporter.Send(message, callbackWrapper);
+        }
+
+        private static string ToJson(object value)
+        {
+            return JsonConvert.SerializeObject(value, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         }
 
         private static Action<Response> GetCallbackWrapper(Action<LogResponse> callback)
@@ -74,37 +52,6 @@ namespace Loggly
             }
 
             return callbackWrapper;
-        }
-
-        public void Log<TMessage>(TMessage logObject)
-        {
-            Log(null, logObject);
-        }
-
-        public void Log<TMessage>(MessageOptions options, TMessage logObject)
-        {
-            if (options == null)
-            {
-                options = new MessageOptions();
-            }
-            var message = new LogglyMessage { MessageId = options.MessageId, Level=options.Level, Type = MessageType.Plain, Content = ToJson(logObject) };
-            var callbackWrapper = GetCallbackWrapper(options.Callback);
-
-            IMessageTransport transporter = TransportFactory();
-            transporter.Send(message, callbackWrapper);
-        }
-
-        private static string ToJson(object objectToLog)
-        {
-            var objectToLogAsString = objectToLog as string;
-
-            if (objectToLogAsString != null)
-            {
-                return objectToLogAsString;
-            }
-
-            var asJson = JsonConvert.SerializeObject(objectToLog, new JsonSerializerSettings {NullValueHandling = NullValueHandling.Ignore});
-            return asJson;
         }
 
         private IMessageTransport TransportFactory()

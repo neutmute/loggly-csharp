@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Loggly.Example
 {
-    public class LogObject
+    public class LogObject: IMessageData
     {
         public DateTime LocalTime
         {
@@ -37,5 +37,20 @@ namespace Loggly.Example
             get { return Environment.OSVersion; }
         }
 
+
+        public void AddSafe(string key, object value)
+        {//noop
+        }
+
+        public void Add(string key, string valueFormat, params object[] valueArgs)
+        {
+            //noop
+        }
+
+
+        public void Add(string key, object value)
+        {
+            //noop
+        }
     }
 }

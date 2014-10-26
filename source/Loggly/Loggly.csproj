@@ -47,8 +47,12 @@
     <Compile Include="..\..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="Events\EventOptions.cs" />
+    <Compile Include="Events\LogglyEvent.cs" />
+    <Compile Include="Events\MessageData.cs" />
+    <Compile Include="Events\SyslogHeader.cs" />
     <Compile Include="Search\FieldQuery.cs" />
-    <Compile Include="LogglyMessage.cs" />
+    <Compile Include="Events\LogglyMessage.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
     <Compile Include="Interfaces\ILogglyClient.cs" />
     <Compile Include="Interfaces\ISearchClient.cs" />

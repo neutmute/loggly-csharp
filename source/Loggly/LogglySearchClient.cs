@@ -30,9 +30,9 @@ namespace Loggly
             return Search(new SearchQuery { Query = query, From = start, Until = until });
         }
 
-        public SearchResponse Search(string query, DateTime start, DateTime until, int numberOfRows)
+        public SearchResponse Search(string query, DateTime start, DateTime until, int size)
         {
-            return Search(new SearchQuery { Query = query, From = start, Until = until, Size = numberOfRows});
+            return Search(new SearchQuery { Query = query, From = start, Until = until, Size = size});
         }
 
         public SearchResponse Search(SearchQuery query)
@@ -50,9 +50,9 @@ namespace Loggly
             return Search<TMessage>(new SearchQuery { Query = query, From = start, Until = until });
         }
 
-        public SearchResponse<TMessage> Search<TMessage>(string query, DateTime start, DateTime until, int numberOfRows)
+        public SearchResponse<TMessage> Search<TMessage>(string query, DateTime start, DateTime until, int size)
         {
-            return Search<TMessage>(new SearchQuery { Query = query, From = start, Until = until, Size = numberOfRows });
+            return Search<TMessage>(new SearchQuery { Query = query, From = start, Until = until, Size = size });
         }
 
         public SearchResponse<TMessage> Search<TMessage>(SearchQuery query)
