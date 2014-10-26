@@ -13,8 +13,8 @@ namespace Loggly.Tests.Loggly
         public void AddSafeIgnoresDuplicates()
         {
             var data = new MessageData();
-            data.AddSafe("myKey", "data1");
-            data.AddSafe("myKey", "data2");
+            data.AddIfAbsent("myKey", "data1");
+            data.AddIfAbsent("myKey", "data2");
             Assert.That((string)data["myKey"] == "data1");
         }
     }

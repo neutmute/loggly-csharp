@@ -21,7 +21,7 @@ namespace Loggly
                 if (LogglyConfig.Instance.Transport.LogTransport == LogTransport.Https)
                 {
                     // syslog has this data in the header
-                    logglyEvent.Data.AddSafe("timestamp", logglyEvent.Timestamp);
+                    logglyEvent.Data.AddIfAbsent("timestamp", logglyEvent.Timestamp);
                 }
                 var message = new LogglyMessage {Timestamp=logglyEvent.Timestamp,  Syslog= logglyEvent.Syslog, Type = MessageType.Plain, Content = ToJson(logglyEvent.Data) };
                 var callbackWrapper = GetCallbackWrapper(logglyEvent.Options.Callback);

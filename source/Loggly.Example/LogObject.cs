@@ -38,7 +38,7 @@ namespace Loggly.Example
         }
 
 
-        public void AddSafe(string key, object value)
+        public void AddIfAbsent(string key, object value)
         {//noop
         }
 

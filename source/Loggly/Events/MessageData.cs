@@ -7,7 +7,7 @@ namespace Loggly
 {
     public interface IMessageData
     {
-        void AddSafe(string key, object value);
+        void AddIfAbsent(string key, object value);
         void Add(string key, object value);
         void Add(string key, string valueFormat, params object[] valueArgs);
     }
@@ -25,7 +25,7 @@ namespace Loggly
             return messageData;
         }
 
-        public void AddSafe(string key, object value)
+        public void AddIfAbsent(string key, object value)
         {
             if (!ContainsKey(key))
             {
