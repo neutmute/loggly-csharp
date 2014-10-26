@@ -16,12 +16,15 @@ namespace Loggly
     {
         public void Log(LogglyEvent logglyEvent)
         {
-            logglyEvent.Data.AddSafe("timestamp", logglyEvent.Timestamp);
-            var message = new LogglyMessage { Syslog= logglyEvent.Syslog, Type = MessageType.Plain, Content = ToJson(logglyEvent.Data) };
-            var callbackWrapper = GetCallbackWrapper(logglyEvent.Options.Callback);
+            if (LogglyConfig.Instance.IsEnabled)
+            { 
+                logglyEvent.Data.AddSafe("timestamp", logglyEvent.Timestamp);
+                var message = new LogglyMessage { Syslog= logglyEvent.Syslog, Type = MessageType.Plain, Content = ToJson(logglyEvent.Data) };
+                var callbackWrapper = GetCallbackWrapper(logglyEvent.Options.Callback);
 
-            IMessageTransport transporter = TransportFactory();
-            transporter.Send(message, callbackWrapper);
+                IMessageTransport transporter = TransportFactory();
+                transporter.Send(message, callbackWrapper);
+            }
         }
 
         private static string ToJson(object value)

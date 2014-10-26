@@ -16,6 +16,7 @@ namespace Loggly.Config
         public ITransportConfiguration Transport { get; private set; }
         public ISearchConfiguration Search { get; private set; }
 
+        public bool IsEnabled { get;set;}
         public bool IsValid
         {
             get { return !string.IsNullOrEmpty(CustomerToken); }
@@ -23,6 +24,7 @@ namespace Loggly.Config
 
         private LogglyConfig()
         {
+            IsEnabled = true;
             Tags = new TagConfiguration();
             Transport = new TransportConfiguration();
         }
@@ -61,6 +63,7 @@ namespace Loggly.Config
             config.CustomerToken = LogglyAppConfig.Instance.CustomerToken;
             config.ThrowExceptions = LogglyAppConfig.Instance.ThrowExceptions;
             config.ApplicationName = new ApplicationNameProvider().GetName();
+            config.IsEnabled = LogglyAppConfig.Instance.IsEnabled;
 
             if (LogglyAppConfig.Instance.HasTagConfig)
             {

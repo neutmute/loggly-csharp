@@ -35,6 +35,11 @@
             <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Boolean" />
           </type>
         </attributeProperty>
+        <attributeProperty name="IsEnabled" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="isEnabled" isReadOnly="false" defaultValue="true">
+          <type>
+            <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Boolean" />
+          </type>
+        </attributeProperty>
       </attributeProperties>
       <elementProperties>
         <elementProperty name="Tags" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="tags" isReadOnly="false">
