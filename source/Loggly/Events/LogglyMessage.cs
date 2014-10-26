@@ -12,6 +12,7 @@ namespace Loggly
     }
     internal class LogglyMessage
     {
+        public DateTimeOffset Timestamp { get; set; }
         public SyslogHeader Syslog { get; set; }
         public MessageType Type { get; set; }
         public string Content { get; set; }

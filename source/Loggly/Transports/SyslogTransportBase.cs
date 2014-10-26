@@ -13,6 +13,7 @@ namespace Loggly.Transports.Syslog
             syslogMessage.Text = message.Content;
             syslogMessage.Level = message.Syslog.Level;
             syslogMessage.MessageId = message.Syslog.MessageId;
+            syslogMessage.Timestamp = message.Timestamp;
             Send(syslogMessage);
         }
 
