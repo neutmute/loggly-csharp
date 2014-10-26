@@ -42,6 +42,11 @@
 				<xs:documentation>The ThrowExceptions.</xs:documentation>
 			</xs:annotation>
 		</xs:attribute>
+		<xs:attribute name="isEnabled" use="optional" type="xs:boolean">
+			<xs:annotation>
+				<xs:documentation>The IsEnabled.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
 	</xs:complexType>
 	<xs:complexType name="Loggly.Config.ComplexTagCollectionCT">
 		<xs:choice minOccurs="0" maxOccurs="unbounded">

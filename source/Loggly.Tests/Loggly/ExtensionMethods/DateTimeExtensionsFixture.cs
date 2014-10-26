@@ -29,5 +29,13 @@ namespace Loggly.Tests.Loggly.ExtensionMethods
             Assert.AreEqual("2013-10-11T22:14:15.003000+11:00", date.ToSyslog());
             Console.WriteLine(DateTime.UtcNow.ToSyslog());
         }
+
+        [Test]
+        public void DateTimeOffsetToSyslog()
+        {
+            var date = new DateTimeOffset(2013, 10, 11, 22, 14, 15, 3, TimeSpan.FromHours(10));
+            Assert.AreEqual("2013-10-11T22:14:15.003000+10:00", date.ToSyslog());
+            Console.WriteLine(DateTime.UtcNow.ToSyslog());
+        }
     }
 }
