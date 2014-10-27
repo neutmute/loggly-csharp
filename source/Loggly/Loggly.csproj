@@ -1,0 +1,107 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{F66349BA-29A6-4336-BA81-993170FC9963}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>Loggly</RootNamespace>
+    <AssemblyName>Loggly</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
+    <SolutionDir Condition="$(SolutionDir) == '' Or $(SolutionDir) == '*Undefined*'">..\</SolutionDir>
+    <RestorePackages>true</RestorePackages>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\packages\Newtonsoft.Json.6.0.5\lib\net35\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.configuration" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Web" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\SolutionItems\Properties\AssemblyInfo.cs">
+      <Link>Properties\AssemblyInfo.cs</Link>
+    </Compile>
+    <Compile Include="Events\EventOptions.cs" />
+    <Compile Include="Events\LogglyEvent.cs" />
+    <Compile Include="Events\MessageData.cs" />
+    <Compile Include="Events\SyslogHeader.cs" />
+    <Compile Include="Search\FieldQuery.cs" />
+    <Compile Include="Events\LogglyMessage.cs" />
+    <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
+    <Compile Include="Interfaces\ILogglyClient.cs" />
+    <Compile Include="Interfaces\ISearchClient.cs" />
+    <Compile Include="LogglyClient.cs" />
+    <Compile Include="LogglyException.cs" />
+    <Compile Include="Properties\AssemblyInfoUnique.cs" />
+    <Compile Include="Responses\Search\EntryJsonResponse.cs" />
+    <Compile Include="Responses\ErrorMessage.cs" />
+    <Compile Include="Responses\EventBase.cs" />
+    <Compile Include="Responses\LogResponse.cs" />
+    <Compile Include="Responses\Response.cs" />
+    <Compile Include="Responses\Search\EventMessage.cs" />
+    <Compile Include="Responses\Search\EventQuery.cs" />
+    <Compile Include="Responses\Search\FieldResponse.cs" />
+    <Compile Include="Responses\Search\Rsid.cs" />
+    <Compile Include="Responses\Search\SearchResponseBase.cs" />
+    <Compile Include="Responses\Search\SearchResponseT.cs" />
+    <Compile Include="LogglySearchClient.cs" />
+    <Compile Include="Search\SearchQuery.cs" />
+    <Compile Include="Responses\Search\SearchResponse.cs" />
+    <Compile Include="Transports\HttpTransportBase.cs" />
+    <Compile Include="Transports\HttpMessageTransport.cs" />
+    <Compile Include="Transports\Interfaces\IMessageTransport.cs" />
+    <Compile Include="Transports\Interfaces\ISearchTransport.cs" />
+    <Compile Include="Transports\SearchTransport.cs" />
+    <Compile Include="Transports\SyslogMessage.cs" />
+    <Compile Include="Transports\SyslogTransportBase.cs" />
+    <Compile Include="Transports\SyslogUdpTransport.cs" />
+    <Compile Include="Transports\SyslogSecureTransport.cs" />
+    <Compile Include="Transports\TransportBase.cs" />
+    <Compile Include="Transports\UdpClientEx.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Loggly.nuspec" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\loggly.Config\Loggly.Config.csproj">
+      <Project>{58a100ce-cc7e-43bf-a054-d28648f092ac}</Project>
+      <Name>Loggly.Config</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(SolutionDir)\.nuget\NuGet.targets" Condition="Exists('$(SolutionDir)\.nuget\NuGet.targets')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
