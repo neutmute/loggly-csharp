@@ -24,6 +24,7 @@ When you get that working, take the training wheels off and go crazy:
 	  xmlns="Loggly" 
 	  applicationName="MyAwesomeApp" 
 	  customerToken="your token here" 
+	  isEnabled="true"
 	  throwExceptions="true">
 
   	  <transport logTransport="Https" endpointHostname="logs-01.loggly.com" endpointPort="443"/>
@@ -47,11 +48,14 @@ When you get that working, take the training wheels off and go crazy:
 This is an optional attribute. If you leave this attribute out but have `NewRelic.AppName` in your app.config, then it will pick that value up automatically.
 Render your application name as a tag by using the `HostnameTag` (keep reading).
 
+### IsEnabled
+Set it to false on your development machine so that no events are sent to loggly. 
+
 ### Transports ##
 Three different transports may be specified with the `logTransport` attribute in the `transport` element.
 The transport element is entirely optional and will default to the Https. The available transports are as follows:
 
-#### Https ###
+#### Https
 The default transport, posting to Loggly on port 443. Note that application and host source group filtering [are not supported by HTTP](https://community.loggly.com/customer/portal/questions/8416949--host-field-for-source-groups?b_id=50), so you may wish to consider a Syslog transport.
 
 #### SyslogUdp
@@ -71,7 +75,7 @@ Loggly has certain restrictions around characters allowed in tags. This library 
 If you don't need programatially driven tags, just write your simple tags. If your tags don't appear, check the [Loggly restrictions](https://www.loggly.com/docs/tags/) for tag formats. 
 
 ### Programmatic Configuration
-As long as you keep the `xmlns` attribute, Visual Studio will provide auto completion.
+
 If you prefer to set configuration programatically, specify the values via the static `LogglyConfig.Instance` class at application startup.
 
 ## Usage: LogglyClient
