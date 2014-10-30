@@ -78,6 +78,11 @@ If you don't need programatially driven tags, just write your simple tags. If yo
 
 If you prefer to set configuration programatically, specify the values via the static `LogglyConfig.Instance` class at application startup.
 
+### Suppression
+Sometimes you might emit something to a flat file log that doesn't make sense in loggly, such as a delimiting line of dashes: ---------
+
+Add a property to your nLog event with the name `syslog-suppress` to filter these out so they don't transmit to loggly.
+
 ## Usage: LogglyClient
 Send simple text messages with something like this.
 
