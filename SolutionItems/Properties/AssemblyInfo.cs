@@ -2,7 +2,6 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using System.Security;
 
-[assembly: AssemblyCompany("Karl Seguin")]
 [assembly: AssemblyVersion("3.5.1.0")]
 [assembly: AllowPartiallyTrustedCallers]
 [assembly: AssemblyProduct("loggly-csharp")]
