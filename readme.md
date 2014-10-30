@@ -44,14 +44,14 @@ When you get that working, take the training wheels off and go crazy:
 	  </tags>
 	</loggly>
 
-### ApplicationName
+### applicationName
 This is an optional attribute. If you leave this attribute out but have `NewRelic.AppName` in your app.config, then it will pick that value up automatically.
 Render your application name as a tag by using the `HostnameTag` (keep reading).
 
-### IsEnabled
+### isEnabled
 Set it to false on your development machine so that no events are sent to loggly. 
 
-### Transports ##
+### Transport
 Three different transports may be specified with the `logTransport` attribute in the `transport` element.
 The transport element is entirely optional and will default to the Https. The available transports are as follows:
 
@@ -61,37 +61,33 @@ The default transport, posting to Loggly on port 443. Note that application and 
 #### SyslogUdp
 If you specify an `applicationName` in the config, the syslog UDP transport will populate the field so it may be filtered in a source group. Host is also automatically populated by  the client. Udp messages are sent in plain text.  
 
-### SyslogSecure
+#### SyslogSecure
 Has the advantages of SyslogUdp as well as transmitting via the secure TLS TCP channel so that your logs are encrypted over the wire. Syslog supports JSON formatted messages just like Https.
 
 ### Tags 
-Simple tags are string literals added to the app.config.
+Simple tags are string literals added to the app.config. What you see is what you get.
 
 Complex tags are types inheriting from `ComplexTag`. They have the `formatter` attribute so you may specify your own `string.Format`.
 The `Assembly` attribute is available as an optional parameter so you can roll your own tags too.
 
-Loggly has certain restrictions around characters allowed in tags. This library replaces illegal characters automatically with an underscore.
-
-If you don't need programatially driven tags, just write your simple tags. If your tags don't appear, check the [Loggly restrictions](https://www.loggly.com/docs/tags/) for tag formats. 
-
+Loggly has certain restrictions around characters allowed in tags. This library automatically replaces illegal characters with an underscore.
+ 
 ### Programmatic Configuration
 
 If you prefer to set configuration programatically, specify the values via the static `LogglyConfig.Instance` class at application startup.
-
-### Suppression
-Sometimes you might emit something to a flat file log that doesn't make sense in loggly, such as a delimiting line of dashes: ---------
-
-Add a property to your nLog event with the name `syslog-suppress` to filter these out so they don't transmit to loggly.
 
 ## Usage: LogglyClient
 Send simple text messages with something like this.
 
 	ILogglyClient _loggly = new LogglyClient();
-	_loggly.Log("A simple text message at {0}", DateTime.Now);
+    var logEvent = new LogglyEvent();
+    logEvent.Data.Add("message", "Simple message at {0}", DateTime.Now);
+    _loggly.Log(logEvent);
 
 Or log an entire object and let the client send it as structured JSON
 
-	_loggly.Log(new MyAwesomeObjectToLog());
+	logEvent.Data.Add("context", new GlimmerWingPony());
+    _loggly.Log(logEvent);
 
 ## Usage: SearchClient
 
