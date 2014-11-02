@@ -51,6 +51,7 @@
     <Compile Include="Events\LogglyEvent.cs" />
     <Compile Include="Events\MessageData.cs" />
     <Compile Include="Events\SyslogHeader.cs" />
+    <Compile Include="Interfaces\IEnvironmentProvider.cs" />
     <Compile Include="Search\FieldQuery.cs" />
     <Compile Include="Events\LogglyMessage.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
@@ -73,6 +74,7 @@
     <Compile Include="LogglySearchClient.cs" />
     <Compile Include="Search\SearchQuery.cs" />
     <Compile Include="Responses\Search\SearchResponse.cs" />
+    <Compile Include="Transports\EnvironmentProvider.cs" />
     <Compile Include="Transports\HttpTransports\HttpTransportBase.cs" />
     <Compile Include="Transports\HttpTransports\HttpMessageTransport.cs" />
     <Compile Include="Transports\Interfaces\IMessageTransport.cs" />

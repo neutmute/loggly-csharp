@@ -51,6 +51,8 @@ namespace Loggly.Transports.Syslog
 
         public string AppName { get; set; }
 
+        public IEnvironmentProvider EnvironmentProvider { get; set; }
+
         public SyslogMessage() {}
 
         public SyslogMessage(Facility facility, Level level, string text)
@@ -68,9 +70,9 @@ namespace Loggly.Transports.Syslog
                 "<{0}>1 {1} {2} {3} {4} {5} {6}"
                 , priority
                 , Timestamp.ToSyslog()
-                , Environment.MachineName
+                , EnvironmentProvider.MachineName
                 , AppName
-                , Process.GetCurrentProcess().Id
+                , EnvironmentProvider.ProcessId
                 , MessageId
                 , Text);
 
