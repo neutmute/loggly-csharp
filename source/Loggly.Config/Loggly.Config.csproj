@@ -42,6 +42,7 @@
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="AppConfigPartials\TransportAppConfig.cs" />
+    <Compile Include="ExtensionMethods\TransportAppConfig.cs" />
     <Compile Include="AppConfigPartials\TagAppConfig.cs" />
     <Compile Include="ApplicationNameProvider.cs" />
     <Compile Include="SearchConfiguration.cs" />

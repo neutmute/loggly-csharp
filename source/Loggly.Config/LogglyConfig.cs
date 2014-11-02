@@ -13,7 +13,7 @@ namespace Loggly.Config
         public string CustomerToken { get; set; }
         public bool ThrowExceptions { get; set; }
         public ITagConfiguration Tags { get; private set; }
-        public ITransportConfiguration Transport { get; private set; }
+        public ITransportConfiguration Transport { get; set; }
         public ISearchConfiguration Search { get; private set; }
 
         public bool IsEnabled { get;set;}
@@ -71,7 +71,7 @@ namespace Loggly.Config
                 config.Tags.ComplexTags.AddRange(LogglyAppConfig.Instance.Tags.GetComplexTags());
             }
 
-            config.Transport = TransportAppConfig.ConformToValidConfig(LogglyAppConfig.Instance.Transport);
+            config.Transport = LogglyAppConfig.Instance.Transport.GetCoercedToValidConfig();
 
             config.Search = LogglyAppConfig.Instance.Search;
 

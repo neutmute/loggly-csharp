@@ -72,7 +72,19 @@ namespace Loggly.Example
             }
         }
 
+        private void groupBoxTransport_Enter(object sender, EventArgs e)
+        {
 
+        }
 
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            radTransportAppConfig.Checked = true;
+        }
+
+        private void btnForcedTransport_Click(object sender, EventArgs e)
+        {
+
+        }
     }
 }

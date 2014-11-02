@@ -46,5 +46,19 @@ namespace Loggly.Example
             logEvent.Data = new LogObject();
             _loggly.Log(logEvent);
         }
+
+        public void SendWithSpecificTransport(LogTransport transport)
+        {
+            var priorTransport = LogglyConfig.Instance.Transport;
+
+            var newTransport = new TransportConfiguration {LogTransport = transport};
+            LogglyConfig.Instance.Transport = newTransport.GetCoercedToValidConfig();
+
+            var logEvent = new LogglyEvent();
+            logEvent.Data.Add("message", "Log event sent with forced transport={0}", transport);
+            _loggly.Log(logEvent);
+
+            LogglyConfig.Instance.Transport = priorTransport;
+        }
     }
 }

@@ -48,6 +48,6 @@ namespace Loggly.Config
         
         ISearchConfiguration Search { get; }
 
-        ITransportConfiguration Transport { get; }
+        ITransportConfiguration Transport { get; set; }
     }
 }
