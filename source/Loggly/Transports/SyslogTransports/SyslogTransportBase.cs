@@ -13,7 +13,15 @@ namespace Loggly.Transports.Syslog
             syslogMessage.Text = message.Content;
             syslogMessage.Level = message.Syslog.Level;
             syslogMessage.MessageId = message.Syslog.MessageId;
+            syslogMessage.AppName = LogglyConfig.Instance.ApplicationName.Replace(" ", "");
             syslogMessage.Timestamp = message.Timestamp;
+
+            syslogMessage.Text = string.Format(
+                                    "[{0} {1}] {2}"
+                                    , LogglyConfig.Instance.CustomerToken
+                                    , RenderedTags
+                                    , message.Content);
+            
             Send(syslogMessage);
         }
 

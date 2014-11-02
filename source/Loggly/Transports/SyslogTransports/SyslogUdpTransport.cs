@@ -43,7 +43,7 @@ namespace Loggly.Transports.Syslog
             {
                 if (_udpClient.IsActive)
                 {
-                    var bytes = syslogMessage.GetBytes(RenderedTags);
+                    var bytes = syslogMessage.GetBytes();
                     _udpClient.Send(bytes, bytes.Length);
                 }
                 else

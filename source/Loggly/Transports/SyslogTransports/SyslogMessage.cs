@@ -49,6 +49,8 @@ namespace Loggly.Transports.Syslog
 
         public string Text { get; set; }
 
+        public string AppName { get; set; }
+
         public SyslogMessage() {}
 
         public SyslogMessage(Facility facility, Level level, string text)
@@ -58,30 +60,26 @@ namespace Loggly.Transports.Syslog
             Text = text;
         }
 
-        internal string GetMessageAsString(string tagString)
+        internal string GetMessageAsString()
         {
-
             int priority = (((int)Facility) * 8) + ((int)Level);
-            var appName = LogglyConfig.Instance.ApplicationName.Replace(" ", "");
-            var logglyStructuredData = string.Format("[{0} {1}]", LogglyConfig.Instance.CustomerToken, tagString);
-
-            string msg = String.Format(
-                "<{0}>1 {1} {2} {3} {4} {5} {6} {7}"
+           
+            var msg = String.Format(
+                "<{0}>1 {1} {2} {3} {4} {5} {6}"
                 , priority
                 , Timestamp.ToSyslog()
                 , Environment.MachineName
-                , appName
+                , AppName
                 , Process.GetCurrentProcess().Id
                 , MessageId
-                , logglyStructuredData
                 , Text);
 
             return msg;
         }
 
-        public byte[] GetBytes(string tagString)
+        public byte[] GetBytes()
         {
-            var messageString = GetMessageAsString(tagString);
+            var messageString = GetMessageAsString();
             byte[] bytes = Encoding.ASCII.GetBytes(messageString);
             return bytes;
         }

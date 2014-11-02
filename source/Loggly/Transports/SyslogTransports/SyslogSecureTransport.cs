@@ -32,13 +32,12 @@ namespace Loggly.Transports.Syslog
                 client.GetStream(),
                 false,
                 ValidateServerCertificate,
-                null
-                );
+                null);
 
             try
             {
                 sslStream.AuthenticateAsClient(hostname);
-                byte[] messageBytes = syslogMessage.GetBytes(RenderedTags);
+                byte[] messageBytes = syslogMessage.GetBytes();
 
                 sslStream.Write(messageBytes);
                 sslStream.Flush();
