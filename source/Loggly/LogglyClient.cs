@@ -22,29 +22,38 @@ namespace Loggly
 
         private LogResponse LogWorker(LogglyEvent logglyEvent)
         {
-            if (LogglyConfig.Instance.IsEnabled)
+            var response = new LogResponse {Code = ResponseCode.Unknown};
+            try
             {
-                if (LogglyConfig.Instance.Transport.LogTransport == LogTransport.Https)
+                if (LogglyConfig.Instance.IsEnabled)
                 {
-                    // syslog has this data in the header, only need to add it for Http
-                    logglyEvent.Data.AddIfAbsent("timestamp", logglyEvent.Timestamp);
-                }
+                    if (LogglyConfig.Instance.Transport.LogTransport == LogTransport.Https)
+                    {
+                        // syslog has this data in the header, only need to add it for Http
+                        logglyEvent.Data.AddIfAbsent("timestamp", logglyEvent.Timestamp);
+                    }
 
-                var message = new LogglyMessage
-                {
-                    Timestamp = logglyEvent.Timestamp
-                    , Syslog = logglyEvent.Syslog
-                    , Type = MessageType.Plain
-                    , Content = ToJson(logglyEvent.Data)
-                };
+                    var message = new LogglyMessage
+                    {
+                        Timestamp = logglyEvent.Timestamp
+                        , Syslog = logglyEvent.Syslog
+                        , Type = MessageType.Plain
+                        , Content = ToJson(logglyEvent.Data)
+                    };
                 
-                IMessageTransport transporter = TransportFactory();
-                return transporter.Send(message);
+                    IMessageTransport transporter = TransportFactory();
+                    response = transporter.Send(message);
+                }
+                else
+                {
+                    response = new LogResponse {Code = ResponseCode.SendDisabled};
+                }
             }
-            else
+            catch (Exception e)
             {
-                return new LogResponse {Code = ResponseCode.SendDisabled};
+                LogglyException.Throw(e);
             }
+            return response;
         }
 
         private static string ToJson(object value)
