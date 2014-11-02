@@ -12,11 +12,14 @@ namespace Loggly.Example
     {
         readonly ILogglyClient _loggly = new LogglyClient();
 
+        /// <summary>
+        /// Calling result on the task forces it to be synchronous
+        /// </summary>
         public ResponseCode SendPlainMessageSynchronous()
         {
             var logEvent = new LogglyEvent();
             logEvent.Data.Add("message", "Synchronous message at {0} using {1}", DateTime.Now, LogglyConfig.Instance.Transport.LogTransport);
-            var r = _loggly.Log(logEvent).Result; // Log returns task. Force synchronous with Result
+            var r = _loggly.Log(logEvent).Result;
             return r.Code;
         }
 
@@ -37,11 +40,11 @@ namespace Loggly.Example
             _loggly.Log(logEvent);
         }
 
-        public void SendCustomObject()
+        public async Task<LogResponse> SendCustomObjectAsync()
         {
             var logEvent = new LogglyEvent();
             logEvent.Data = new LogObject();
-            _loggly.Log(logEvent);
+            return await _loggly.Log(logEvent);
         }
 
         public async void SendWithSpecificTransport(LogTransport transport)

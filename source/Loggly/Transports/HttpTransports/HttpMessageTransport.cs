@@ -46,7 +46,7 @@ namespace Loggly
                     }
                     else
                     {
-                        logResponse = new LogResponse { Code =ResponseCode.Error, Message = rawResponse.Error.Message };
+                        logResponse = new LogResponse { Code = ResponseCode.Error, Message = rawResponse.Error.Message };
                     }
                 }
             }

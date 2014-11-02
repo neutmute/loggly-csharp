@@ -44,7 +44,10 @@ namespace Loggly.Example
 
         private void btnSendJson_Click(object sender, EventArgs e)
         {
-            _logglyExample.SendCustomObject();
+            using (new WaitCursor(this))
+            {
+                _logglyExample.SendCustomObjectAsync();
+            }
         }
 
         private void btnSearch_Click(object sender, EventArgs e)

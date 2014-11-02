@@ -5,6 +5,9 @@ using Loggly.Config;
 
 namespace Loggly.Transports.Syslog
 {
+
+    #region Level enum
+
     public enum Level
     {
         Emergency = 0,
@@ -16,6 +19,10 @@ namespace Loggly.Transports.Syslog
         Information = 6,
         Debug = 7,
     }
+
+    #endregion
+
+    #region Facility enum
 
     public enum Facility
     {
@@ -39,8 +46,12 @@ namespace Loggly.Transports.Syslog
         Local7 = 17,
     }
 
+    #endregion
+
     public class SyslogMessage
     {
+        #region Properties
+
         public DateTimeOffset Timestamp { get; set; }
         public int MessageId { get; set; }
         public Facility Facility { get; set; }
@@ -53,6 +64,10 @@ namespace Loggly.Transports.Syslog
 
         public IEnvironmentProvider EnvironmentProvider { get; set; }
 
+        #endregion
+        
+        #region Ctor
+
         public SyslogMessage()
         {
             EnvironmentProvider = new EnvironmentProvider();
@@ -60,15 +75,19 @@ namespace Loggly.Transports.Syslog
 
         public SyslogMessage(Facility facility, Level level, string text) : this()
         {
-            Facility= facility;
-            Level= level;
+            Facility = facility;
+            Level = level;
             Text = text;
         }
 
+        #endregion
+
+        #region Methods
+
         internal string GetMessageAsString()
         {
-            int priority = (((int)Facility) * 8) + ((int)Level);
-           
+            int priority = (((int) Facility)*8) + ((int) Level);
+
             var msg = String.Format(
                 "<{0}>1 {1} {2} {3} {4} {5} {6}"
                 , priority
@@ -88,5 +107,7 @@ namespace Loggly.Transports.Syslog
             byte[] bytes = Encoding.ASCII.GetBytes(messageString);
             return bytes;
         }
+
+        #endregion
     }
 }
