@@ -6,7 +6,7 @@ namespace Loggly.Transports.Syslog
 {
     internal abstract class SyslogTransportBase : TransportBase, IMessageTransport
     {
-        public void Send(LogglyMessage message, Action<Responses.Response> callback)
+        public void Send(LogglyMessage message)
         {
             var syslogMessage = new SyslogMessage();
             syslogMessage.Facility = Facility.User;

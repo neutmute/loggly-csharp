@@ -26,51 +26,58 @@ namespace Loggly
             }
         }
 
+        public LogResponse Send(LogglyMessage message)
+        {
+            var logglyResponse = Response.CreateError(new ErrorMessage{Message= "something failed?"});
 
-        public void Send(LogglyMessage message)
-        {
-            Send(message, null);
-        }
-        
-        public void Send(LogglyMessage message, Action<Response> callback)
-        {
             if (LogglyConfig.Instance.IsValid)
             {
-                var request = CreateRequest(message);
-                var requestState = new RequestState();
+                var httpWebRequest = CreateHttpWebRequest(message);
 
-                requestState.Request = request;
-                requestState.Payload = message == null ? null : Encoding.UTF8.GetBytes(message.Content);
-                requestState.Callback = callback;
-
-                request.BeginGetRequestStream(GetRequestStream, requestState);
+                using (var response = httpWebRequest.GetResponse())
+                {
+                    logglyResponse = Response.CreateSuccess(GetResponseBody(response));
+                }
             }
             else
             {
                 LogglyException.Throw("Loggly configuration is missing or invalid. Did you specify a customer token?");
             }
+
+            return logglyResponse;
         }
 
-        private HttpWebRequest CreateRequest(LogglyMessage message)
+        private HttpWebRequest CreateHttpWebRequest(LogglyMessage message)
         {
-            var request = CreateRequest(Url, HttpRequestType.Post);
+            var httpWebRequest = CreateHttpWebRequest(Url, HttpRequestType.Post);
 
             if (!string.IsNullOrEmpty(RenderedTags))
             {
-                request.Headers.Add("X-LOGGLY-TAG", RenderedTags);
+                httpWebRequest.Headers.Add("X-LOGGLY-TAG", RenderedTags);
             }
 
             switch (message.Type)
             {
                 case MessageType.Plain:
-                    request.ContentType = "content-type:text/plain";
+                    httpWebRequest.ContentType = "content-type:text/plain";
                     break;
                 case MessageType.Json:
-                    request.ContentType = "application/json";
+                    httpWebRequest.ContentType = "application/json";
                     break;
             }
 
-            return request;
+            var contentBytes = Encoding.UTF8.GetBytes(message.Content);
+
+            httpWebRequest.ContentLength = contentBytes.Length;
+
+            using (var requestStream = httpWebRequest.GetRequestStream())
+            {
+                requestStream.Write(contentBytes, 0, contentBytes.Length);
+                requestStream.Flush();
+                requestStream.Close();
+            }
+
+            return httpWebRequest;
         }
 
         protected override string GetRenderedTags()

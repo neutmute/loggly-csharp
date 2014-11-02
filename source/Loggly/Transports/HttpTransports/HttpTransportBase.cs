@@ -15,7 +15,7 @@ namespace Loggly
         {
             _userAgent = "loggly-csharp " + Assembly.GetAssembly(typeof(HttpMessageTransport)).GetName().Version;
         }
-        protected HttpWebRequest CreateRequest(string url, HttpRequestType requestType)
+        protected HttpWebRequest CreateHttpWebRequest(string url, HttpRequestType requestType)
         {
             var request = (HttpWebRequest)WebRequest.Create(url);
             request.Method = requestType.ToString().ToUpper();
@@ -23,52 +23,52 @@ namespace Loggly
             request.KeepAlive = false;
             return request;
         }
-        protected static void GetRequestStream(IAsyncResult result)
-        {
-            var state = (RequestState)result.AsyncState;
-            try
-            {
-                if (state.Payload != null)
-                {
-                    using (var requestStream = state.Request.EndGetRequestStream(result))
-                    {
-                        requestStream.Write(state.Payload, 0, state.Payload.Length);
-                        requestStream.Flush();
-                        requestStream.Close();
-                    }
-                }
-                state.Request.BeginGetResponse(GetResponseStream, state);
-            }
-            catch (Exception ex)
-            {
-                if (state.Callback != null)
-                {
-                    state.Callback(Response.CreateError(HandleException(ex)));
-                }
-            }
-        }
+        //protected static void GetRequestStream(IAsyncResult result)
+        //{
+        //    var state = (RequestState)result.AsyncState;
+        //    try
+        //    {
+        //        if (state.Payload != null)
+        //        {
+        //            using (var requestStream = state.Request.EndGetRequestStream(result))
+        //            {
+        //                requestStream.Write(state.Payload, 0, state.Payload.Length);
+        //                requestStream.Flush();
+        //                requestStream.Close();
+        //            }
+        //        }
+        //        state.Request.BeginGetResponse(GetResponseStream, state);
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (state.Callback != null)
+        //        {
+        //            state.Callback(Response.CreateError(HandleException(ex)));
+        //        }
+        //    }
+        //}
 
-        private static void GetResponseStream(IAsyncResult result)
-        {
-            var state = (ResponseState)result.AsyncState;
-            try
-            {
-                using (var response = (HttpWebResponse)state.Request.EndGetResponse(result))
-                {
-                    if (state.Callback != null)
-                    {
-                        state.Callback(Response.CreateSuccess(GetResponseBody(response)));
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                if (state.Callback != null)
-                {
-                    state.Callback(Response.CreateError(HandleException(ex)));
-                }
-            }
-        }
+        //private static void GetResponseStream(IAsyncResult result)
+        //{
+        //    var state = (ResponseState)result.AsyncState;
+        //    try
+        //    {
+        //        using (var response = (HttpWebResponse)state.Request.EndGetResponse(result))
+        //        {
+        //            if (state.Callback != null)
+        //            {
+        //                state.Callback(Response.CreateSuccess(GetResponseBody(response)));
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        if (state.Callback != null)
+        //        {
+        //            state.Callback(Response.CreateError(HandleException(ex)));
+        //        }
+        //    }
+        //}
 
         protected static string GetResponseBody(WebResponse response)
         {
