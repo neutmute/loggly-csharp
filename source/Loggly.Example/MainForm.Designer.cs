@@ -34,12 +34,15 @@
             this.btnSearchEvents = new System.Windows.Forms.Button();
             this.btnSearch = new System.Windows.Forms.Button();
             this.groupBoxSend = new System.Windows.Forms.GroupBox();
+            this.groupBoxAsync = new System.Windows.Forms.GroupBox();
+            this.groupBoxSync = new System.Windows.Forms.GroupBox();
             this.btnSendJson = new System.Windows.Forms.Button();
             this.btnPlainWithCallback = new System.Windows.Forms.Button();
             this.btnPlainText = new System.Windows.Forms.Button();
             this.groupBoxSearch.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBoxSend.SuspendLayout();
+            this.groupBoxSync.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBoxSearch
@@ -95,9 +98,8 @@
             // 
             // groupBoxSend
             // 
-            this.groupBoxSend.Controls.Add(this.btnSendJson);
-            this.groupBoxSend.Controls.Add(this.btnPlainWithCallback);
-            this.groupBoxSend.Controls.Add(this.btnPlainText);
+            this.groupBoxSend.Controls.Add(this.groupBoxAsync);
+            this.groupBoxSend.Controls.Add(this.groupBoxSync);
             this.groupBoxSend.Dock = System.Windows.Forms.DockStyle.Left;
             this.groupBoxSend.Location = new System.Drawing.Point(0, 0);
             this.groupBoxSend.Name = "groupBoxSend";
@@ -106,32 +108,55 @@
             this.groupBoxSend.TabStop = false;
             this.groupBoxSend.Text = "Send";
             // 
+            // groupBoxAsync
+            // 
+            this.groupBoxAsync.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBoxAsync.Location = new System.Drawing.Point(3, 138);
+            this.groupBoxAsync.Name = "groupBoxAsync";
+            this.groupBoxAsync.Size = new System.Drawing.Size(194, 161);
+            this.groupBoxAsync.TabIndex = 7;
+            this.groupBoxAsync.TabStop = false;
+            this.groupBoxAsync.Text = "Asynchronous";
+            // 
+            // groupBoxSync
+            // 
+            this.groupBoxSync.Controls.Add(this.btnSendJson);
+            this.groupBoxSync.Controls.Add(this.btnPlainWithCallback);
+            this.groupBoxSync.Controls.Add(this.btnPlainText);
+            this.groupBoxSync.Dock = System.Windows.Forms.DockStyle.Top;
+            this.groupBoxSync.Location = new System.Drawing.Point(3, 16);
+            this.groupBoxSync.Name = "groupBoxSync";
+            this.groupBoxSync.Size = new System.Drawing.Size(194, 122);
+            this.groupBoxSync.TabIndex = 6;
+            this.groupBoxSync.TabStop = false;
+            this.groupBoxSync.Text = "Synchronous";
+            // 
             // btnSendJson
             // 
-            this.btnSendJson.Location = new System.Drawing.Point(12, 79);
+            this.btnSendJson.Location = new System.Drawing.Point(9, 77);
             this.btnSendJson.Name = "btnSendJson";
             this.btnSendJson.Size = new System.Drawing.Size(173, 23);
-            this.btnSendJson.TabIndex = 5;
-            this.btnSendJson.Text = "Send JSON";
+            this.btnSendJson.TabIndex = 8;
+            this.btnSendJson.Text = "Object as JSON";
             this.btnSendJson.UseVisualStyleBackColor = true;
             this.btnSendJson.Click += new System.EventHandler(this.btnSendJson_Click);
             // 
             // btnPlainWithCallback
             // 
-            this.btnPlainWithCallback.Location = new System.Drawing.Point(12, 50);
+            this.btnPlainWithCallback.Location = new System.Drawing.Point(9, 48);
             this.btnPlainWithCallback.Name = "btnPlainWithCallback";
             this.btnPlainWithCallback.Size = new System.Drawing.Size(173, 23);
-            this.btnPlainWithCallback.TabIndex = 4;
+            this.btnPlainWithCallback.TabIndex = 7;
             this.btnPlainWithCallback.Text = "Plain text message with callback";
             this.btnPlainWithCallback.UseVisualStyleBackColor = true;
             this.btnPlainWithCallback.Click += new System.EventHandler(this.btnPlainWithCallback_Click);
             // 
             // btnPlainText
             // 
-            this.btnPlainText.Location = new System.Drawing.Point(12, 19);
+            this.btnPlainText.Location = new System.Drawing.Point(9, 19);
             this.btnPlainText.Name = "btnPlainText";
             this.btnPlainText.Size = new System.Drawing.Size(173, 23);
-            this.btnPlainText.TabIndex = 3;
+            this.btnPlainText.TabIndex = 6;
             this.btnPlainText.Text = "Plain text message";
             this.btnPlainText.UseVisualStyleBackColor = true;
             this.btnPlainText.Click += new System.EventHandler(this.btnPlainText_Click);
@@ -149,6 +174,7 @@
             this.groupBoxSearch.PerformLayout();
             this.panel1.ResumeLayout(false);
             this.groupBoxSend.ResumeLayout(false);
+            this.groupBoxSync.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -161,6 +187,8 @@
         private System.Windows.Forms.Button btnSearchEvents;
         private System.Windows.Forms.Button btnSearch;
         private System.Windows.Forms.GroupBox groupBoxSend;
+        private System.Windows.Forms.GroupBox groupBoxAsync;
+        private System.Windows.Forms.GroupBox groupBoxSync;
         private System.Windows.Forms.Button btnSendJson;
         private System.Windows.Forms.Button btnPlainWithCallback;
         private System.Windows.Forms.Button btnPlainText;
