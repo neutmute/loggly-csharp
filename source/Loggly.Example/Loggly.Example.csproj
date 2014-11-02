@@ -48,6 +48,7 @@
     <Compile Include="..\..\SolutionItems\Properties\AssemblyInfo.cs">
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
+    <Compile Include="WaitCursor.cs" />
     <Compile Include="LogglyExample.cs" />
     <Compile Include="LogObject.cs" />
     <Compile Include="MainForm.cs">

@@ -18,6 +18,9 @@ namespace Loggly
         public Task<LogResponse> Log(LogglyEvent logglyEvent)
         {
             var task = new Task<LogResponse>(() => LogWorker(logglyEvent));
+
+            //task.ContinueWith<LogResponse>(t => 
+            //{ throw LogglyException.Throw(t.Exception as Exception, "loggly task Exception"); }, logglyEvent, TaskContinuationOptions.OnlyOnFaulted);
             task.Start();
             return task;
         }
@@ -41,7 +44,11 @@ namespace Loggly
                 };
                 
                 IMessageTransport transporter = TransportFactory();
-                transporter.Send(message);
+                return transporter.Send(message);
+            }
+            else
+            {
+                return new LogResponse {Code = ResponseCode.SendDisabled};
             }
         }
 
@@ -49,32 +56,7 @@ namespace Loggly
         {
             return JsonConvert.SerializeObject(value, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
         }
-
-        private static Action<Response> GetCallbackWrapper(Action<LogResponse> callback)
-        {
-            Action<Response> callbackWrapper = null;
-
-            if (callback != null)
-            {
-                callbackWrapper = r =>
-                {
-                    if (r.Success)
-                    {
-                        var res = JsonConvert.DeserializeObject<LogResponse>(r.Raw);
-                        res.Success = true;
-                        callback(res);
-                    }
-                    else
-                    {
-                        var res = new LogResponse {Success = false, Message = r.Error.Message};
-                        callback(res);
-                    }
-                };
-            }
-
-            return callbackWrapper;
-        }
-
+        
         private IMessageTransport TransportFactory()
         {
             var transport = LogglyConfig.Instance.Transport.LogTransport;

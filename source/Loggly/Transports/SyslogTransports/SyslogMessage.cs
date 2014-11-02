@@ -53,9 +53,12 @@ namespace Loggly.Transports.Syslog
 
         public IEnvironmentProvider EnvironmentProvider { get; set; }
 
-        public SyslogMessage() {}
+        public SyslogMessage()
+        {
+            EnvironmentProvider = new EnvironmentProvider();
+        }
 
-        public SyslogMessage(Facility facility, Level level, string text)
+        public SyslogMessage(Facility facility, Level level, string text) : this()
         {
             Facility= facility;
             Level= level;

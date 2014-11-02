@@ -1,19 +1,24 @@
 using System;
 using System.Text;
 using Loggly.Config;
+using Loggly.Responses;
 
 namespace Loggly.Transports.Syslog
 {
     internal abstract class SyslogTransportBase : TransportBase, IMessageTransport
     {
-        public void Send(LogglyMessage message)
+        public LogResponse Send(LogglyMessage message)
         {
+            var appNameSafe = LogglyConfig.Instance.ApplicationName ?? string.Empty;
+
+
             var syslogMessage = new SyslogMessage();
+
             syslogMessage.Facility = Facility.User;
             syslogMessage.Text = message.Content;
             syslogMessage.Level = message.Syslog.Level;
             syslogMessage.MessageId = message.Syslog.MessageId;
-            syslogMessage.AppName = LogglyConfig.Instance.ApplicationName.Replace(" ", "");
+            syslogMessage.AppName = appNameSafe.Replace(" ", "");
             syslogMessage.Timestamp = message.Timestamp;
 
             syslogMessage.Text = string.Format(
@@ -23,6 +28,8 @@ namespace Loggly.Transports.Syslog
                                     , message.Content);
             
             Send(syslogMessage);
+
+            return new LogResponse { Code = ResponseCode.AssumedSuccess };
         }
 
         protected abstract void Send(SyslogMessage syslogMessage);

@@ -12,11 +12,12 @@ namespace Loggly.Example
     {
         readonly ILogglyClient _loggly = new LogglyClient();
 
-        public void SendPlainMessage()
+        public ResponseCode SendPlainMessageSynchronous()
         {
             var logEvent = new LogglyEvent();
             logEvent.Data.Add("message", "Simple message at {0} using {1}", DateTime.Now, LogglyConfig.Instance.Transport.LogTransport);
-            _loggly.Log(logEvent);
+            var r = _loggly.Log(logEvent).Result;
+            return r.Code;
         }
 
         public void SendWithCallback()
@@ -24,7 +25,6 @@ namespace Loggly.Example
 
             var logEvent = new LogglyEvent();
 
-            logEvent.Options.Callback = lr => Debug.WriteLine(lr);
             logEvent.Data.Add("message", "Simple message at {0} with callback using {1}", DateTime.Now, LogglyConfig.Instance.Transport.LogTransport);
 
             _loggly.Log(logEvent);
@@ -34,7 +34,6 @@ namespace Loggly.Example
         {
             var logEvent = new LogglyEvent();
 
-            logEvent.Options.Callback = lr => Debug.WriteLine(lr);
             logEvent.Data.Add("message", "Message with attributes");
             logEvent.Data.Add("context", new LogObject());
 

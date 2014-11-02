@@ -4,6 +4,7 @@ using System.Net;
 using System.Text;
 using Loggly.Config;
 using Loggly.Responses;
+using Newtonsoft.Json;
 
 namespace Loggly
 {
@@ -28,7 +29,7 @@ namespace Loggly
 
         public LogResponse Send(LogglyMessage message)
         {
-            var logglyResponse = Response.CreateError(new ErrorMessage{Message= "something failed?"});
+            var logResponse = new LogResponse();
 
             if (LogglyConfig.Instance.IsValid)
             {
@@ -36,7 +37,17 @@ namespace Loggly
 
                 using (var response = httpWebRequest.GetResponse())
                 {
-                    logglyResponse = Response.CreateSuccess(GetResponseBody(response));
+                    var rawResponse = Response.CreateSuccess(GetResponseBody(response));
+
+                    if (rawResponse.Success)
+                    {
+                        logResponse = JsonConvert.DeserializeObject<LogResponse>(rawResponse.Raw);
+                        logResponse.Code = ResponseCode.Success;
+                    }
+                    else
+                    {
+                        logResponse = new LogResponse { Code =ResponseCode.Error, Message = rawResponse.Error.Message };
+                    }
                 }
             }
             else
@@ -44,7 +55,7 @@ namespace Loggly
                 LogglyException.Throw("Loggly configuration is missing or invalid. Did you specify a customer token?");
             }
 
-            return logglyResponse;
+            return logResponse;
         }
 
         private HttpWebRequest CreateHttpWebRequest(LogglyMessage message)
