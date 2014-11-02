@@ -44,7 +44,7 @@ namespace Loggly.Example
         {
             var logEvent = new LogglyEvent();
             logEvent.Data = new LogObject();
-            return await _loggly.Log(logEvent);
+            return await _loggly.Log(logEvent).ConfigureAwait(false);
         }
 
         public async void SendWithSpecificTransport(LogTransport transport)
