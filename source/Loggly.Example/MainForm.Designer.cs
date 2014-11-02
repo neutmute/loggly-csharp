@@ -36,11 +36,10 @@
             this.groupBoxSend = new System.Windows.Forms.GroupBox();
             this.groupBoxAsync = new System.Windows.Forms.GroupBox();
             this.btnSendJson = new System.Windows.Forms.Button();
-            this.btnPlainWithCallback = new System.Windows.Forms.Button();
+            this.btnPlainAsync = new System.Windows.Forms.Button();
             this.groupBoxSync = new System.Windows.Forms.GroupBox();
             this.btnPlainText = new System.Windows.Forms.Button();
             this.groupBoxTransport = new System.Windows.Forms.GroupBox();
-            this.radTransportAppConfig = new System.Windows.Forms.RadioButton();
             this.radTransportHttps = new System.Windows.Forms.RadioButton();
             this.radTransportSyslogUdp = new System.Windows.Forms.RadioButton();
             this.radTransportSyslogSecure = new System.Windows.Forms.RadioButton();
@@ -120,7 +119,7 @@
             // groupBoxAsync
             // 
             this.groupBoxAsync.Controls.Add(this.btnSendJson);
-            this.groupBoxAsync.Controls.Add(this.btnPlainWithCallback);
+            this.groupBoxAsync.Controls.Add(this.btnPlainAsync);
             this.groupBoxAsync.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBoxAsync.Location = new System.Drawing.Point(3, 78);
             this.groupBoxAsync.Name = "groupBoxAsync";
@@ -139,15 +138,15 @@
             this.btnSendJson.UseVisualStyleBackColor = true;
             this.btnSendJson.Click += new System.EventHandler(this.btnSendJson_Click);
             // 
-            // btnPlainWithCallback
+            // btnPlainAsync
             // 
-            this.btnPlainWithCallback.Location = new System.Drawing.Point(6, 19);
-            this.btnPlainWithCallback.Name = "btnPlainWithCallback";
-            this.btnPlainWithCallback.Size = new System.Drawing.Size(173, 23);
-            this.btnPlainWithCallback.TabIndex = 9;
-            this.btnPlainWithCallback.Text = "Plain text message with callback";
-            this.btnPlainWithCallback.UseVisualStyleBackColor = true;
-            this.btnPlainWithCallback.Click += new System.EventHandler(this.btnPlainWithCallback_Click);
+            this.btnPlainAsync.Location = new System.Drawing.Point(6, 19);
+            this.btnPlainAsync.Name = "btnPlainAsync";
+            this.btnPlainAsync.Size = new System.Drawing.Size(173, 23);
+            this.btnPlainAsync.TabIndex = 9;
+            this.btnPlainAsync.Text = "Plain text message";
+            this.btnPlainAsync.UseVisualStyleBackColor = true;
+            this.btnPlainAsync.Click += new System.EventHandler(this.btnPlainAsync_Click);
             // 
             // groupBoxSync
             // 
@@ -176,7 +175,6 @@
             this.groupBoxTransport.Controls.Add(this.radTransportSyslogSecure);
             this.groupBoxTransport.Controls.Add(this.radTransportSyslogUdp);
             this.groupBoxTransport.Controls.Add(this.radTransportHttps);
-            this.groupBoxTransport.Controls.Add(this.radTransportAppConfig);
             this.groupBoxTransport.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBoxTransport.Location = new System.Drawing.Point(3, 167);
             this.groupBoxTransport.Name = "groupBoxTransport";
@@ -185,17 +183,6 @@
             this.groupBoxTransport.TabStop = false;
             this.groupBoxTransport.Text = "Transport";
             this.groupBoxTransport.Enter += new System.EventHandler(this.groupBoxTransport_Enter);
-            // 
-            // radTransportAppConfig
-            // 
-            this.radTransportAppConfig.AutoSize = true;
-            this.radTransportAppConfig.Location = new System.Drawing.Point(9, 19);
-            this.radTransportAppConfig.Name = "radTransportAppConfig";
-            this.radTransportAppConfig.Size = new System.Drawing.Size(77, 17);
-            this.radTransportAppConfig.TabIndex = 0;
-            this.radTransportAppConfig.TabStop = true;
-            this.radTransportAppConfig.Text = "App.Config";
-            this.radTransportAppConfig.UseVisualStyleBackColor = true;
             // 
             // radTransportHttps
             // 
@@ -274,12 +261,11 @@
         private System.Windows.Forms.GroupBox groupBoxSync;
         private System.Windows.Forms.Button btnPlainText;
         private System.Windows.Forms.Button btnSendJson;
-        private System.Windows.Forms.Button btnPlainWithCallback;
+        private System.Windows.Forms.Button btnPlainAsync;
         private System.Windows.Forms.GroupBox groupBoxTransport;
         private System.Windows.Forms.RadioButton radTransportSyslogSecure;
         private System.Windows.Forms.RadioButton radTransportSyslogUdp;
         private System.Windows.Forms.RadioButton radTransportHttps;
-        private System.Windows.Forms.RadioButton radTransportAppConfig;
         private System.Windows.Forms.Button btnForcedTransport;
     }
 }

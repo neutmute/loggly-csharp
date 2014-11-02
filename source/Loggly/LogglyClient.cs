@@ -17,12 +17,7 @@ namespace Loggly
     {
         public Task<LogResponse> Log(LogglyEvent logglyEvent)
         {
-            var task = new Task<LogResponse>(() => LogWorker(logglyEvent));
-
-            //task.ContinueWith<LogResponse>(t => 
-            //{ throw LogglyException.Throw(t.Exception as Exception, "loggly task Exception"); }, logglyEvent, TaskContinuationOptions.OnlyOnFaulted);
-            task.Start();
-            return task;
+            return Task.Run(() => LogWorker(logglyEvent));
         }
 
         private LogResponse LogWorker(LogglyEvent logglyEvent)

@@ -34,10 +34,12 @@ namespace Loggly.Example
             }
         }
 
-        private void btnPlainWithCallback_Click(object sender, EventArgs e)
+        private void btnPlainAsync_Click(object sender, EventArgs e)
         {
-
-            _logglyExample.SendWithCallback();
+            using (new WaitCursor(this))
+            {
+               _logglyExample.SendAsync();
+            }
         }
 
         private void btnSendJson_Click(object sender, EventArgs e)
@@ -79,12 +81,22 @@ namespace Loggly.Example
 
         private void MainForm_Load(object sender, EventArgs e)
         {
-            radTransportAppConfig.Checked = true;
+            radTransportHttps.Checked = true;
         }
 
         private void btnForcedTransport_Click(object sender, EventArgs e)
         {
+            var logTransport = LogTransport.Https;
+            if (radTransportSyslogUdp.Checked)
+            {
+                logTransport = LogTransport.SyslogUdp;
+            }
+            if (radTransportSyslogSecure.Checked)
+            {
+                logTransport = LogTransport.SyslogSecure;
+            }
 
+            _logglyExample.SendWithSpecificTransport(logTransport);
         }
     }
 }

@@ -15,19 +15,16 @@ namespace Loggly.Example
         public ResponseCode SendPlainMessageSynchronous()
         {
             var logEvent = new LogglyEvent();
-            logEvent.Data.Add("message", "Simple message at {0} using {1}", DateTime.Now, LogglyConfig.Instance.Transport.LogTransport);
-            var r = _loggly.Log(logEvent).Result;
+            logEvent.Data.Add("message", "Synchronous message at {0} using {1}", DateTime.Now, LogglyConfig.Instance.Transport.LogTransport);
+            var r = _loggly.Log(logEvent).Result; // Log returns task. Force synchronous with Result
             return r.Code;
         }
 
-        public void SendWithCallback()
+        public void SendAsync()
         {
-
             var logEvent = new LogglyEvent();
-
-            logEvent.Data.Add("message", "Simple message at {0} with callback using {1}", DateTime.Now, LogglyConfig.Instance.Transport.LogTransport);
-
-            _loggly.Log(logEvent);
+            logEvent.Data.Add("message", "Asynchronous message at {0} using {1}", DateTime.Now, LogglyConfig.Instance.Transport.LogTransport);
+            _loggly.Log(logEvent).ConfigureAwait(false);
         }
 
         public void SendWithAttributes()
@@ -47,7 +44,7 @@ namespace Loggly.Example
             _loggly.Log(logEvent);
         }
 
-        public void SendWithSpecificTransport(LogTransport transport)
+        public async void SendWithSpecificTransport(LogTransport transport)
         {
             var priorTransport = LogglyConfig.Instance.Transport;
 
@@ -56,7 +53,7 @@ namespace Loggly.Example
 
             var logEvent = new LogglyEvent();
             logEvent.Data.Add("message", "Log event sent with forced transport={0}", transport);
-            _loggly.Log(logEvent);
+            await _loggly.Log(logEvent);
 
             LogglyConfig.Instance.Transport = priorTransport;
         }
