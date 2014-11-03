@@ -64,10 +64,10 @@ If you specify an `applicationName` in the config, the syslog UDP transport will
 #### logTransport="SyslogSecure"
 Has the advantages of SyslogUdp as well as transmitting via the secure TLS TCP channel so that your logs are encrypted over the wire. Syslog supports JSON formatted messages just like Https.
 
-### Tags 
-Simple tags are string literals added to the app.config. What you see is what you get.
+#### tags 
+`simple` tags are string literals added to the app.config. What you see is what you get.
 
-Complex tags are types inheriting from `ComplexTag`. They have the `formatter` attribute so you may specify your own `string.Format`.
+`complex` tags inherit from `ComplexTag`. They have the `formatter` attribute so you may specify your own `string.Format`.
 The `Assembly` attribute is available as an optional parameter so you can roll your own tags too.
 
 Loggly has certain restrictions around characters allowed in tags. This library automatically replaces illegal characters with an underscore.
