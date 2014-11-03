@@ -46,7 +46,9 @@ namespace Loggly.Example
         {
             using (new WaitCursor(this))
             {
+                #pragma warning disable 4014
                 _logglyExample.SendCustomObjectAsync();
+                #pragma warning restore 4014
             }
         }
 
