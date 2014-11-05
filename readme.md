@@ -109,3 +109,17 @@ Of course, there is no need to have a config source in your real app, this is ju
 ## Projects using this client
 * [nlog-targets-loggly](https://github.com/joefitzgerald/nlog-targets-loggly) An NLog target
 * [Serilog.Sinks.Loggly](https://github.com/serilog/serilog/tree/master/src/Serilog.Sinks.Loggly) Serilog sink
+
+## History
+###v4.5 
+* Targets framework 4.5
+* Log method returns `Task<LogResponse>` for async/await compatibility
+
+###v3.5
+* New maintainer [neutmute](https://github.com/neutmute)
+* Refactored API with new Config assembly
+* Syslog UDP and TCP support added
+
+###v2.0 and prior
+* Maintained by [Karl Seguin](https://github.com/karlseguin) 
+ 
