@@ -9,11 +9,11 @@ Install via nuget with
 Any existing code targeting versions < 3.0 will require modification.
 
 ## Configuration
-Configuration is done via your app.config. The minimal amount config you require is to specify your customer token: 
+Configuration is done via your app.config. The minimal amount config you require is to specify your `customerToken`: 
 
 	<configuration>
 	  <configSections>
-	    <section name="loggly" type="Loggly.Config.LogglyAppConfig, Loggly.Config, Version=3.5.0.0, Culture=neutral, PublicKeyToken=null"/>
+	    <section name="loggly" type="Loggly.Config.LogglyAppConfig, Loggly.Config"/>
 	  </configSections>
 	  <loggly xmlns="Loggly" customerToken="your token here" />
 	</configuration>
@@ -51,23 +51,23 @@ Render your application name as a tag by using the `HostnameTag` (keep reading).
 ### isEnabled
 Set it to false on your development machine so that no events are sent to loggly. 
 
-### Transport
+### transport
 Three different transports may be specified with the `logTransport` attribute in the `transport` element.
 The transport element is entirely optional and will default to the Https. The available transports are as follows:
 
-#### Https
+#### logTransport="Https"
 The default transport, posting to Loggly on port 443. Note that application and host source group filtering [are not supported by HTTP](https://community.loggly.com/customer/portal/questions/8416949--host-field-for-source-groups?b_id=50), so you may wish to consider a Syslog transport.
 
-#### SyslogUdp
+#### logTransport="SyslogUdp"
 If you specify an `applicationName` in the config, the syslog UDP transport will populate the field so it may be filtered in a source group. Host is also automatically populated by  the client. Udp messages are sent in plain text.  
 
-#### SyslogSecure
+#### logTransport="SyslogSecure"
 Has the advantages of SyslogUdp as well as transmitting via the secure TLS TCP channel so that your logs are encrypted over the wire. Syslog supports JSON formatted messages just like Https.
 
-### Tags 
-Simple tags are string literals added to the app.config. What you see is what you get.
+#### tags 
+`simple` tags are string literals added to the app.config. What you see is what you get.
 
-Complex tags are types inheriting from `ComplexTag`. They have the `formatter` attribute so you may specify your own `string.Format`.
+`complex` tags inherit from `ComplexTag`. They have the `formatter` attribute so you may specify your own `string.Format`.
 The `Assembly` attribute is available as an optional parameter so you can roll your own tags too.
 
 Loggly has certain restrictions around characters allowed in tags. This library automatically replaces illegal characters with an underscore.
@@ -89,6 +89,8 @@ Or log an entire object and let the client send it as structured JSON
 	logEvent.Data.Add("context", new GlimmerWingPony());
     _loggly.Log(logEvent);
 
+The `Log` method returns `Task<LogResponse>` so it is asynchronous by default but can be awaited. Only the Https transport would be worth awaiting as the Syslog transports are fire and forget. 
+
 ## Usage: SearchClient
 
 See example project below in conjunction with the [loggly docs](https://www.loggly.com/docs/api-retrieving-data/)
@@ -105,4 +107,19 @@ Of course, there is no need to have a config source in your real app, this is ju
 
 
 ## Projects using this client
-[nlog-targets-loggly](https://github.com/joefitzgerald/nlog-targets-loggly) An NLog target
+* [nlog-targets-loggly](https://github.com/joefitzgerald/nlog-targets-loggly) An NLog target
+* [Serilog.Sinks.Loggly](https://github.com/serilog/serilog/tree/master/src/Serilog.Sinks.Loggly) Serilog sink
+
+## History
+###v4.5 
+* Targets framework 4.5
+* Log method returns `Task<LogResponse>` for async/await compatibility
+
+###v3.5
+* New maintainer [neutmute](https://github.com/neutmute)
+* Refactored API with new Config assembly
+* Syslog UDP and TCP support added
+
+###v2.0 and prior
+* Maintained by [Karl Seguin](https://github.com/karlseguin) 
+ 

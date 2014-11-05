@@ -1,11 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Loggly.Responses;
 
 namespace Loggly
 {
    public interface ILogglyClient
    {
-      void Log(LogglyEvent logglyEvent);
+       Task<LogResponse> Log(LogglyEvent logglyEvent);
    }
 }

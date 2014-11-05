@@ -39,7 +39,8 @@ namespace Loggly.Example
 
 
         public void AddIfAbsent(string key, object value)
-        {//noop
+        {
+            //noop
         }
 
         public void Add(string key, string valueFormat, params object[] valueArgs)

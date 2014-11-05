@@ -12,40 +12,53 @@ namespace Loggly.Example
     {
         readonly ILogglyClient _loggly = new LogglyClient();
 
-        public void SendPlainMessage()
+        /// <summary>
+        /// Calling result on the task forces it to be synchronous
+        /// </summary>
+        public ResponseCode SendPlainMessageSynchronous()
         {
             var logEvent = new LogglyEvent();
-            logEvent.Data.Add("message", "Simple message at {0} using {1}", DateTime.Now, LogglyConfig.Instance.Transport.LogTransport);
-            _loggly.Log(logEvent);
+            logEvent.Data.Add("message", "Synchronous message at {0} using {1}", DateTime.Now, LogglyConfig.Instance.Transport.LogTransport);
+            var r = _loggly.Log(logEvent).Result;
+            return r.Code;
         }
 
-        public void SendWithCallback()
+        public void SendAsync()
         {
-
             var logEvent = new LogglyEvent();
-
-            logEvent.Options.Callback = lr => Debug.WriteLine(lr);
-            logEvent.Data.Add("message", "Simple message at {0} with callback using {1}", DateTime.Now, LogglyConfig.Instance.Transport.LogTransport);
-
-            _loggly.Log(logEvent);
+            logEvent.Data.Add("message", "Asynchronous message at {0} using {1}", DateTime.Now, LogglyConfig.Instance.Transport.LogTransport);
+            _loggly.Log(logEvent).ConfigureAwait(false);
         }
 
         public void SendWithAttributes()
         {
             var logEvent = new LogglyEvent();
 
-            logEvent.Options.Callback = lr => Debug.WriteLine(lr);
             logEvent.Data.Add("message", "Message with attributes");
             logEvent.Data.Add("context", new LogObject());
 
             _loggly.Log(logEvent);
         }
 
-        public void SendCustomObject()
+        public async Task<LogResponse> SendCustomObjectAsync()
         {
             var logEvent = new LogglyEvent();
             logEvent.Data = new LogObject();
-            _loggly.Log(logEvent);
+            return await _loggly.Log(logEvent).ConfigureAwait(false);
+        }
+
+        public async void SendWithSpecificTransport(LogTransport transport)
+        {
+            var priorTransport = LogglyConfig.Instance.Transport;
+
+            var newTransport = new TransportConfiguration {LogTransport = transport};
+            LogglyConfig.Instance.Transport = newTransport.GetCoercedToValidConfig();
+
+            var logEvent = new LogglyEvent();
+            logEvent.Data.Add("message", "Log event sent with forced transport={0}", transport);
+            await _loggly.Log(logEvent);
+
+            LogglyConfig.Instance.Transport = priorTransport;
         }
     }
 }

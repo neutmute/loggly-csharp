@@ -48,7 +48,7 @@ namespace Loggly
             try
             {
                 var searchPathAndQuery = GetUrl(endPoint, parameters);
-                var searchRequest = CreateRequest(searchPathAndQuery, HttpRequestType.Get);
+                var searchRequest = CreateHttpWebRequest(searchPathAndQuery, HttpRequestType.Get);
                 
                 searchRequest.Credentials = new NetworkCredential(_config.Username, _config.Password);
 

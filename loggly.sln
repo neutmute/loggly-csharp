@@ -17,8 +17,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loggly.Example", "source\Lo
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loggly", "source\Loggly\Loggly.csproj", "{F66349BA-29A6-4336-BA81-993170FC9963}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loggly.Tests.Integration", "source\Loggly.Tests.Integration\Loggly.Tests.Integration.csproj", "{8276BB03-DBCC-4A94-8111-5D333F49FECD}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C0663875-851C-4166-B028-D0EAEC29810B}"
 	ProjectSection(SolutionItems) = preProject
 		.nuget\NuGet.Config = .nuget\NuGet.Config
@@ -48,10 +46,6 @@ Global
 		{F66349BA-29A6-4336-BA81-993170FC9963}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F66349BA-29A6-4336-BA81-993170FC9963}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F66349BA-29A6-4336-BA81-993170FC9963}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8276BB03-DBCC-4A94-8111-5D333F49FECD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8276BB03-DBCC-4A94-8111-5D333F49FECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8276BB03-DBCC-4A94-8111-5D333F49FECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8276BB03-DBCC-4A94-8111-5D333F49FECD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

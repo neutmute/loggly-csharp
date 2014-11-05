@@ -29,14 +29,14 @@ namespace Loggly
         ,Post
     }
 
-    class RequestState : ResponseState
-    {
-        public byte[] Payload { get; set; }
-    }
+    //class RequestState : ResponseState
+    //{
+    //    public byte[] Payload { get; set; }
+    //}
 
-    class ResponseState
-    {
-        public HttpWebRequest Request { get; set; }
-        public Action<Response> Callback { get; set; }
-    }
+    //class ResponseState
+    //{
+    //    public HttpWebRequest Request { get; set; }
+    //    //public Action<Response> Callback { get; set; }
+    //}
 }

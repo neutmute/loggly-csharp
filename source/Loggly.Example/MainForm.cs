@@ -15,6 +15,7 @@ namespace Loggly.Example
 {
     public partial class MainForm : Form
     {
+
         readonly LogglyExample _logglyExample = new LogglyExample();
 
         private SearchResponse _searchResponse;
@@ -25,19 +26,30 @@ namespace Loggly.Example
 
         private void btnPlainText_Click(object sender, EventArgs e)
         {
-            _logglyExample.SendPlainMessage();
+            Cursor.Current = Cursors.WaitCursor;
+
+            using (new WaitCursor(this))
+            {
+                _logglyExample.SendPlainMessageSynchronous();
+            }
         }
 
-        private void btnPlainWithCallback_Click(object sender, EventArgs e)
+        private void btnPlainAsync_Click(object sender, EventArgs e)
         {
-
-            _logglyExample.SendWithCallback();
+            using (new WaitCursor(this))
+            {
+               _logglyExample.SendAsync();
+            }
         }
 
         private void btnSendJson_Click(object sender, EventArgs e)
         {
-            _logglyExample.SendCustomObject();
-
+            using (new WaitCursor(this))
+            {
+                #pragma warning disable 4014
+                _logglyExample.SendCustomObjectAsync();
+                #pragma warning restore 4014
+            }
         }
 
         private void btnSearch_Click(object sender, EventArgs e)
@@ -65,6 +77,31 @@ namespace Loggly.Example
                     break;
                 }
             }
+        }
+
+        private void groupBoxTransport_Enter(object sender, EventArgs e)
+        {
+
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            radTransportHttps.Checked = true;
+        }
+
+        private void btnForcedTransport_Click(object sender, EventArgs e)
+        {
+            var logTransport = LogTransport.Https;
+            if (radTransportSyslogUdp.Checked)
+            {
+                logTransport = LogTransport.SyslogUdp;
+            }
+            if (radTransportSyslogSecure.Checked)
+            {
+                logTransport = LogTransport.SyslogSecure;
+            }
+
+            _logglyExample.SendWithSpecificTransport(logTransport);
         }
     }
 }

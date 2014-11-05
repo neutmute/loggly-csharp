@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq">
+      <HintPath>..\..\packages\Moq.4.2.1409.1722\lib\net40\Moq.dll</HintPath>
+    </Reference>
     <Reference Include="nunit.framework">
       <HintPath>..\..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
     </Reference>
@@ -49,6 +52,7 @@
     <Compile Include="Loggly.Config\TagConfigurationFixture.cs" />
     <Compile Include="Loggly\ExtensionMethods\DateTimeExtensionsFixture.cs" />
     <Compile Include="Loggly\LogglyMessageDataFixture.cs" />
+    <Compile Include="Loggly\Transports\SyslogTransports\SyslogMessageFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

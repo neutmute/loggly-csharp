@@ -39,6 +39,12 @@ namespace Loggly
             Throw(exception);
         }
 
+        public static void Throw(Exception innerException)
+        {
+            var exception = new LogglyException(innerException.Message, innerException);
+            Throw(exception);
+        }
+
        private static void Throw(LogglyException exception)
        {
             if (LogglyConfig.Instance.ThrowExceptions)
