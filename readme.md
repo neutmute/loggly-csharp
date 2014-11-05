@@ -13,7 +13,7 @@ Configuration is done via your app.config. The minimal amount config you require
 
 	<configuration>
 	  <configSections>
-	    <section name="loggly" type="Loggly.Config.LogglyAppConfig, Loggly.Config, Version=4.5.0.0, Culture=neutral, PublicKeyToken=null"/>
+	    <section name="loggly" type="Loggly.Config.LogglyAppConfig, Loggly.Config"/>
 	  </configSections>
 	  <loggly xmlns="Loggly" customerToken="your token here" />
 	</configuration>
