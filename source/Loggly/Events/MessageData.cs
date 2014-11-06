@@ -40,8 +40,15 @@ namespace Loggly
 
         public void Add(string key, string valueFormat, params object[] valueArgs)
         {
-            var value = string.Format(valueFormat, valueArgs);
-            Add(key, value);
+            if (valueArgs.Length == 0)
+            {
+                Add(key, valueFormat);
+            }
+            else
+            {
+                var value = string.Format(valueFormat, valueArgs);
+                Add(key, value);
+            }
         }
         
     }

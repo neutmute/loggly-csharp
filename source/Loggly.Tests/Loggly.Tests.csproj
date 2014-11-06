@@ -50,6 +50,7 @@
     <Compile Include="Fixture.cs" />
     <Compile Include="Loggly.Config\ComplexTags\HostnameTagFixture.cs" />
     <Compile Include="Loggly.Config\TagConfigurationFixture.cs" />
+    <Compile Include="Loggly\Events\MessageDataFixture.cs" />
     <Compile Include="Loggly\ExtensionMethods\DateTimeExtensionsFixture.cs" />
     <Compile Include="Loggly\LogglyMessageDataFixture.cs" />
     <Compile Include="Loggly\Transports\SyslogTransports\SyslogMessageFixture.cs" />
