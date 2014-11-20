@@ -62,6 +62,8 @@ namespace Loggly
         {
             var httpWebRequest = CreateHttpWebRequest(Url, HttpRequestType.Post);
 
+            httpWebRequest.Headers.Add("X-Forwarded-For", Utils.NetworkUtils.GetHostIPAddress());
+
             if (!string.IsNullOrEmpty(RenderedTags))
             {
                 httpWebRequest.Headers.Add("X-LOGGLY-TAG", RenderedTags);
