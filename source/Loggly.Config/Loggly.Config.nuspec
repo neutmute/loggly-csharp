@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2010/07/nuspec.xsd">
+  <metadata>
+    <id>loggly-csharp-config</id>
+    <title>loggly-csharp-config</title>
+    <version>$version$</version>
+    <authors>neutmute</authors>
+    <projectUrl>https://github.com/neutmute/loggly-csharp</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/neutmute/loggly-csharp/master/SolutionItems/loggly-config.png</iconUrl>
+    <description>$description$</description>
+    <language>en-US</language>
+    <tags>loggly</tags>
+  </metadata>
+</package>

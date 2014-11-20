@@ -1,75 +1,125 @@
-# Loggly .NET Driver
+#![](https://raw.githubusercontent.com/neutmute/loggly-csharp/master/SolutionItems/loggly.png) .NET Client for Loggly  
 
-This is a .NET driver for [loggly.com](http://loggly.com).
+A .NET client for loggly. Supporting Https, Syslog UDP and encrypted Syslog TCP transports.
+Install via nuget with
 
-## Logging Events
+	Install-Package loggly-csharp
 
-**Please note that as of the 2.0 release, async logging is the default. To log synchronously, use the corresponding `Sync` methods (`Log` vs `LogSync`)**
+**Note** Version 3.5 has completely broken compatibility with prior versions to bring major improvements.
+Any existing code targeting versions < 3.0 will require modification.
 
-Create a new `Logger` with your input key:
+## Configuration
+Configuration is done via your app.config. The minimal amount config you require is to specify your `customerToken`: 
 
-	var logger = new Logger("my-long-key-that-i-got-when-setting-up-my-http-input");
+	<configuration>
+	  <configSections>
+	    <section name="loggly" type="Loggly.Config.LogglyAppConfig, Loggly.Config"/>
+	  </configSections>
+	  <loggly xmlns="Loggly" customerToken="your token here" />
+	</configuration>
+ 
+When you get that working, take the training wheels off and go crazy:
 
-OR
-	
-	var logger = new Logger("my-long-key-that-i-got-when-setting-up-my-http-input", "your-application-name");
-	
-	
-Passing application name will help you to track your application easily in loggly dashboard if you use loggly-csharp library in multiple projects.
+	<loggly 
+	  xmlns="Loggly" 
+	  applicationName="MyAwesomeApp" 
+	  customerToken="your token here" 
+	  isEnabled="true"
+	  throwExceptions="true">
 
-For JSON logging you can use `LogInfo`, `LogVerbose`, `LogWarning`, `LogError` methods that will create json objects with properties like category, message, exception (if applicable), extra data that you provide.
+  	  <transport logTransport="Https" endpointHostname="logs-01.loggly.com" endpointPort="443"/>
 
-Use either a synchronous or asynchronous `Log` method.
+	  <search account="your_loggly_account" username="a_loggly_username" password="myLittleP0ny!"/>
+  
+	  <tags>
+	    <simple>
+	      <tag value="winforms"/>
+	    </simple>
+	    <complex>
+	      <tag type="Loggly.HostnameTag" formatter="host-{0}"/>
+	      <tag type="Loggly.ApplicationNameTag" formatter="application-{0}"/>
+	      <tag type="Loggly.OperatingSystemVersionTag" formatter="os-{0}"/>
+	      <tag type="Loggly.OperatingSystemPlatformTag" formatter="platform-{0}"/>
+	    </complex>
+	  </tags>
+	</loggly>
+
+### applicationName
+This is an optional attribute. If you leave this attribute out but have `NewRelic.AppName` in your app.config, then it will pick that value up automatically.
+Render your application name as a tag by using the `HostnameTag` (keep reading).
+
+### isEnabled
+Set it to false on your development machine so that no events are sent to loggly. 
+
+### transport
+Three different transports may be specified with the `logTransport` attribute in the `transport` element.
+The transport element is entirely optional and will default to the Https. The available transports are as follows:
+
+#### logTransport="Https"
+The default transport, posting to Loggly on port 443. Note that application and host source group filtering [are not supported by HTTP](https://community.loggly.com/customer/portal/questions/8416949--host-field-for-source-groups?b_id=50), so you may wish to consider a Syslog transport.
+
+#### logTransport="SyslogUdp"
+If you specify an `applicationName` in the config, the syslog UDP transport will populate the field so it may be filtered in a source group. Host is also automatically populated by  the client. Udp messages are sent in plain text.  
+
+#### logTransport="SyslogSecure"
+Has the advantages of SyslogUdp as well as transmitting via the secure TLS TCP channel so that your logs are encrypted over the wire. Syslog supports JSON formatted messages just like Https.
+
+#### tags 
+`simple` tags are string literals added to the app.config. What you see is what you get.
+
+`complex` tags inherit from `ComplexTag`. They have the `formatter` attribute so you may specify your own `string.Format`.
+The `Assembly` attribute is available as an optional parameter so you can roll your own tags too.
+
+Loggly has certain restrictions around characters allowed in tags. This library automatically replaces illegal characters with an underscore.
+ 
+### Programmatic Configuration
+
+If you prefer to set configuration programatically, specify the values via the static `LogglyConfig.Instance` class at application startup.
+
+## Usage: LogglyClient
+Send simple text messages with something like this.
+
+	ILogglyClient _loggly = new LogglyClient();
+    var logEvent = new LogglyEvent();
+    logEvent.Data.Add("message", "Simple message at {0}", DateTime.Now);
+    _loggly.Log(logEvent);
+
+Or log an entire object and let the client send it as structured JSON
+
+	logEvent.Data.Add("context", new GlimmerWingPony());
+    _loggly.Log(logEvent);
+
+The `Log` method returns `Task<LogResponse>` so it is asynchronous by default but can be awaited. Only the Https transport would be worth awaiting as the Syslog transports are fire and forget. 
+
+## Usage: SearchClient
+
+See example project below in conjunction with the [loggly docs](https://www.loggly.com/docs/api-retrieving-data/)
+
+## Loggly.Example Project
+The solution has an example project with sample code to demonstrate the client.
+Before starting, copy the example config into the user config, eg:
+
+	C:\loggly-csharp>copy .\source\Loggly.Example\example.loggly.user.config .\source\Loggly.Example\loggly.user.config
+
+And configure the file with your own customer token.
+
+Of course, there is no need to have a config source in your real app, this is just a convenience for this public repository.
 
 
-## Searching Events on Loggly Dashboad
+## Projects using this client
+* [nlog-targets-loggly](https://github.com/joefitzgerald/nlog-targets-loggly) An NLog target
+* [Serilog.Sinks.Loggly](https://github.com/serilog/serilog/tree/master/src/Serilog.Sinks.Loggly) Serilog sink
 
-You can see logs on Loggly dashboard by using facet 
+## History
+###v4.5 
+* Targets framework 4.5
+* Log method returns `Task<LogResponse>` for async/await compatibility
 
-	userAgent:"loggly-csharp"
+###v3.5
+* New maintainer [neutmute](https://github.com/neutmute)
+* Refactored API with new Config assembly
+* Syslog UDP and TCP support added
 
-OR
-
-	userAgent:"your-application-name"
-
-## Searching Events using code
-
-First, setup the username/password you want to connect with:
-
-	LogglyConfiguration.Configure(c => c.AuthenticateWith("username", "password"));
-
-Next, create a searcher with your domain:
-
-	var searcher = new Searcher("mydomain");
-
-Finally, use the various `Search` methods.
-
-For JSON search you can use `SearchJson` methods.
-
-Note that searching happens synchronously.
-
-
-## Facets
-
-First, setup the username/password you want to connect with:
-
-	LogglyConfiguration.Configure(c => c.AuthenticateWith("username", "password"));
-
-Next, create a facet with your domain:
-
-	var facet = new Facet("mydomain");
-
-Finally, use the various `GetDate`, `GetIp` and `GetInput* methods.
-
-Getting facts is always synchronous
-
-
-## Integration Tests
-
-To run the integration tests, you'll need to place a `config.user` file in the test's debug folder (assuming you are running tests in debug). The file should look something like:
-
-	<appSettings>
-		<add key="IntegrationKey" value="YOUR KEY"></add>
-		<add key="IntegrationUser" value="YOUR USERNAME"></add>
-		<add key="IntegrationPassword" value="YOUR PASSWORD"></add>
-	</appSettings>
+###v2.0 and prior
+* Maintained by [Karl Seguin](https://github.com/karlseguin) 
+ 

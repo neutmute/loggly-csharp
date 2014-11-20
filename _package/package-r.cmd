@@ -1,0 +1,1 @@
+call _package.cmd Release
