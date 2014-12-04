@@ -54,6 +54,7 @@
     <Compile Include="Events\MessageData.cs" />
     <Compile Include="Events\SyslogHeader.cs" />
     <Compile Include="Interfaces\IEnvironmentProvider.cs" />
+    <Compile Include="LogglyEventSource.cs" />
     <Compile Include="Search\FieldQuery.cs" />
     <Compile Include="Events\LogglyMessage.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />

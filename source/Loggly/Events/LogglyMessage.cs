@@ -21,6 +21,11 @@ namespace Loggly
         {
             Syslog = new SyslogHeader();
         }
+
+        public override string ToString()
+        {
+            return string.Format("content={0}", Content);
+        }
     }
 
     internal enum HttpRequestType
