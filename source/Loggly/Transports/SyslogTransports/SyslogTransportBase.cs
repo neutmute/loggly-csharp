@@ -29,7 +29,11 @@ namespace Loggly.Transports.Syslog
             
             Send(syslogMessage);
 
-            return new LogResponse { Code = ResponseCode.AssumedSuccess };
+            var response = new LogResponse { Code = ResponseCode.AssumedSuccess };
+
+            LogglyEventSource.Instance.Log(message, response);
+
+            return response;
         }
 
         protected abstract void Send(SyslogMessage syslogMessage);

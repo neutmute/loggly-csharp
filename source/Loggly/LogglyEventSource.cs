@@ -7,6 +7,12 @@ using System.Threading.Tasks;
 
 namespace Loggly
 {
+    /// <remarks>
+    /// this.Guid	{36623ac9-597b-5ef6-5158-0410d4d5dc73}
+    /// 
+    /// logman -ets create trace logglyTrace -p {36623ac9-597b-5ef6-5158-0410d4d5dc73} -o D:\Logs\logglyTrace.etl
+    /// logman –ets stop logglyTrace
+    /// </remarks>
     sealed class LogglyEventSource : EventSource
     {
         #region Singleton

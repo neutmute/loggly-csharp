@@ -36,6 +36,7 @@ namespace Loggly.Transports.Syslog
             {
                 client.Close();
             }
+
         }
     }
 }
