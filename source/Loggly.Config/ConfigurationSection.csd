@@ -14,6 +14,7 @@
         <enumerationLiteral name="Https" />
         <enumerationLiteral name="SyslogSecure" />
         <enumerationLiteral name="SyslogUdp" />
+        <enumerationLiteral name="SyslogTcp" />
       </literals>
     </enumeratedType>
   </typeDefinitions>

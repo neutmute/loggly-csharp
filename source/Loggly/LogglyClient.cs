@@ -68,6 +68,7 @@ namespace Loggly
             {
                 case LogTransport.Https: return new HttpMessageTransport();
                 case LogTransport.SyslogUdp: return new SyslogUdpTransport();
+                case LogTransport.SyslogTcp: return new SyslogTcpTransport();
                 case LogTransport.SyslogSecure: return new SyslogSecureTransport();
                 default: throw new NotSupportedException("Unsupported transport: " + transport);
             }

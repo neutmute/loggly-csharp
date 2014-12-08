@@ -100,6 +100,10 @@ namespace Loggly.Example
             {
                 logTransport = LogTransport.SyslogSecure;
             }
+            if (radSyslogTcp.Checked)
+            {
+                logTransport = LogTransport.SyslogTcp;
+            }
 
             _logglyExample.SendWithSpecificTransport(logTransport);
         }

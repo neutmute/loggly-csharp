@@ -25,11 +25,6 @@ namespace Loggly
 
         #endregion
 
-        //public void Log(string messageFormat, params object[] messageArgs)
-        //{
-        //    WriteEvent(1, string.Format(messageFormat, messageArgs));
-        //}
-
         public void Log(LogglyMessage message, LogResponse result)
         {
             WriteEvent(_counterNonThreadSafe++, message.ToString(), result.ToString());
