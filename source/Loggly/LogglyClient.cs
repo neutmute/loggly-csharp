@@ -37,7 +37,7 @@ namespace Loggly
                     {
                         Timestamp = logglyEvent.Timestamp
                         , Syslog = logglyEvent.Syslog
-                        , Type = MessageType.Plain
+                        , Type = MessageType.Json
                         , Content = ToJson(logglyEvent.Data)
                     };
                 

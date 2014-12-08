@@ -50,6 +50,7 @@
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Events\EventOptions.cs" />
+    <Compile Include="Interfaces\IMessageData.cs" />
     <Compile Include="Events\LogglyEvent.cs" />
     <Compile Include="Events\MessageData.cs" />
     <Compile Include="Events\SyslogHeader.cs" />
