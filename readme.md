@@ -61,8 +61,11 @@ The default transport, posting to Loggly on port 443. Note that application and 
 #### logTransport="SyslogUdp"
 If you specify an `applicationName` in the config, the syslog UDP transport will populate the field so it may be filtered in a source group. Host is also automatically populated by  the client. Udp messages are sent in plain text.  
 
+#### logTransport="SyslogTcp"
+Uses Syslog over TCP but is not encrypted. Note this needs to be on port 514 for loggly. Port 514 will be selected if not specified.   
+
 #### logTransport="SyslogSecure"
-Has the advantages of SyslogUdp as well as transmitting via the secure TLS TCP channel so that your logs are encrypted over the wire. Syslog supports JSON formatted messages just like Https.
+Transmits using syslog messages via a secure TLS TCP channel so that your logs are encrypted over the wire. Syslog supports JSON formatted messages just like Https. Port 6514 is required for loggly and will be the default if not specified.
 
 #### tags 
 `simple` tags are string literals added to the app.config. What you see is what you get.
@@ -111,6 +114,9 @@ Of course, there is no need to have a config source in your real app, this is ju
 * [Serilog.Sinks.Loggly](https://github.com/serilog/serilog/tree/master/src/Serilog.Sinks.Loggly) Serilog sink
 
 ## History
+### v4.5.0.3
+* Bug fixes for syslog transports
+
 ###v4.5 
 * Targets framework 4.5
 * Log method returns `Task<LogResponse>` for async/await compatibility
