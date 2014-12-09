@@ -22,7 +22,7 @@ namespace Loggly.Transports.Syslog
             syslogMessage.Timestamp = message.Timestamp;
 
             syslogMessage.Text = string.Format(
-                                    "[{0} {1}] {2}"
+                                    "[{0}@41058 {1}] {2}"
                                     , LogglyConfig.Instance.CustomerToken
                                     , RenderedTags
                                     , message.Content);
