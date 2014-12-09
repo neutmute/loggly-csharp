@@ -54,6 +54,7 @@
     <Compile Include="Loggly\ExtensionMethods\DateTimeExtensionsFixture.cs" />
     <Compile Include="Loggly\LogglyMessageDataFixture.cs" />
     <Compile Include="Loggly\Transports\SyslogTransports\SyslogMessageFixture.cs" />
+    <Compile Include="Loggly\Transports\SyslogTransports\SyslogTransportBaseFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
