@@ -21,6 +21,11 @@ namespace Loggly
         {
             Syslog = new SyslogHeader();
         }
+
+        public override string ToString()
+        {
+            return string.Format("content={0}", Content);
+        }
     }
 
     internal enum HttpRequestType
@@ -28,15 +33,4 @@ namespace Loggly
         Get
         ,Post
     }
-
-    //class RequestState : ResponseState
-    //{
-    //    public byte[] Payload { get; set; }
-    //}
-
-    //class ResponseState
-    //{
-    //    public HttpWebRequest Request { get; set; }
-    //    //public Action<Response> Callback { get; set; }
-    //}
 }

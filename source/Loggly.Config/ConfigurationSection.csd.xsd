@@ -158,6 +158,11 @@
 					<xs:documentation>SyslogUdp.</xs:documentation>
 				</xs:annotation>
 			</xs:enumeration>
+			<xs:enumeration value="SyslogTcp">
+				<xs:annotation>
+					<xs:documentation>SyslogTcp.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
 		</xs:restriction>
 	</xs:simpleType>
 </xs:schema>

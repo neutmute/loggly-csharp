@@ -50,10 +50,12 @@
       <Link>Properties\AssemblyInfo.cs</Link>
     </Compile>
     <Compile Include="Events\EventOptions.cs" />
+    <Compile Include="Interfaces\IMessageData.cs" />
     <Compile Include="Events\LogglyEvent.cs" />
     <Compile Include="Events\MessageData.cs" />
     <Compile Include="Events\SyslogHeader.cs" />
     <Compile Include="Interfaces\IEnvironmentProvider.cs" />
+    <Compile Include="LogglyEventSource.cs" />
     <Compile Include="Search\FieldQuery.cs" />
     <Compile Include="Events\LogglyMessage.cs" />
     <Compile Include="ExtensionMethods\DateTimeExtensions.cs" />
@@ -83,6 +85,7 @@
     <Compile Include="Transports\Interfaces\ISearchTransport.cs" />
     <Compile Include="Transports\SearchTransport.cs" />
     <Compile Include="Transports\SyslogTransports\SyslogMessage.cs" />
+    <Compile Include="Transports\SyslogTransports\SyslogTcpTransport.cs" />
     <Compile Include="Transports\SyslogTransports\SyslogTransportBase.cs" />
     <Compile Include="Transports\SyslogTransports\SyslogUdpTransport.cs" />
     <Compile Include="Transports\SyslogTransports\SyslogSecureTransport.cs" />

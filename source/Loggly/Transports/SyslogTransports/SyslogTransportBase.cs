@@ -9,9 +9,20 @@ namespace Loggly.Transports.Syslog
     {
         public LogResponse Send(LogglyMessage message)
         {
+            var sysLog = ConstructSyslog(message);
+            Send(sysLog);
+
+            var response = new LogResponse { Code = ResponseCode.AssumedSuccess };
+
+            LogglyEventSource.Instance.Log(message, response);
+
+            return response;
+        }
+
+        internal SyslogMessage ConstructSyslog(LogglyMessage message)
+        {
             var appNameSafe = LogglyConfig.Instance.ApplicationName ?? string.Empty;
-
-
+            
             var syslogMessage = new SyslogMessage();
 
             syslogMessage.Facility = Facility.User;
@@ -21,15 +32,17 @@ namespace Loggly.Transports.Syslog
             syslogMessage.AppName = appNameSafe.Replace(" ", "");
             syslogMessage.Timestamp = message.Timestamp;
 
-            syslogMessage.Text = string.Format(
-                                    "[{0} {1}] {2}"
-                                    , LogglyConfig.Instance.CustomerToken
-                                    , RenderedTags
-                                    , message.Content);
-            
-            Send(syslogMessage);
+            var tags = RenderedTags;
+            var tagSpacer = string.IsNullOrEmpty(RenderedTags) ? string.Empty : " ";
 
-            return new LogResponse { Code = ResponseCode.AssumedSuccess };
+            syslogMessage.Text = string.Format(
+                                    "[{0}@41058{1}{2}] {3}"
+                                    , LogglyConfig.Instance.CustomerToken
+                                    , tagSpacer
+                                    , tags
+                                    , message.Content);
+
+            return syslogMessage;
         }
 
         protected abstract void Send(SyslogMessage syslogMessage);
@@ -37,11 +50,15 @@ namespace Loggly.Transports.Syslog
         protected override string GetRenderedTags()
         {
             var sb = new StringBuilder();
-            foreach (var tag in LogglyConfig.Instance.Tags.GetRenderedTags())
+            var tagList = LogglyConfig.Instance.Tags.GetRenderedTags();
+            foreach (var tag in tagList)
             {
                 sb.AppendFormat("tag=\"{0}\" ", tag);
             }
-            sb.Remove(sb.Length - 1, 1);
+            if (tagList.Count > 0)
+            {
+                sb.Remove(sb.Length - 1, 1);
+            }
             return sb.ToString();
         }
     }

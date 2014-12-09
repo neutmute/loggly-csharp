@@ -43,6 +43,7 @@ namespace Loggly
                     {
                         logResponse = JsonConvert.DeserializeObject<LogResponse>(rawResponse.Raw);
                         logResponse.Code = ResponseCode.Success;
+                        
                     }
                     else
                     {
@@ -54,7 +55,7 @@ namespace Loggly
             {
                 LogglyException.Throw("Loggly configuration is missing or invalid. Did you specify a customer token?");
             }
-
+            LogglyEventSource.Instance.Log(message, logResponse);
             return logResponse;
         }
 

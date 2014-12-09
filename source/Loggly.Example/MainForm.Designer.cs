@@ -44,6 +44,7 @@
             this.btnPlainAsync = new System.Windows.Forms.Button();
             this.groupBoxSync = new System.Windows.Forms.GroupBox();
             this.btnPlainText = new System.Windows.Forms.Button();
+            this.radSyslogTcp = new System.Windows.Forms.RadioButton();
             this.groupBoxSearch.SuspendLayout();
             this.panel1.SuspendLayout();
             this.groupBoxSend.SuspendLayout();
@@ -118,6 +119,7 @@
             // 
             // groupBoxTransport
             // 
+            this.groupBoxTransport.Controls.Add(this.radSyslogTcp);
             this.groupBoxTransport.Controls.Add(this.btnForcedTransport);
             this.groupBoxTransport.Controls.Add(this.radTransportSyslogSecure);
             this.groupBoxTransport.Controls.Add(this.radTransportSyslogUdp);
@@ -125,7 +127,7 @@
             this.groupBoxTransport.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBoxTransport.Location = new System.Drawing.Point(3, 167);
             this.groupBoxTransport.Name = "groupBoxTransport";
-            this.groupBoxTransport.Size = new System.Drawing.Size(263, 122);
+            this.groupBoxTransport.Size = new System.Drawing.Size(263, 167);
             this.groupBoxTransport.TabIndex = 8;
             this.groupBoxTransport.TabStop = false;
             this.groupBoxTransport.Text = "Transport";
@@ -133,7 +135,7 @@
             // 
             // btnForcedTransport
             // 
-            this.btnForcedTransport.Location = new System.Drawing.Point(3, 87);
+            this.btnForcedTransport.Location = new System.Drawing.Point(6, 118);
             this.btnForcedTransport.Name = "btnForcedTransport";
             this.btnForcedTransport.Size = new System.Drawing.Size(197, 23);
             this.btnForcedTransport.TabIndex = 4;
@@ -144,12 +146,12 @@
             // radTransportSyslogSecure
             // 
             this.radTransportSyslogSecure.AutoSize = true;
-            this.radTransportSyslogSecure.Location = new System.Drawing.Point(9, 64);
+            this.radTransportSyslogSecure.Location = new System.Drawing.Point(10, 87);
             this.radTransportSyslogSecure.Name = "radTransportSyslogSecure";
-            this.radTransportSyslogSecure.Size = new System.Drawing.Size(117, 17);
+            this.radTransportSyslogSecure.Size = new System.Drawing.Size(162, 17);
             this.radTransportSyslogSecure.TabIndex = 3;
             this.radTransportSyslogSecure.TabStop = true;
-            this.radTransportSyslogSecure.Text = "Syslog Secure TCP";
+            this.radTransportSyslogSecure.Text = "Syslog Secure TCP with SSL";
             this.radTransportSyslogSecure.UseVisualStyleBackColor = true;
             // 
             // radTransportSyslogUdp
@@ -227,6 +229,17 @@
             this.btnPlainText.UseVisualStyleBackColor = true;
             this.btnPlainText.Click += new System.EventHandler(this.btnPlainText_Click);
             // 
+            // radSyslogTcp
+            // 
+            this.radSyslogTcp.AutoSize = true;
+            this.radSyslogTcp.Location = new System.Drawing.Point(10, 64);
+            this.radSyslogTcp.Name = "radSyslogTcp";
+            this.radSyslogTcp.Size = new System.Drawing.Size(80, 17);
+            this.radSyslogTcp.TabIndex = 5;
+            this.radSyslogTcp.TabStop = true;
+            this.radSyslogTcp.Text = "Syslog TCP";
+            this.radSyslogTcp.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -268,6 +281,7 @@
         private System.Windows.Forms.RadioButton radTransportSyslogUdp;
         private System.Windows.Forms.RadioButton radTransportHttps;
         private System.Windows.Forms.Button btnForcedTransport;
+        private System.Windows.Forms.RadioButton radSyslogTcp;
     }
 }
 

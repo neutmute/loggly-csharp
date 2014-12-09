@@ -1022,5 +1022,10 @@ namespace Loggly.Config
         /// SyslogUdp.
         /// </summary>
         SyslogUdp,
+        
+        /// <summary>
+        /// SyslogTcp.
+        /// </summary>
+        SyslogTcp,
     }
 }

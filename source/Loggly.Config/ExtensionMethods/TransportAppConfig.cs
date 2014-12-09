@@ -33,6 +33,7 @@ namespace Loggly.Config
                         newConfig.EndpointPort = 443;
                         break;
                     case LogTransport.SyslogUdp:
+                    case LogTransport.SyslogTcp:
                         newConfig.EndpointPort = 514;
                         break;
                     case LogTransport.SyslogSecure:
