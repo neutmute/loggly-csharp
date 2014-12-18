@@ -17,7 +17,16 @@ namespace Loggly
         }
         protected HttpWebRequest CreateHttpWebRequest(string url, HttpRequestType requestType)
         {
+            return CreateHttpWebRequest(url, requestType, false);
+        }
+        protected HttpWebRequest CreateHttpWebRequest(string url, HttpRequestType requestType, bool useProxy)
+        {
             var request = (HttpWebRequest)WebRequest.Create(url);
+            
+            if (useProxy)
+            {
+                request.Proxy.Credentials = System.Net.CredentialCache.DefaultCredentials;
+            }
             request.Method = requestType.ToString().ToUpper();
             request.UserAgent = _userAgent;
             request.KeepAlive = false;

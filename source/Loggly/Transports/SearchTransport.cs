@@ -48,11 +48,32 @@ namespace Loggly
             try
             {
                 var searchPathAndQuery = GetUrl(endPoint, parameters);
-                var searchRequest = CreateHttpWebRequest(searchPathAndQuery, HttpRequestType.Get);
-                
-                searchRequest.Credentials = new NetworkCredential(_config.Username, _config.Password);
+                WebResponse response = null;
 
-                using (var response = searchRequest.GetResponse())
+                try 
+                { 
+                    var searchRequest = CreateHttpWebRequest(searchPathAndQuery, HttpRequestType.Get);
+                    searchRequest.Credentials = new NetworkCredential(_config.Username, _config.Password);
+                    response = searchRequest.GetResponse();
+                }
+                catch (WebException wex)
+                {
+                    if (wex.Status == WebExceptionStatus.ProtocolError) // 407 Proxy Auth Required raises this exception
+                    {
+                        var searchRequest = CreateHttpWebRequest(searchPathAndQuery, HttpRequestType.Get, true);
+                        searchRequest.Credentials = new NetworkCredential(_config.Username, _config.Password);
+                        response = searchRequest.GetResponse();
+                    }
+                    else
+                    {
+                        LogglyException.Throw(wex);
+                        return null;
+                    }
+                }
+
+                
+
+                using ( response )
                 {
                     var isFieldResponseResultExpected = typeof (T) == typeof (FieldResponse);
                     var responseBody = GetResponseBody(response);
