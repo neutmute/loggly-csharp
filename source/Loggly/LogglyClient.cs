@@ -58,7 +58,11 @@ namespace Loggly
 
         private static string ToJson(object value)
         {
-            return JsonConvert.SerializeObject(value, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            return JsonConvert.SerializeObject(value, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                TypeNameHandling = TypeNameHandling.None,
+            });
         }
         
         private IMessageTransport TransportFactory()
