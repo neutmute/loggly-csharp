@@ -33,9 +33,28 @@ namespace Loggly
 
             if (LogglyConfig.Instance.IsValid)
             {
-                var httpWebRequest = CreateHttpWebRequest(message);
+                
+                WebResponse response = null;
+                try
+                {
+                    var httpWebRequest = CreateHttpWebRequest(message);
+                    response = httpWebRequest.GetResponse();
+                }
+                catch (WebException wex)
+                {
+                    if (wex.Status == WebExceptionStatus.ProtocolError) // 407 Proxy Auth Required raises this exception
+                    {
+                        var httpWebRequest = CreateHttpWebRequest(message, true);
+                        response = httpWebRequest.GetResponse();
+                    }
+                    else
+                    {
+                        LogglyException.Throw(wex);
+                        return null;
+                    }
+                }
 
-                using (var response = httpWebRequest.GetResponse())
+                using (response)
                 {
                     var rawResponse = Response.CreateSuccess(GetResponseBody(response));
 
@@ -61,7 +80,11 @@ namespace Loggly
 
         private HttpWebRequest CreateHttpWebRequest(LogglyMessage message)
         {
-            var httpWebRequest = CreateHttpWebRequest(Url, HttpRequestType.Post);
+            return CreateHttpWebRequest(message, false);
+        }
+        private HttpWebRequest CreateHttpWebRequest(LogglyMessage message,bool useProxy)
+        {
+            var httpWebRequest = CreateHttpWebRequest(Url, HttpRequestType.Post, useProxy);
 
             if (!string.IsNullOrEmpty(RenderedTags))
             {
