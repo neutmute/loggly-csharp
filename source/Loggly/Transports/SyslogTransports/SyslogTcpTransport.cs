@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Net.Sockets;
 using System.Security.Authentication;
+using System.Threading.Tasks;
 using Loggly.Config;
 
 namespace Loggly.Transports.Syslog
@@ -17,7 +18,7 @@ namespace Loggly.Transports.Syslog
             return client.GetStream();
         }
 
-        protected override void Send(SyslogMessage syslogMessage)
+        protected override async Task Send(SyslogMessage syslogMessage)
         {
             var client = new TcpClient(Hostname, LogglyConfig.Instance.Transport.EndpointPort);
 
@@ -25,8 +26,8 @@ namespace Loggly.Transports.Syslog
             {
                 byte[] messageBytes = syslogMessage.GetBytes();
                 var networkStream = GetNetworkStream(client);
-                networkStream.Write(messageBytes, 0, messageBytes.Length);
-                networkStream.Flush();
+                await networkStream.WriteAsync(messageBytes, 0, messageBytes.Length).ConfigureAwait(false);
+                await networkStream.FlushAsync().ConfigureAwait(false);
             }
             catch (AuthenticationException e)
             {
