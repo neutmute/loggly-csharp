@@ -11,20 +11,36 @@ namespace Loggly
 {
     internal class HttpMessageTransport : HttpTransportBase, IMessageTransport
     {
-        private static string __url;
+        private static string _urlSingle;
+        private static string _urlBulk;
 
-        private static string Url
+        private static string UrlSingle
         {
             get
             {
-                if (string.IsNullOrEmpty(__url))
+                if (string.IsNullOrEmpty(_urlSingle))
                 {
-                    __url = string.Format("https://{0}:{1}/inputs/{2}"
+                    _urlSingle = string.Format("https://{0}:{1}/inputs/{2}"
                         , LogglyConfig.Instance.Transport.EndpointHostname
                         , LogglyConfig.Instance.Transport.EndpointPort
                         , LogglyConfig.Instance.CustomerToken);
                 }
-                return __url;
+                return _urlSingle;
+            }
+        }
+
+        private static string UrlBulk
+        {
+            get
+            {
+                if (string.IsNullOrEmpty(_urlBulk))
+                {
+                    _urlBulk = string.Format("https://{0}:{1}/bulk/{2}"
+                        , LogglyConfig.Instance.Transport.EndpointHostname
+                        , LogglyConfig.Instance.Transport.EndpointPort
+                        , LogglyConfig.Instance.CustomerToken);
+                }
+                return _urlBulk;
             }
         }
 
@@ -66,7 +82,7 @@ namespace Loggly
 
         private HttpWebRequest CreateHttpWebRequest(List<LogglyMessage> message)
         {
-            var httpWebRequest = CreateHttpWebRequest(Url, HttpRequestType.Post);
+            var httpWebRequest = CreateHttpWebRequest(message.Count == 1 ? UrlSingle : UrlBulk, HttpRequestType.Post);
 
             if (!string.IsNullOrEmpty(RenderedTags))
             {
