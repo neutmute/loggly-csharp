@@ -7,6 +7,7 @@ using System.Net.Security;
 using System.Net.Sockets;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
+using System.Threading.Tasks;
 using Loggly.Responses;
 
 namespace Loggly.Transports.Syslog
@@ -22,7 +23,7 @@ namespace Loggly.Transports.Syslog
             return sslPolicyErrors == SslPolicyErrors.None;
         }
 
-        protected override Stream GetNetworkStream(TcpClient client)
+        protected override async Task<Stream> GetNetworkStream(TcpClient client)
         {
             var sslStream = new SslStream(
                 client.GetStream(),
@@ -31,7 +32,7 @@ namespace Loggly.Transports.Syslog
                 null
                 );
 
-            sslStream.AuthenticateAsClient(Hostname);
+            await sslStream.AuthenticateAsClientAsync(Hostname).ConfigureAwait(false);
 
             return sslStream;
         }

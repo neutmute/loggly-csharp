@@ -13,9 +13,9 @@ namespace Loggly.Transports.Syslog
             get { return LogglyConfig.Instance.Transport.EndpointHostname; }
         }
 
-        protected virtual Stream GetNetworkStream(TcpClient client)
+        protected virtual Task<Stream> GetNetworkStream(TcpClient client)
         {
-            return client.GetStream();
+            return Task.FromResult<Stream>(client.GetStream());
         }
 
         protected override async Task Send(SyslogMessage syslogMessage)
@@ -25,7 +25,7 @@ namespace Loggly.Transports.Syslog
             try
             {
                 byte[] messageBytes = syslogMessage.GetBytes();
-                var networkStream = GetNetworkStream(client);
+                var networkStream = await GetNetworkStream(client).ConfigureAwait(false);
                 await networkStream.WriteAsync(messageBytes, 0, messageBytes.Length).ConfigureAwait(false);
                 await networkStream.FlushAsync().ConfigureAwait(false);
             }
