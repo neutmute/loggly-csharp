@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
+using System.Threading.Tasks;
 using Loggly.Config;
 
 namespace Loggly.Transports.Syslog
@@ -31,7 +32,7 @@ namespace Loggly.Transports.Syslog
         }
 
 
-        protected override void Send(SyslogMessage syslogMessage)
+        protected override async Task Send(SyslogMessage syslogMessage)
         {
             if (!_udpClient.IsActive)
             {
@@ -44,7 +45,7 @@ namespace Loggly.Transports.Syslog
                 if (_udpClient.IsActive)
                 {
                     var bytes = syslogMessage.GetBytes();
-                    _udpClient.Send(bytes, bytes.Length);
+                    await _udpClient.SendAsync(bytes, bytes.Length).ConfigureAwait(false);
                 }
                 else
                 {

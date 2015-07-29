@@ -1,22 +1,30 @@
-using System;
+using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Loggly.Config;
-using Loggly.Responses;
 
 namespace Loggly.Transports.Syslog
 {
     internal abstract class SyslogTransportBase : TransportBase, IMessageTransport
     {
-        public LogResponse Send(LogglyMessage message)
+        public async Task<LogResponse> Send(IEnumerable<LogglyMessage> messages)
         {
-            var sysLog = ConstructSyslog(message);
-            Send(sysLog);
+            foreach (var message in messages)
+            {
+                var sysLog = ConstructSyslog(message);
+                await Send(sysLog);
 
-            var response = new LogResponse { Code = ResponseCode.AssumedSuccess };
+                var response = new LogResponse
+                {
+                    Code = ResponseCode.AssumedSuccess
+                };
+                LogglyEventSource.Instance.Log(message, response);
+            }
 
-            LogglyEventSource.Instance.Log(message, response);
-
-            return response;
+            return new LogResponse
+            {
+                Code = ResponseCode.AssumedSuccess
+            };
         }
 
         internal SyslogMessage ConstructSyslog(LogglyMessage message)
@@ -45,7 +53,7 @@ namespace Loggly.Transports.Syslog
             return syslogMessage;
         }
 
-        protected abstract void Send(SyslogMessage syslogMessage);
+        protected abstract Task Send(SyslogMessage syslogMessage);
 
         protected override string GetRenderedTags()
         {
