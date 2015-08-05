@@ -11,14 +11,14 @@ namespace Loggly
 
     public class LogglyClient : ILogglyClient
     {
-        public Task<LogResponse> Log(LogglyEvent logglyEvent)
+        public async Task<LogResponse> Log(LogglyEvent logglyEvent)
         {
-            return Task.Run(async () => await LogWorker(new [] {logglyEvent}).ConfigureAwait(false));
+            return await LogWorker(new [] {logglyEvent}).ConfigureAwait(false);
         }
 
-        public Task<LogResponse> Log(IEnumerable<LogglyEvent> logglyEvents)
+        public async Task<LogResponse> Log(IEnumerable<LogglyEvent> logglyEvents)
         {
-            return Task.Run(async () => await LogWorker(logglyEvents.ToArray()).ConfigureAwait(false));
+            return await LogWorker(logglyEvents.ToArray()).ConfigureAwait(false);
         }
 
         private async Task<LogResponse> LogWorker(LogglyEvent[] events)
