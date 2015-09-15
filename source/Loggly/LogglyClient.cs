@@ -11,17 +11,17 @@ namespace Loggly
 
     public class LogglyClient : ILogglyClient
     {
-        public async Task<LogResponse> Log(LogglyEvent logglyEvent)
+        public async Task<LogResponse> Log(LogglyEvent logglyEvent, IEnumerable<string> tags = null)
         {
-            return await LogWorker(new [] {logglyEvent}).ConfigureAwait(false);
+            return await LogWorker(new [] {logglyEvent}, tags).ConfigureAwait(false);
         }
 
-        public async Task<LogResponse> Log(IEnumerable<LogglyEvent> logglyEvents)
+        public async Task<LogResponse> Log(IEnumerable<LogglyEvent> logglyEvents, IEnumerable<string> tags = null)
         {
-            return await LogWorker(logglyEvents.ToArray()).ConfigureAwait(false);
+            return await LogWorker(logglyEvents.ToArray(), tags).ConfigureAwait(false);
         }
 
-        private async Task<LogResponse> LogWorker(LogglyEvent[] events)
+        private async Task<LogResponse> LogWorker(LogglyEvent[] events, IEnumerable<string> tags = null)
         {
             var response = new LogResponse {Code = ResponseCode.Unknown};
             try
@@ -44,7 +44,7 @@ namespace Loggly
                         Syslog = x.Syslog,
                         Type = MessageType.Json,
                         Content = ToJson(x.Data)
-                    })).ConfigureAwait(false);
+                    }), tags).ConfigureAwait(false);
                 }
                 else
                 {
