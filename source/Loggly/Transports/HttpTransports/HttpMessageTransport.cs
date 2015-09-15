@@ -44,14 +44,14 @@ namespace Loggly
             }
         }
 
-        public async Task<LogResponse> Send(IEnumerable<LogglyMessage> messages)
+        public async Task<LogResponse> Send(IEnumerable<LogglyMessage> messages, IEnumerable<string> tags = null)
         {
             var logResponse = new LogResponse();
 
             if (LogglyConfig.Instance.IsValid)
             {
                 var list = messages.ToList();
-                var httpWebRequest = CreateHttpWebRequest(list);
+                var httpWebRequest = CreateHttpWebRequest(list, tags);
 
                 using (var response = await httpWebRequest.GetResponseAsync().ConfigureAwait(false))
                 {
@@ -80,13 +80,25 @@ namespace Loggly
             return logResponse;
         }
 
-        private HttpWebRequest CreateHttpWebRequest(List<LogglyMessage> message)
+        private HttpWebRequest CreateHttpWebRequest(List<LogglyMessage> message, IEnumerable<string> tags = null)
         {
             var httpWebRequest = CreateHttpWebRequest(message.Count == 1 ? UrlSingle : UrlBulk, HttpRequestType.Post);
 
-            if (!string.IsNullOrEmpty(RenderedTags))
+            var effectiveTags = RenderedTags ?? "";
+            if (tags != null)
             {
-                httpWebRequest.Headers.Add("X-LOGGLY-TAG", RenderedTags);
+                var customTags = tags.ToList();
+                if (customTags.Count > 0)
+                {
+                    if (!string.IsNullOrEmpty(effectiveTags))
+                        effectiveTags += ",";
+                    effectiveTags += string.Join(",", customTags);
+                }
+            }
+
+            if (!string.IsNullOrEmpty(effectiveTags))
+            {
+                httpWebRequest.Headers.Add("X-LOGGLY-TAG", effectiveTags);
             }
             var type = message.First().Type;
             if (!message.TrueForAll(x => type == x.Type))

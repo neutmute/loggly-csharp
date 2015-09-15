@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Loggly.Config;
@@ -7,11 +8,11 @@ namespace Loggly.Transports.Syslog
 {
     internal abstract class SyslogTransportBase : TransportBase, IMessageTransport
     {
-        public async Task<LogResponse> Send(IEnumerable<LogglyMessage> messages)
+        public async Task<LogResponse> Send(IEnumerable<LogglyMessage> messages, IEnumerable<string> tags = null)
         {
             foreach (var message in messages)
             {
-                var sysLog = ConstructSyslog(message);
+                var sysLog = ConstructSyslog(message, tags);
                 await Send(sysLog);
 
                 var response = new LogResponse
@@ -27,7 +28,7 @@ namespace Loggly.Transports.Syslog
             };
         }
 
-        internal SyslogMessage ConstructSyslog(LogglyMessage message)
+        internal SyslogMessage ConstructSyslog(LogglyMessage message, IEnumerable<string> tags = null)
         {
             var appNameSafe = LogglyConfig.Instance.ApplicationName ?? string.Empty;
             
@@ -40,14 +41,24 @@ namespace Loggly.Transports.Syslog
             syslogMessage.AppName = appNameSafe.Replace(" ", "");
             syslogMessage.Timestamp = message.Timestamp;
 
-            var tags = RenderedTags;
+            var effectiveTags = RenderedTags ?? "";
+            if (tags != null)
+            {
+                var customTags = tags.ToList();
+                if (customTags.Count > 0)
+                {
+                    if (!string.IsNullOrEmpty(effectiveTags))
+                        effectiveTags += ",";
+                    effectiveTags += string.Join(",", customTags);
+                }
+            }
             var tagSpacer = string.IsNullOrEmpty(RenderedTags) ? string.Empty : " ";
 
             syslogMessage.Text = string.Format(
                                     "[{0}@41058{1}{2}] {3}"
                                     , LogglyConfig.Instance.CustomerToken
                                     , tagSpacer
-                                    , tags
+                                    , effectiveTags
                                     , message.Content);
 
             return syslogMessage;
