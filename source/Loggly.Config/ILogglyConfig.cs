@@ -5,11 +5,7 @@ namespace Loggly.Config
 {
     public interface ITagConfiguration
     {
-        List<ISimpleTag> SimpleTags { get; }
-
-        List<ComplexTag> ComplexTags { get; }
-
-        List<string> GetRenderedTags();
+        List<ITag> Tags { get; }
     }
 
     public interface IHttpTransport
@@ -23,10 +19,6 @@ namespace Loggly.Config
         LogTransport LogTransport { get; set; }
     }
 
-    public interface ISimpleTag
-    {
-        string Value { get; }
-    }
     public interface ISearchConfiguration
     {
         string Account { get; set; }
@@ -44,10 +36,10 @@ namespace Loggly.Config
 
         bool IsValid { get;  }
         
-        ITagConfiguration Tags { get;  }
+        ITagConfiguration TagConfig { get;  }
         
         ISearchConfiguration Search { get; }
-
+        
         ITransportConfiguration Transport { get; set; }
     }
 }

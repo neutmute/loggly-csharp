@@ -16,8 +16,8 @@ namespace Loggly.Tests.Config.ComplexTags
         {
             var tag = new HostnameTag();
             tag.Formatter = "machine={0}";
-            Assert.That(tag.FormattedValue.StartsWith("machine"));
-            Assert.That(tag.FormattedValue.EndsWith(Environment.MachineName));
+            Assert.That(tag.Value.StartsWith("machine"));
+            Assert.That(tag.Value.EndsWith(Environment.MachineName));
         }
     }
 }

@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Net;
+using Loggly.Config;
 using Loggly.Responses;
 using Loggly.Transports.Syslog;
 
@@ -17,9 +19,12 @@ namespace Loggly
         public MessageType Type { get; set; }
         public string Content { get; set; }
 
+        public List<ITag> CustomTags { get; set; }
+
         public LogglyMessage()
         {
             Syslog = new SyslogHeader();
+            CustomTags = new List<ITag>();
         }
 
         public override string ToString()

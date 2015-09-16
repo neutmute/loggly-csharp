@@ -14,14 +14,14 @@ namespace Loggly.Tests.Loggly.Transports.SyslogTransports
         [SetUp]
         public void Setup()
         {
-            LogglyConfig.Instance.Tags.SimpleTags.Add(new SimpleTag {Value = "myTag"});
+            LogglyConfig.Instance.TagConfig.Tags.Add(new SimpleTag {Value = "myTag"});
             LogglyConfig.Instance.CustomerToken = "MyLogglyToken";
         }
 
         [Test]
         public void SyslogContentWhenNoTags()
         {
-            LogglyConfig.Instance.Tags.SimpleTags.Clear();
+            LogglyConfig.Instance.TagConfig.Tags.Clear();
 
             var transport = new SyslogTcpTransport();
             var logglyMessage = new LogglyMessage();

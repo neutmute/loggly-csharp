@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Loggly.Config
 {
-    internal partial class SimpleTagAppConfig : ISimpleTag
+    internal partial class SimpleTagAppConfig : ITag
     {
     }
 }

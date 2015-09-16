@@ -93,7 +93,9 @@
     <Compile Include="Transports\SyslogTransports\UdpClientEx.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Loggly.nuspec" />
+    <None Include="Loggly.nuspec">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

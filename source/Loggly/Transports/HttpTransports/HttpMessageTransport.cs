@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -63,9 +64,10 @@ namespace Loggly
         {
             var httpWebRequest = CreateHttpWebRequest(Url, HttpRequestType.Post);
 
-            if (!string.IsNullOrEmpty(RenderedTags))
+            var renderedTags = GetRenderedTags(message.CustomTags);
+            if (!string.IsNullOrEmpty(renderedTags))
             {
-                httpWebRequest.Headers.Add("X-LOGGLY-TAG", RenderedTags);
+                httpWebRequest.Headers.Add("X-LOGGLY-TAG", renderedTags);
             }
 
             switch (message.Type)
@@ -92,9 +94,14 @@ namespace Loggly
             return httpWebRequest;
         }
 
-        protected override string GetRenderedTags()
+        protected override string GetRenderedTags(List<ITag> customTags)
         {
-            var tags = string.Join(",", LogglyConfig.Instance.Tags.GetRenderedTags().ToArray());
+            var tagList = new List<ITag>();
+
+            tagList.AddRange(LogglyConfig.Instance.TagConfig.Tags);
+            tagList.AddRange(customTags);
+
+            var tags = string.Join(",", tagList.ToLegalStrings().ToArray());
             return tags;
         }
     }

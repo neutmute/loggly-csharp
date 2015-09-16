@@ -39,7 +39,9 @@ namespace Loggly
                         , Syslog = logglyEvent.Syslog
                         , Type = MessageType.Json
                         , Content = ToJson(logglyEvent.Data)
+                        , CustomTags = logglyEvent.Options.Tags
                     };
+
                 
                     IMessageTransport transporter = TransportFactory();
                     response = transporter.Send(message);

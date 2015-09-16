@@ -7,7 +7,7 @@ namespace Loggly
 {
     public class OperatingSystemPlatformTag : ComplexTag
     {
-        public override string Value
+        public override string InputValue
         {
             get { return Environment.OSVersion.Platform.ToString(); }
         }

@@ -1,16 +1,17 @@
 using System;
+using Loggly.Config;
 
 namespace Loggly
 {
-    public abstract class ComplexTag
+    public abstract class ComplexTag : ITag
     {
         public string Formatter { get; set; }
 
-        public abstract string Value { get; }
+        public abstract string InputValue { get; }
 
-        public string FormattedValue
+        public string Value
         {
-            get { return String.Format(Formatter, Value); }
+            get { return String.Format(Formatter, InputValue); }
         }
 
         protected ComplexTag()

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Text;
 using Loggly.Config;
 using Loggly.Responses;
@@ -32,14 +33,14 @@ namespace Loggly.Transports.Syslog
             syslogMessage.AppName = appNameSafe.Replace(" ", "");
             syslogMessage.Timestamp = message.Timestamp;
 
-            var tags = RenderedTags;
-            var tagSpacer = string.IsNullOrEmpty(RenderedTags) ? string.Empty : " ";
+            var renderedTags = GetRenderedTags(message.CustomTags);
+            var tagSpacer = string.IsNullOrEmpty(renderedTags) ? string.Empty : " ";
 
             syslogMessage.Text = string.Format(
                                     "[{0}@41058{1}{2}] {3}"
                                     , LogglyConfig.Instance.CustomerToken
                                     , tagSpacer
-                                    , tags
+                                    , renderedTags
                                     , message.Content);
 
             return syslogMessage;
@@ -47,11 +48,15 @@ namespace Loggly.Transports.Syslog
 
         protected abstract void Send(SyslogMessage syslogMessage);
 
-        protected override string GetRenderedTags()
+        protected override string GetRenderedTags(List<ITag> customTags)
         {
             var sb = new StringBuilder();
-            var tagList = LogglyConfig.Instance.Tags.GetRenderedTags();
-            foreach (var tag in tagList)
+            var tagList = new List<ITag>();
+
+            tagList.AddRange(LogglyConfig.Instance.TagConfig.Tags);
+            tagList.AddRange(customTags);
+
+            foreach (var tag in tagList.ToLegalStrings())
             {
                 sb.AppendFormat("tag=\"{0}\" ", tag);
             }

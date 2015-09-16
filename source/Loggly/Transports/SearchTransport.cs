@@ -107,9 +107,9 @@ namespace Loggly
             return sb.ToString();
         }
 
-        protected override string GetRenderedTags()
+        protected override string GetRenderedTags(List<ITag> customTags)
         {
-            throw new NotImplementedException();
+            throw new NotSupportedException();
         }
     }
 }

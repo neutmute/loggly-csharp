@@ -1,6 +1,6 @@
 ﻿namespace Loggly.Config
 {
-    public class SimpleTag : ISimpleTag
+    public class SimpleTag : ITag
     {
         public string Value { get; set; }
     }
