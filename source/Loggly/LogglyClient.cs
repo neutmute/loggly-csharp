@@ -1,11 +1,7 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Text;
-using System.Threading;
+using System.Linq;
 using Loggly.Config;
-using Loggly.Responses;
-using Loggly.Transports;
 using Loggly.Transports.Syslog;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
@@ -15,12 +11,17 @@ namespace Loggly
 
     public class LogglyClient : ILogglyClient
     {
-        public Task<LogResponse> Log(LogglyEvent logglyEvent)
+        public async Task<LogResponse> Log(LogglyEvent logglyEvent)
         {
-            return Task.Run(() => LogWorker(logglyEvent));
+            return await LogWorker(new [] {logglyEvent}).ConfigureAwait(false);
         }
 
-        private LogResponse LogWorker(LogglyEvent logglyEvent)
+        public async Task<LogResponse> Log(IEnumerable<LogglyEvent> logglyEvents)
+        {
+            return await LogWorker(logglyEvents.ToArray()).ConfigureAwait(false);
+        }
+
+        private async Task<LogResponse> LogWorker(LogglyEvent[] events)
         {
             var response = new LogResponse {Code = ResponseCode.Unknown};
             try
@@ -29,22 +30,22 @@ namespace Loggly
                 {
                     if (LogglyConfig.Instance.Transport.LogTransport == LogTransport.Https)
                     {
-                        // syslog has this data in the header, only need to add it for Http
-                        logglyEvent.Data.AddIfAbsent("timestamp", logglyEvent.Timestamp);
+                        foreach (var e in events)
+                        {
+                            // syslog has this data in the header, only need to add it for Http
+                            e.Data.AddIfAbsent("timestamp", e.Timestamp);
+                        }
                     }
-
-                    var message = new LogglyMessage
-                    {
-                        Timestamp = logglyEvent.Timestamp
-                        , Syslog = logglyEvent.Syslog
-                        , Type = MessageType.Json
-                        , Content = ToJson(logglyEvent.Data)
-                        , CustomTags = logglyEvent.Options.Tags
-                    };
-
-                
+                    
                     IMessageTransport transporter = TransportFactory();
-                    response = transporter.Send(message);
+                    response = await transporter.Send(events.Select(x => new LogglyMessage
+                    {
+                        Timestamp = x.Timestamp,
+                        Syslog = x.Syslog,
+                        Type = MessageType.Json,
+                        Content = ToJson(x.Data),
+                        CustomTags = x.Options.Tags
+                    })).ConfigureAwait(false);
                 }
                 else
                 {
@@ -60,7 +61,11 @@ namespace Loggly
 
         private static string ToJson(object value)
         {
-            return JsonConvert.SerializeObject(value, new JsonSerializerSettings { NullValueHandling = NullValueHandling.Ignore });
+            return JsonConvert.SerializeObject(value, new JsonSerializerSettings
+            {
+                NullValueHandling = NullValueHandling.Ignore,
+                TypeNameHandling = TypeNameHandling.None,
+            });
         }
         
         private IMessageTransport TransportFactory()

@@ -112,6 +112,7 @@ Of course, there is no need to have a config source in your real app, this is ju
 ## Projects using this client
 * [nlog-targets-loggly](https://github.com/joefitzgerald/nlog-targets-loggly) An NLog target
 * [Serilog.Sinks.Loggly](https://github.com/serilog/serilog/tree/master/src/Serilog.Sinks.Loggly) Serilog sink
+* [Loggly.CompositeC1](https://www.nuget.org/packages/Loggly.CompositeC1) TraceListener for Composite C1 CMS
 
 ## History
 ### v4.5.0.3

@@ -1,10 +1,10 @@
-using System;
-using Loggly.Responses;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Loggly
 {
     internal interface IMessageTransport
     {
-        LogResponse Send(LogglyMessage message);
+        Task<LogResponse> Send(IEnumerable<LogglyMessage> message);
     }
 }
