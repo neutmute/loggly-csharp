@@ -64,11 +64,21 @@ function buildSolution{
     &"$rootFolder\packages\gitlink\lib\net45\GitLink.exe" $rootFolder -u $sourceUrl
 }
 
+function checkExitCode{
+    if ($lastExitCode -ne 0)
+    {
+        Write-Host "##myget[buildProblem description='lastExitCode was not zero']"
+        exit $lastExitCode
+    }
+}
+
 function executeTests{
 
     Write-Host "Execute Tests"
     $nunitConsole = "$rootFolder\packages\NUnit.Runners.2.6.3\tools\nunit-console.exe"
     & $nunitConsole .\Source\Loggly.Tests\bin\$configuration\Loggly.Tests.dll
+
+    checkExitCode
 }
 
 init
