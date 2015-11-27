@@ -1,5 +1,7 @@
 #![](https://raw.githubusercontent.com/neutmute/loggly-csharp/master/SolutionItems/loggly.png) .NET Client for Loggly  
 
+[![loggly-csharp MyGet Build Status](https://www.myget.org/BuildSource/Badge/loggly-csharp?identifier=096040c5-29c7-4254-9b71-611f780d43ff)](https://www.myget.org/) ![Version](https://img.shields.io/nuget/v/loggly-csharp.svg)
+
 A .NET client for loggly. Supporting Https, Syslog UDP and encrypted Syslog TCP transports.
 Install via nuget with
 
@@ -107,6 +109,13 @@ Before starting, copy the example config into the user config, eg:
 And configure the file with your own customer token.
 
 Of course, there is no need to have a config source in your real app, this is just a convenience for this public repository.
+
+## Contributions
+Contributions are welcome.
+
+* Open an issue first to discuss your proposed changes
+* Branch your PR from the develop branch
+* `.\build.ps1` is compatible with [myget](https://www.myget.org) build services for dogfooding your modifications
 
 
 ## Projects using this client
