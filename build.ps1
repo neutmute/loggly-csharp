@@ -41,8 +41,8 @@ function nugetPack{
         $env:PackageVersion = "1.0.0.0"
     }
 
-    nuget pack $rootFolder\Source\Loggly\Loggly.csproj -o $outputFolder -p Configuration=$configuration -Version $env:PackageVersion
-    nuget pack $rootFolder\Source\Loggly.Config\Loggly.Config.csproj -o $outputFolder -p Configuration=$configuration -Version $env:PackageVersion
+    nuget pack $rootFolder\Source\Loggly\Loggly.csproj -o $outputFolder -IncludeReferencedProjects -p Configuration=$configuration -Version $env:PackageVersion
+    nuget pack $rootFolder\Source\Loggly.Config\Loggly.Config.csproj -IncludeReferencedProjects -o $outputFolder -p Configuration=$configuration -Version $env:PackageVersion
 }
 
 function nugetPublish{
