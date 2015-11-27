@@ -11,4 +11,7 @@
     <language>en-US</language>
     <tags>loggly</tags>
   </metadata>
+  <files>
+		<file src="bin\release\Loggly.Config.pdb" target="lib\net45\" />    
+	</files>
 </package>

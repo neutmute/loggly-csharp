@@ -21,3 +21,4 @@ packages/
 source/Loggly.Example/loggly.user.config
 SolutionItems/Thumbs.db
 *.nupkg
+_output/
