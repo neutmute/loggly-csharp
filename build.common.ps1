@@ -70,21 +70,26 @@ param(
 }
 
 function _DownloadNuget{
-param(
-        [Parameter(Mandatory=$true,Position=0)]$rootPath)
+param([Parameter(Mandatory=$true,Position=0)]$rootPath)
 
-$sourceNugetExe = "http://nuget.org/nuget.exe"
-$targetNugetExe = "$rootPath\nuget.exe"
+	$sourceNugetExe = "http://nuget.org/nuget.exe"
+	$targetNugetExe = "$rootPath\nuget.exe"
 
+	if(!(Test-Path $targetNugetExe )){
+		_WriteOut "Downloading nuget to $targetNugetExe"
+		Invoke-WebRequest $sourceNugetExe -OutFile $targetNugetExe
+	}
+	else{
+		# _WriteOut "nuget.exe is already present"
+	}
 
-if(!(Test-Path $targetNugetExe )){
-    _WriteOut "Downloading nuget to $targetNugetExe"
-    Invoke-WebRequest $sourceNugetExe -OutFile $targetNugetExe
+	Set-Alias nuget $targetNugetExe -Scope Global
 }
-else{
-    # _WriteOut "nuget.exe is already present"
-}
 
-Set-Alias nuget $targetNugetExe -Scope Global
-
+function checkExitCode{
+    if ($lastExitCode -ne 0)
+    {
+        Write-Host "##myget[buildProblem description='lastExitCode was not zero']"
+        exit $lastExitCode
+    }
 }
