@@ -129,6 +129,11 @@
             <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Int32" />
           </type>
         </attributeProperty>
+        <attributeProperty name="IsOmitTimestamp" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="isOmitTimestamp" isReadOnly="false">
+          <type>
+            <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Boolean" />
+          </type>
+        </attributeProperty>
       </attributeProperties>
     </configurationElement>
     <configurationElement name="SearchAppConfig" accessModifier="Internal">

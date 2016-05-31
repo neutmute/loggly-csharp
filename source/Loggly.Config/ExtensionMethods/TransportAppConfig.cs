@@ -18,6 +18,7 @@ namespace Loggly.Config
                 newConfig.EndpointHostname = input.EndpointHostname;
                 newConfig.EndpointPort = input.EndpointPort;
                 newConfig.LogTransport = input.LogTransport;
+				newConfig.IsOmitTimestamp = input.IsOmitTimestamp;
             }
 
             if (string.IsNullOrEmpty(newConfig.EndpointHostname))
