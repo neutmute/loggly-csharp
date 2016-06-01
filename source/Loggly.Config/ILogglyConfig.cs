@@ -17,6 +17,7 @@ namespace Loggly.Config
         string EndpointHostname { get; set; }
         int EndpointPort { get; set; }
         LogTransport LogTransport { get; set; }
+		bool IsOmitTimestamp { get; set; }
     }
 
     public interface ISearchConfiguration

@@ -30,11 +30,14 @@ namespace Loggly
                 {
                     if (LogglyConfig.Instance.Transport.LogTransport == LogTransport.Https)
                     {
-                        foreach (var e in events)
-                        {
-                            // syslog has this data in the header, only need to add it for Http
-                            e.Data.AddIfAbsent("timestamp", e.Timestamp);
-                        }
+						if (!LogglyConfig.Instance.Transport.IsOmitTimestamp)
+						{
+							foreach (var e in events)
+							{
+								// syslog has this data in the header, only need to add it for Http
+								e.Data.AddIfAbsent("timestamp", e.Timestamp);
+							}
+						}
                     }
                     
                     IMessageTransport transporter = TransportFactory();

@@ -895,6 +895,32 @@ namespace Loggly.Config
             }
         }
         #endregion
+
+		#region IsOmitTimestamp Property
+		/// <summary>
+		/// The XML name of the <see cref="IsOmitTimestamp"/> property.
+		/// </summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+		internal const string IsOmitTimestampPropertyName = "isOmitTimestamp";
+
+		/// <summary>
+		/// Gets or sets the IsOmitTimestamp.
+		/// </summary>
+		[global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+		[global::System.ComponentModel.DescriptionAttribute("The IsOmitTimestamp.")]
+		[global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.TransportAppConfig.IsOmitTimestampPropertyName, IsRequired = false, IsKey = false, IsDefaultCollection = false)]
+		public virtual bool IsOmitTimestamp
+		{
+			get
+			{
+				return ((bool)(base[global::Loggly.Config.TransportAppConfig.IsOmitTimestampPropertyName]));
+			}
+			set
+			{
+				base[global::Loggly.Config.TransportAppConfig.IsOmitTimestampPropertyName] = value;
+			}
+		}
+		#endregion
     }
 }
 namespace Loggly.Config
