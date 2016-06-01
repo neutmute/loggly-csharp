@@ -3,7 +3,7 @@ param(
     [string]$configuration = "Release"
 )
 
-. ".\build.common.ps1"
+. ".\common.ps1"
 
 $solutionName = "loggly"
 $sourceUrl = "https://github.com/neutmute/loggly-csharp"
@@ -48,8 +48,8 @@ function nugetPack{
 function nugetPublish{
 
     if(Test-Path Env:\nugetapikey ){
-        _WriteOut -ForegroundColor $ColorScheme.Banner "Nuget publish"
-        &$env:nuget push .\_output\* -ApiKey $env:nugetapikey -source http://www.nuget.org
+        _WriteOut -ForegroundColor $ColorScheme.Banner "Nuget publish..."
+        &nuget push .\_output\* -ApiKey "$env:nugetapikey" -source https://www.nuget.org
     }
     else{
         _WriteOut -ForegroundColor Yellow "nugetapikey environment variable not detected. Skipping nuget publish"
