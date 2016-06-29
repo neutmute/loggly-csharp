@@ -11,6 +11,15 @@ namespace Loggly
 
     public class LogglyClient : ILogglyClient
     {
+        public LogglyClient() {}
+
+        public LogglyClient(string customerToken, string appName = null) {
+            LogglyConfig.Instance.CustomerToken = customerToken;
+            if (appName != null) {
+                LogglyConfig.Instance.ApplicationName = appName;
+            }
+        }
+
         public async Task<LogResponse> Log(LogglyEvent logglyEvent)
         {
             return await LogWorker(new [] {logglyEvent}).ConfigureAwait(false);

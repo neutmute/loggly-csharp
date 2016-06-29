@@ -21,7 +21,7 @@
   <configurationElements>
     <configurationSection name="LogglyAppConfig" namespace="Loggly.Config" accessModifier="Internal" codeGenOptions="Singleton, XmlnsProperty" xmlSectionName="loggly">
       <attributeProperties>
-        <attributeProperty name="CustomerToken" isRequired="true" isKey="false" isDefaultCollection="false" xmlName="customerToken" isReadOnly="false">
+        <attributeProperty name="CustomerToken" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="customerToken" isReadOnly="false">
           <type>
             <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/String" />
           </type>
