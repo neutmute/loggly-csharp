@@ -27,7 +27,7 @@
 				</xs:annotation>
 			</xs:element>
 		</xs:choice>
-		<xs:attribute name="customerToken" use="required" type="xs:string">
+		<xs:attribute name="customerToken" use="optional" type="xs:string">
 			<xs:annotation>
 				<xs:documentation>The CustomerToken.</xs:documentation>
 			</xs:annotation>

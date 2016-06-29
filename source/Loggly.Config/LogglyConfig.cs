@@ -19,7 +19,7 @@ namespace Loggly.Config
         public bool IsEnabled { get;set;}
         public bool IsValid
         {
-            get { return !string.IsNullOrEmpty(CustomerToken); }
+            get { return true; }
         }
 
         private LogglyConfig()
@@ -53,7 +53,9 @@ namespace Loggly.Config
 
         private static ILogglyConfig GetNullConfig()
         {
-            return new LogglyConfig();
+            var config = new LogglyConfig();
+            config.Transport = config.Transport.GetCoercedToValidConfig();
+            return config;
         }
 
         private static ILogglyConfig FromAppConfig()

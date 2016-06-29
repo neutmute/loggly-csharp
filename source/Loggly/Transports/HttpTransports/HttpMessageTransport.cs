@@ -20,6 +20,10 @@ namespace Loggly
             {
                 if (string.IsNullOrEmpty(_urlSingle))
                 {
+                    if (string.IsNullOrWhiteSpace(LogglyConfig.Instance.CustomerToken)) {
+                        throw new System.Exception("CustomerToken is required.");
+                    }
+
                     _urlSingle = string.Format("https://{0}:{1}/inputs/{2}"
                         , LogglyConfig.Instance.Transport.EndpointHostname
                         , LogglyConfig.Instance.Transport.EndpointPort
@@ -35,6 +39,10 @@ namespace Loggly
             {
                 if (string.IsNullOrEmpty(_urlBulk))
                 {
+                    if (string.IsNullOrWhiteSpace(LogglyConfig.Instance.CustomerToken)) {
+                        throw new System.Exception("CustomerToken is required.");
+                    }
+
                     _urlBulk = string.Format("https://{0}:{1}/bulk/{2}"
                         , LogglyConfig.Instance.Transport.EndpointHostname
                         , LogglyConfig.Instance.Transport.EndpointPort
