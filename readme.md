@@ -10,8 +10,8 @@ Install via nuget with
 **Note** Version 3.5 has completely broken compatibility with prior versions to bring major improvements.
 Any existing code targeting versions < 3.0 will require modification.
 
-## Configuration
-Configuration is done via your app.config. The minimal amount config you require is to specify your `customerToken`: 
+## Configuration via app.Config
+Configuration may be done via your app.config. The minimal amount config you require is to specify your `customerToken`: 
 
 	<configuration>
 	  <configSections>
@@ -46,6 +46,29 @@ When you get that working, take the training wheels off and go crazy:
 	  </tags>
 	</loggly>
 
+## Configuration via Code
+
+The following sample shows how to configure loggly via code - useful for Azure/Asp.NET core scenarios. Be sure to do this very early in the application life cycle in order to capture your early logs.
+
+    var config = LogglyConfig.Instance;
+    config.CustomerToken = "1ceb00da-cec7-45cb-8135-d3adbeef";
+    config.ApplicationName = $"MyApp-{_environmentName}";
+
+    config.Transport.EndpointHostname = "logs-01.loggly.com";
+    config.Transport.EndpointPort = 443;
+    config.Transport.LogTransport = LogTransport.Https;
+
+    var ct = new ApplicationNameTag();
+    ct.Formatter = "application-{0}";
+    config.TagConfig.Tags.Add(ct);
+
+## Proxy 
+To set a global proxy for WebRequests used by HTTPS, you can do something like
+
+    System.Net.WebRequest.DefaultWebProxy = new WebProxy("http://proxy.net:3128");
+
+## Configuration Detail
+
 ### applicationName
 This is an optional attribute. If you leave this attribute out but have `NewRelic.AppName` in your app.config, then it will pick that value up automatically.
 Render your application name as a tag by using the `HostnameTag` (keep reading).
@@ -76,10 +99,6 @@ Transmits using syslog messages via a secure TLS TCP channel so that your logs a
 The `Assembly` attribute is available as an optional parameter so you can roll your own tags too.
 
 Loggly has certain restrictions around characters allowed in tags. This library automatically replaces illegal characters with an underscore.
- 
-### Programmatic Configuration
-
-If you prefer to set configuration programatically, specify the values via the static `LogglyConfig.Instance` class at application startup.
 
 ## Usage: LogglyClient
 Send simple text messages with something like this.
