@@ -72,7 +72,7 @@ param(
 function _DownloadNuget{
 param([Parameter(Mandatory=$true,Position=0)]$rootPath)
 
-	$sourceNugetExe = "http://nuget.org/nuget.exe"
+	$sourceNugetExe = "https://dist.nuget.org/win-x86-commandline/v3.5.0-rc1/NuGet.exe"
 	$targetNugetExe = "$rootPath\nuget.exe"
 
 	if(!(Test-Path $targetNugetExe )){

@@ -19,7 +19,7 @@
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
     <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <DefineConstants>TRACE;DEBUG;FEATURE_SYSTEM_CONFIGURATION FEATURE_SYSTEM_ENVIRONMENT_OSVERSION</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -28,7 +28,7 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>TRACE;FEATURE_SYSTEM_CONFIGURATION FEATURE_SYSTEM_ENVIRONMENT_OSVERSION</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <Prefer32Bit>false</Prefer32Bit>
@@ -77,6 +77,7 @@
     <None Include="ConfigurationSection.csd">
       <Generator>CsdFileGenerator</Generator>
       <LastGenOutput>ConfigurationSection1.csd.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </None>
     <None Include="ConfigurationSection.csd.config">
       <DependentUpon>ConfigurationSection.csd</DependentUpon>

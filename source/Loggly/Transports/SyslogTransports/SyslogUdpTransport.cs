@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System;
 using System.Linq;
 using System.Net;
 using System.Net.Sockets;
@@ -12,45 +12,45 @@ namespace Loggly.Transports.Syslog
         private readonly UdpClientEx _udpClient;
         public SyslogUdpTransport()
         {
-            var ipHostInfo = Dns.GetHostEntry(Dns.GetHostName());
+            var ipHostInfo = Dns.GetHostEntryAsync(Dns.GetHostName()).Result;
             var ipAddress = ipHostInfo.AddressList.First(ip => ip.AddressFamily == AddressFamily.InterNetwork);
             var ipLocalEndPoint = new IPEndPoint(ipAddress, 0);
-            _udpClient= new UdpClientEx(ipLocalEndPoint);
+            _udpClient = new UdpClientEx(ipLocalEndPoint);
         }
 
         public bool IsActive
         {
-            get {  return _udpClient.IsActive ; }
+            get { return _udpClient.IsActive; }
         }
 
         public void Close()
         {
             if (_udpClient.IsActive)
             {
+#if NET_STANDARD
+                _udpClient.Dispose();
+#else
                 _udpClient.Close();
+#endif
             }
         }
 
 
         protected override async Task Send(SyslogMessage syslogMessage)
         {
-            if (!_udpClient.IsActive)
-            {
-                var logglyEndpointIp = Dns.GetHostEntry(LogglyConfig.Instance.Transport.EndpointHostname).AddressList[0];
-                _udpClient.Connect(logglyEndpointIp, LogglyConfig.Instance.Transport.EndpointPort);
-            }
-
             try
             {
-                if (_udpClient.IsActive)
-                {
-                    var bytes = syslogMessage.GetBytes();
-                    await _udpClient.SendAsync(bytes, bytes.Length).ConfigureAwait(false);
-                }
-                else
-                {
-                    LogglyException.Throw("Syslog client Socket is not connected.");
-                }
+                var hostEntry = Dns.GetHostEntryAsync(LogglyConfig.Instance.Transport.EndpointHostname).Result;
+                var logglyEndpointIp = hostEntry.AddressList[0];
+                var bytes = syslogMessage.GetBytes();
+                await _udpClient.SendAsync(
+                    bytes,
+                    bytes.Length,
+                    new IPEndPoint(logglyEndpointIp, LogglyConfig.Instance.Transport.EndpointPort)).ConfigureAwait(false);
+            }
+            catch (Exception ex)
+            {
+                LogglyException.Throw(ex, "Error when sending data using Udp client.");
             }
             finally
             {

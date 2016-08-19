@@ -1,9 +1,7 @@
-﻿using System;
+﻿#if FEATURE_SYSTEM_CONFIGURATION
 using System.Configuration;
+#endif
 using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using System.Text;
-using System.Net;
 
 namespace Loggly.Config
 {
@@ -37,14 +35,14 @@ namespace Loggly.Config
             {
                 if (_instance == null)
                 {
+#if FEATURE_SYSTEM_CONFIGURATION
                     if (LogglyAppConfig.HasAppCopnfig)
                     {
                         _instance = FromAppConfig();
+                        return _instance;
                     }
-                    else
-                    {
-                        _instance = GetNullConfig();
-                    }
+#endif
+                    _instance = GetNullConfig();
                 }
                 return _instance;
             }
@@ -56,6 +54,7 @@ namespace Loggly.Config
             return new LogglyConfig();
         }
 
+#if FEATURE_SYSTEM_CONFIGURATION
         private static ILogglyConfig FromAppConfig()
         {
             var config = new LogglyConfig();
@@ -77,5 +76,6 @@ namespace Loggly.Config
 
             return config;
         }
+#endif
     }
 }

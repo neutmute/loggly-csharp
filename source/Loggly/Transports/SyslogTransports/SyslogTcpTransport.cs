@@ -20,7 +20,8 @@ namespace Loggly.Transports.Syslog
 
         protected override async Task Send(SyslogMessage syslogMessage)
         {
-            var client = new TcpClient(Hostname, LogglyConfig.Instance.Transport.EndpointPort);
+            var client = new TcpClient();
+            client.ConnectAsync(Hostname, LogglyConfig.Instance.Transport.EndpointPort).Wait();
 
             try
             {
@@ -35,7 +36,11 @@ namespace Loggly.Transports.Syslog
             }
             finally
             {
+#if NET_STANDARD
+                client.Dispose();
+#else
                 client.Close();
+#endif
             }
 
         }

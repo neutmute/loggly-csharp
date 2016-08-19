@@ -41,8 +41,8 @@ function nugetPack{
         $env:PackageVersion = "1.0.0.0"
     }
 
-    nuget pack $rootFolder\Source\Loggly\Loggly.csproj -o $outputFolder -IncludeReferencedProjects -p Configuration=$configuration -Version $env:PackageVersion
-    nuget pack $rootFolder\Source\Loggly.Config\Loggly.Config.csproj -IncludeReferencedProjects -o $outputFolder -p Configuration=$configuration -Version $env:PackageVersion
+    nuget pack $rootFolder\Source\Loggly\Loggly.nuspec -o $outputFolder -IncludeReferencedProjects -p Configuration=$configuration -Version $env:PackageVersion
+    nuget pack $rootFolder\Source\Loggly.Config\Loggly.Config.nuspec -IncludeReferencedProjects -o $outputFolder -p Configuration=$configuration -Version $env:PackageVersion
 }
 
 function nugetPublish{
@@ -67,8 +67,20 @@ function buildSolution{
 function executeTests{
 
     Write-Host "Execute Tests"
-    $nunitConsole = "$rootFolder\packages\NUnit.Runners.2.6.3\tools\nunit-console.exe"
-    & $nunitConsole .\Source\Loggly.Tests\bin\$configuration\Loggly.Tests.dll
+
+    $testResultformat = ""
+    $nunitConsole = "$rootFolder\packages\NUnit.ConsoleRunner.3.4.1\tools\nunit3-console.exe"
+
+    if(Test-Path Env:\APPVEYOR){
+        $testResultformat = ";format=AppVeyor"
+        $nunitConsole = "nunit3-console"
+    }
+
+    & $nunitConsole .\Source\Loggly.Tests\bin\$configuration\Loggly.Tests.dll --result=.\Source\Loggly.Tests\bin\$configuration\nunit-results.xml$testResultformat
+
+    checkExitCode
+
+    dotnet test .\Source\NetStandard\Loggly.Tests\project.json -c $configuration --result=.\Source\NetStandard\Loggly.Tests\bin\$configuration\nunit-netstandard-results.xml
 
     checkExitCode
 }

@@ -1,9 +1,5 @@
-using System;
-using System.Net;
+using System.Net.Http;
 using System.Reflection;
-using System.Text;
-using Loggly.Config;
-using Loggly.Responses;
 using Loggly.Transports;
 
 namespace Loggly
@@ -13,34 +9,34 @@ namespace Loggly
         private static readonly string _userAgent;
         static HttpTransportBase ()
         {
-            _userAgent = "loggly-csharp " + Assembly.GetAssembly(typeof(HttpMessageTransport)).GetName().Version;
+            _userAgent = "loggly-csharp " + typeof(HttpMessageTransport).GetTypeInfo().Assembly.GetName().Version;
         }
-        protected HttpWebRequest CreateHttpWebRequest(string url, HttpRequestType requestType)
+        protected HttpClient CreateHttpClient(HttpRequestType requestType)
         {
-            var request = (HttpWebRequest)WebRequest.Create(url);
-            request.Method = requestType.ToString().ToUpper();
-            request.UserAgent = _userAgent;
-            request.KeepAlive = false;
-            return request;
+            var httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.UserAgent.ParseAdd(_userAgent);
+            httpClient.DefaultRequestHeaders.Add("Connection", "close");
+            HttpMethod method = null;
+            switch (requestType)
+            {
+                case HttpRequestType.Get:
+                    method = HttpMethod.Get;
+                    break;
+                case HttpRequestType.Post:
+                    method = HttpMethod.Post;
+                    break;
+            }
+
+            return httpClient;
         }
-        protected static string GetResponseBody(WebResponse response)
+
+        protected string GetResponseBody(HttpResponseMessage response)
         {
             if (response == null)
             {
                 return null;
             }
-            using (var stream = response.GetResponseStream())
-            {
-                var sb = new StringBuilder();
-                int read;
-                do
-                {
-                    var buffer = new byte[2048];
-                    read = stream.Read(buffer, 0, buffer.Length);
-                    sb.Append(Encoding.UTF8.GetString(buffer, 0, read));
-                } while (read > 0);
-                return sb.ToString();
-            }
+            return response.Content.ReadAsStringAsync().Result;
         }
     }
 }
