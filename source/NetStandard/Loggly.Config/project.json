@@ -1,5 +1,5 @@
 {
-  "title"  : "loggly-csharp-config-netcore",
+  "title"  : "loggly-csharp-config",
   "version": "4.6.0-*",
   "description": "Configuration classes for loggly clients. Settings are read from app.config or can be programmatically injected at runtime. See readme.md for documentation",
 
