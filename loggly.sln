@@ -27,9 +27,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C06638
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetStandard", "NetStandard", "{FF964C86-C884-453C-ACE4-41A5ACBBF2C7}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Loggly.NetStandard", "source\NetStandard\Loggly\Loggly.NetStandard.xproj", "{9E9052E5-A217-477D-8A1A-010AA7A588AF}"
-EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Loggly.Config.NetStandard", "source\NetStandard\Loggly.Config\Loggly.Config.NetStandard.xproj", "{FC9EC8AD-F2C3-4FFD-916C-2A3639DB9AE4}"
+EndProject
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Loggly.NetStandard", "source\NetStandard\Loggly\Loggly.NetStandard.xproj", "{9E9052E5-A217-477D-8A1A-010AA7A588AF}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Loggly.Tests.NetStandard", "source\NetStandard\Loggly.Tests\Loggly.Tests.NetStandard.xproj", "{909515FA-7AFD-4E77-907F-8E776784DF1C}"
 EndProject
