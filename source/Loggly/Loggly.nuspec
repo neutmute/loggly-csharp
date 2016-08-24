@@ -13,7 +13,7 @@
         <tags>loggly</tags>
         <dependencies>
             <group targetFramework="net45">
-                <dependency id="loggly-csharp-config-netcore" version="$version$" />
+                <dependency id="loggly-csharp-config" version="$version$" />
                 <dependency id="Newtonsoft.Json" version="6.0.8" />
             </group>
             <group targetFramework=".NETStandard1.5">
