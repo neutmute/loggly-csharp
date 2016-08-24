@@ -24,7 +24,7 @@
                 <dependency id="System.Net.Security" version="4.0.0" />
                 <dependency id="System.Net.Sockets" version="4.1.0" />
                 <dependency id="System.Diagnostics.Tracing" version="4.1.0" />
-                <dependency id="loggly-csharp-config-netcore" version="$version$" />
+                <dependency id="loggly-csharp-config" version="$version$" />
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
             </group>
         </dependencies>
