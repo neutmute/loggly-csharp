@@ -7,9 +7,6 @@ Install via nuget with
 
 	Install-Package loggly-csharp
 
-**Note** Version 3.5 has completely broken compatibility with prior versions to bring major improvements.
-Any existing code targeting versions < 3.0 will require modification.
-
 ## Configuration via app.Config
 Configuration may be done via your app.config. The minimal amount config you require is to specify your `customerToken`: 
 
@@ -132,10 +129,10 @@ Of course, there is no need to have a config source in your real app, this is ju
 ## Contributions
 Contributions are welcome.
 
-* Open an issue first to discuss your proposed changes
-* Branch your PR from the develop branch
-* `.\build.ps1` is compatible with [myget](https://www.myget.org) build services for dogfooding your modifications
-
+* Open an issue to discuss your proposed changes
+* Branch your PR from the `develop` branch
+* `.\build.ps1` is compatible with [myget](https://www.myget.org) and [appveyor](https://www.appveyor.com/) build services for dogfooding your modifications
+* `.\build.ps1` / Visual Studio 2015 will require VS2015 command prompt / [.NET core tooling](https://www.microsoft.com/net/core#windows) to compile the solution
 
 ## Projects using this client
 * [nlog-targets-loggly](https://github.com/joefitzgerald/nlog-targets-loggly) An NLog target
@@ -143,6 +140,9 @@ Contributions are welcome.
 * [Loggly.CompositeC1](https://www.nuget.org/packages/Loggly.CompositeC1) TraceListener for Composite C1 CMS
 
 ## History
+### v4.6
+* .NET Standard / Core compatible
+
 ### v4.5.0.3
 * Bug fixes for syslog transports
 
