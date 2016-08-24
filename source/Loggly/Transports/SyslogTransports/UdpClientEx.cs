@@ -12,7 +12,12 @@ namespace Loggly.Transports.Syslog
         public UdpClientEx(IPEndPoint ipe) : base (ipe) { }
         ~UdpClientEx()
         {
-            if (Active) Close();
+            if (Active)
+#if NET_STANDARD
+                Dispose();
+#else
+                Close();
+#endif
         }
 
         public bool IsActive

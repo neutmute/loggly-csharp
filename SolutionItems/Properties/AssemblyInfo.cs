@@ -9,7 +9,7 @@ using System.Security;
 #endif
 
 [assembly: AllowPartiallyTrustedCallers]
-[assembly: AssemblyVersion("4.5.1.0")]
+[assembly: AssemblyVersion("4.6.1.0")]
 [assembly: AssemblyProduct("loggly-csharp")]
 [assembly: InternalsVisibleTo("Loggly.Tests")]
 

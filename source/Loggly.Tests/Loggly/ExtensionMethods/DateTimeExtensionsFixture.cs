@@ -30,8 +30,8 @@ namespace Loggly.Tests.Loggly.ExtensionMethods
             // Make this work outside of my timezone
             var syslogForm = date.ToSyslog();
             Assert.AreEqual(32, syslogForm.Length);
-            Assert.That(syslogForm.StartsWith("2013-10-11T22:14:15.003000+"));
-            Assert.That(syslogForm.EndsWith(":00"));
+            Assert.That(syslogForm.StartsWith("2013-10-11T22:14:15.003000"), "Expect syslogForm starting with \"2013-10-11T22:14:15.003000\", actual value \"{0}\"", syslogForm);
+            Assert.That(syslogForm.EndsWith(":00"), "Expect syslogForm ending with \":00\", actual value \"{0}\"", syslogForm);
 
             Console.WriteLine(DateTime.UtcNow.ToSyslog());
         }

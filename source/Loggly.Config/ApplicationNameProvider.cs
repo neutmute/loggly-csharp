@@ -1,4 +1,5 @@
-﻿using System;
+﻿#if FEATURE_SYSTEM_CONFIGURATION
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Linq;
@@ -36,3 +37,4 @@ namespace Loggly.Config
         }
     }
 }
+#endif

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Loggly.Config;
@@ -51,26 +51,27 @@ namespace Loggly
             if (LogglyConfig.Instance.IsValid)
             {
                 var list = messages.ToList();
-                var httpWebRequest = CreateHttpWebRequest(list);
-
-                using (var response = await httpWebRequest.GetResponseAsync().ConfigureAwait(false))
+                using (var httpClient = CreateHttpClient(HttpRequestType.Post))
                 {
-                    var rawResponse = Response.CreateSuccess(GetResponseBody(response));
+                    using (var response = await PostUsingHttpClient(httpClient, list).ConfigureAwait(false))
+                    {
+                        var rawResponse = Response.CreateSuccess(GetResponseBody(response));
 
-                    if (rawResponse.Success)
-                    {
-                        logResponse = JsonConvert.DeserializeObject<LogResponse>(rawResponse.Raw);
-                        logResponse.Code = ResponseCode.Success;
-                        
+                        if (rawResponse.Success)
+                        {
+                            logResponse = JsonConvert.DeserializeObject<LogResponse>(rawResponse.Raw);
+                            logResponse.Code = ResponseCode.Success;
+
+                        }
+                        else
+                        {
+                            logResponse = new LogResponse { Code = ResponseCode.Error, Message = rawResponse.Error.Message };
+                        }
                     }
-                    else
+                    foreach (var m in list)
                     {
-                        logResponse = new LogResponse { Code = ResponseCode.Error, Message = rawResponse.Error.Message };
+                        LogglyEventSource.Instance.Log(m, logResponse);
                     }
-                }
-                foreach (var m in list)
-                {
-                    LogglyEventSource.Instance.Log(m, logResponse);
                 }
             }
             else
@@ -80,16 +81,14 @@ namespace Loggly
             return logResponse;
         }
 
-        private HttpWebRequest CreateHttpWebRequest(List<LogglyMessage> message)
+        private Task<HttpResponseMessage> PostUsingHttpClient(HttpClient httpClient, List<LogglyMessage> message)
         {
-            var httpWebRequest = CreateHttpWebRequest(message.Count == 1 ? UrlSingle : UrlBulk, HttpRequestType.Post);
-
             // if bulk sending messages, what do we do with unique tags per message? For now ignore them
             var tags = GetRenderedTags(message.Count == 1 ? message[0].CustomTags : new List<ITag>());
 
             if (!string.IsNullOrEmpty(tags))
             {
-                httpWebRequest.Headers.Add("X-LOGGLY-TAG", tags);
+                httpClient.DefaultRequestHeaders.Add("X-LOGGLY-TAG", tags);
             }
             var type = message.First().Type;
             if (!message.TrueForAll(x => type == x.Type))
@@ -97,15 +96,6 @@ namespace Loggly
                 LogglyException.Throw("Cannot have mixed Plain and Json messages");
             }
 
-            switch (type)
-            {
-                case MessageType.Plain:
-                    httpWebRequest.ContentType = "content-type:text/plain";
-                    break;
-                case MessageType.Json:
-                    httpWebRequest.ContentType = "application/json";
-                    break;
-            }
             var builder = new StringBuilder();
             bool isFirst = true;
             foreach (var m in message)
@@ -120,18 +110,20 @@ namespace Loggly
                 }
                 builder.Append(m.Content);
             }
-            var contentBytes = Encoding.UTF8.GetBytes(builder.ToString());
 
-            httpWebRequest.ContentLength = contentBytes.Length;
+            StringContent postData = null;
 
-            using (var requestStream = httpWebRequest.GetRequestStream())
+            switch (type)
             {
-                requestStream.Write(contentBytes, 0, contentBytes.Length);
-                requestStream.Flush();
-                requestStream.Close();
+                case MessageType.Plain:
+                    postData = new StringContent(builder.ToString(), Encoding.UTF8, "text/plain");
+                    break;
+                case MessageType.Json:
+                    postData = new StringContent(builder.ToString(), Encoding.UTF8, "application/json");
+                    break;
             }
 
-            return httpWebRequest;
+            return httpClient.PostAsync(message.Count == 1 ? UrlSingle : UrlBulk, postData);
         }
 
         protected override string GetRenderedTags(List<ITag> customTags)

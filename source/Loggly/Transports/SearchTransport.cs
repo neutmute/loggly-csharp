@@ -1,9 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
-using System.Runtime.InteropServices;
+using System.Net.Http.Headers;
 using System.Text;
-using System.Web;
 using Loggly.Config;
 using Loggly.Responses;
 using Newtonsoft.Json;
@@ -29,7 +28,7 @@ namespace Loggly
             var parameters = query.ToParameters();
             return Search<SearchResponse<T>>("apiv2/search", parameters);
         }
-        
+
         public EntryJsonResponseBase Search(EventQuery query)
         {
             var parameters = query.ToParameters();
@@ -41,38 +40,46 @@ namespace Loggly
             var parameters = query.ToParameters();
             return Search<FieldResponse>("apiv2/fields", parameters);
         }
-        
+
         private T Search<T>(string endPoint, IDictionary<string, object> parameters)
             where T : class
         {
             try
             {
                 var searchPathAndQuery = GetUrl(endPoint, parameters);
-                var searchRequest = CreateHttpWebRequest(searchPathAndQuery, HttpRequestType.Get);
-                
-                searchRequest.Credentials = new NetworkCredential(_config.Username, _config.Password);
-
-                using (var response = searchRequest.GetResponse())
+                using (var httpClient = CreateHttpClient(HttpRequestType.Get))
                 {
-                    var isFieldResponseResultExpected = typeof (T) == typeof (FieldResponse);
-                    var responseBody = GetResponseBody(response);
-                    T responseObject = isFieldResponseResultExpected
-                        ? new FieldResponse(JObject.Parse(responseBody), parameters["fieldname"].ToString()) as T
-                        : JsonConvert.DeserializeObject<T>(responseBody);
+                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                        "Basic",
+                        Convert.ToBase64String(
+                            Encoding.ASCII.GetBytes(
+                            string.Format("{0}:{1}", _config.Username, _config.Password))));
 
-                    var responseAsSearchResponseBase = responseObject as SearchResponseBase;
-                    if (responseAsSearchResponseBase != null)
+                    using (var response = httpClient.GetAsync(searchPathAndQuery).Result)
                     {
-                        responseAsSearchResponseBase.Transport = this;
-                    }
+                        var isFieldResponseResultExpected = typeof(T) == typeof(FieldResponse);
+                        var responseBody = GetResponseBody(response);
+                        if (response.IsSuccessStatusCode)
+                        {
+                            T responseObject = isFieldResponseResultExpected
+                                ? new FieldResponse(JObject.Parse(responseBody), parameters["fieldname"].ToString()) as T
+                                : JsonConvert.DeserializeObject<T>(responseBody);
 
-                    return responseObject;
+                            var responseAsSearchResponseBase = responseObject as SearchResponseBase;
+                            if (responseAsSearchResponseBase != null)
+                            {
+                                responseAsSearchResponseBase.Transport = this;
+                            }
+
+                            return responseObject;
+                        }
+                        else
+                        {
+                            LogglyException.Throw(GetResponseBody(response));
+                            return null;
+                        }
+                    }
                 }
-            }
-            catch (WebException ex)
-            {
-                LogglyException.Throw(ex, GetResponseBody(ex.Response));
-                return null;
             }
             catch (Exception ex)
             {
@@ -98,7 +105,7 @@ namespace Loggly
                     }
                     sb.Append(kvp.Key);
                     sb.Append('=');
-                    sb.Append(HttpUtility.UrlEncode(kvp.Value.ToString()));
+                    sb.Append(WebUtility.UrlEncode(kvp.Value.ToString()));
                     sb.Append("&");
                 }
                 sb.Remove(sb.Length - 1, 1);

@@ -1,6 +1,5 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Web.UI;
 using Newtonsoft.Json;
 
 namespace Loggly.Responses
