@@ -49,7 +49,7 @@ function nugetPublish{
 
     if(Test-Path Env:\nugetapikey ){
         _WriteOut -ForegroundColor $ColorScheme.Banner "Nuget publish..."
-        &nuget push .\_output\* -ApiKey "$env:nugetapikey" -source https://www.nuget.org
+        &nuget push $outputFolder\* -ApiKey "$env:nugetapikey" -source https://www.nuget.org
     }
     else{
         _WriteOut -ForegroundColor Yellow "nugetapikey environment variable not detected. Skipping nuget publish"
