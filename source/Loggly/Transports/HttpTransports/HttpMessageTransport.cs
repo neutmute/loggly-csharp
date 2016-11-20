@@ -1,18 +1,42 @@
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Net.Http;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Loggly.Config;
 using Loggly.Responses;
+using Loggly.Transports;
 using Newtonsoft.Json;
 
 namespace Loggly
 {
-    internal class HttpMessageTransport : HttpTransportBase, IMessageTransport
+    internal class HttpMessageTransport : TransportBase, IMessageTransport
     {
         private static string _urlSingle;
         private static string _urlBulk;
+
+        private static readonly string _userAgent;
+        protected HttpClient HttpClient;
+
+        static HttpMessageTransport()
+        {
+            _userAgent = "loggly-csharp " + typeof(HttpMessageTransport).GetTypeInfo().Assembly.GetName().Version;
+        }
+
+        internal HttpMessageTransport(HttpMessageHandler messageHandler)
+        {
+            HttpClient = new HttpClient(messageHandler);
+            HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(_userAgent);
+            HttpClient.DefaultRequestHeaders.Add("Connection", "close");
+        }
+
+        public HttpMessageTransport() : this(new HttpClientHandler())
+        {
+
+        }
+
 
         private static string UrlSingle
         {
@@ -51,28 +75,23 @@ namespace Loggly
             if (LogglyConfig.Instance.IsValid)
             {
                 var list = messages.ToList();
-                using (var httpClient = CreateHttpClient(HttpRequestType.Post))
+
+                using (var response = await PostUsingHttpClient(list).ConfigureAwait(false))
                 {
-                    using (var response = await PostUsingHttpClient(httpClient, list).ConfigureAwait(false))
+                    if (response.IsSuccessStatusCode)
                     {
-                        var rawResponse = Response.CreateSuccess(GetResponseBody(response));
-
-                        if (rawResponse.Success)
-                        {
-                            logResponse = JsonConvert.DeserializeObject<LogResponse>(rawResponse.Raw);
-                            logResponse.Code = ResponseCode.Success;
-
-                        }
-                        else
-                        {
-                            logResponse = new LogResponse { Code = ResponseCode.Error, Message = rawResponse.Error.Message };
-                        }
+                        logResponse = new LogResponse { Code = ResponseCode.Success};
                     }
-                    foreach (var m in list)
+                    else
                     {
-                        LogglyEventSource.Instance.Log(m, logResponse);
+                        logResponse = new LogResponse { Code = ResponseCode.Error, Message = "Loggly returned status:" + response.StatusCode };
                     }
                 }
+                foreach (var m in list)
+                {
+                    LogglyEventSource.Instance.Log(m, logResponse);
+                }
+
             }
             else
             {
@@ -81,24 +100,34 @@ namespace Loggly
             return logResponse;
         }
 
-        private Task<HttpResponseMessage> PostUsingHttpClient(HttpClient httpClient, List<LogglyMessage> message)
+        private Task<HttpResponseMessage> PostUsingHttpClient(List<LogglyMessage> messages)
         {
-            // if bulk sending messages, what do we do with unique tags per message? For now ignore them
-            var tags = GetRenderedTags(message.Count == 1 ? message[0].CustomTags : new List<ITag>());
+            string tags;
+            if (messages.Count == 1)
+            {
+                tags = GetRenderedTags(messages[0].CustomTags);
+            }
+            else
+            {
+                // if bulk sending messages, send all tags which have the same value for all messages
+                tags = string.Join(",", messages.SelectMany(x => GetLegalTagUnion(x.CustomTags)).GroupBy(x => x).Where(x => x.Count() == messages.Count).Select(x => x.Key));
+            }
 
+            var request=new HttpRequestMessage(HttpMethod.Post, messages.Count == 1 ? UrlSingle : UrlBulk);
+            
             if (!string.IsNullOrEmpty(tags))
             {
-                httpClient.DefaultRequestHeaders.Add("X-LOGGLY-TAG", tags);
+                request.Headers.Add("X-LOGGLY-TAG", tags);
             }
-            var type = message.First().Type;
-            if (!message.TrueForAll(x => type == x.Type))
+            var type = messages.First().Type;
+            if (!messages.TrueForAll(x => type == x.Type))
             {
                 LogglyException.Throw("Cannot have mixed Plain and Json messages");
             }
 
             var builder = new StringBuilder();
             bool isFirst = true;
-            foreach (var m in message)
+            foreach (var m in messages)
             {
                 if (isFirst)
                 {
@@ -123,13 +152,23 @@ namespace Loggly
                     break;
             }
 
-            return httpClient.PostAsync(message.Count == 1 ? UrlSingle : UrlBulk, postData);
+            request.Content = postData;
+            return HttpClient.SendAsync(request);
         }
 
         protected override string GetRenderedTags(List<ITag> customTags)
         {
             var tags = string.Join(",", GetLegalTagUnion(customTags));
             return tags;
+        }
+
+        private async Task<string> GetResponseBodyAsync(HttpResponseMessage response)
+        {
+            if (response == null)
+            {
+                return null;
+            }
+            return await response.Content.ReadAsStringAsync();
         }
     }
 }

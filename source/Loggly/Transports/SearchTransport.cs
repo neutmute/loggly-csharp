@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Net;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using Loggly.Config;
@@ -10,12 +11,20 @@ using Newtonsoft.Json.Linq;
 
 namespace Loggly
 {
-    internal class SearchTransport : HttpTransportBase, ISearchTransport
+    internal class SearchTransport : ISearchTransport
     {
         private readonly ISearchConfiguration _config;
+        private HttpClient _httpClient;
+
         public SearchTransport(ISearchConfiguration config)
         {
             _config = config;
+            _httpClient=new HttpClient();
+            _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
+                    "Basic",
+                    Convert.ToBase64String(
+                        Encoding.ASCII.GetBytes(
+                        string.Format("{0}:{1}", config.Username, config.Password))));
         }
         public SearchResponse Search(SearchQuery query)
         {
@@ -47,39 +56,29 @@ namespace Loggly
             try
             {
                 var searchPathAndQuery = GetUrl(endPoint, parameters);
-                using (var httpClient = CreateHttpClient(HttpRequestType.Get))
+                
+                using (var response = _httpClient.GetAsync(searchPathAndQuery).Result)
                 {
-                    httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue(
-                        "Basic",
-                        Convert.ToBase64String(
-                            Encoding.ASCII.GetBytes(
-                            string.Format("{0}:{1}", _config.Username, _config.Password))));
-
-                    using (var response = httpClient.GetAsync(searchPathAndQuery).Result)
+                    var isFieldResponseResultExpected = typeof(T) == typeof(FieldResponse);
+                    var responseBody = response.Content.ReadAsStringAsync().Result;
+                    if (response.IsSuccessStatusCode)
                     {
-                        var isFieldResponseResultExpected = typeof(T) == typeof(FieldResponse);
-                        var responseBody = GetResponseBody(response);
-                        if (response.IsSuccessStatusCode)
-                        {
-                            T responseObject = isFieldResponseResultExpected
-                                ? new FieldResponse(JObject.Parse(responseBody), parameters["fieldname"].ToString()) as T
-                                : JsonConvert.DeserializeObject<T>(responseBody);
+                        T responseObject = isFieldResponseResultExpected
+                            ? new FieldResponse(JObject.Parse(responseBody), parameters["fieldname"].ToString()) as T
+                            : JsonConvert.DeserializeObject<T>(responseBody);
 
-                            var responseAsSearchResponseBase = responseObject as SearchResponseBase;
-                            if (responseAsSearchResponseBase != null)
-                            {
-                                responseAsSearchResponseBase.Transport = this;
-                            }
-
-                            return responseObject;
-                        }
-                        else
+                        var responseAsSearchResponseBase = responseObject as SearchResponseBase;
+                        if (responseAsSearchResponseBase != null)
                         {
-                            LogglyException.Throw(GetResponseBody(response));
-                            return null;
+                            responseAsSearchResponseBase.Transport = this;
                         }
+
+                        return responseObject;
                     }
+                    LogglyException.Throw(responseBody);
+                    return null;
                 }
+
             }
             catch (Exception ex)
             {
@@ -114,9 +113,5 @@ namespace Loggly
             return sb.ToString();
         }
 
-        protected override string GetRenderedTags(List<ITag> customTags)
-        {
-            throw new NotSupportedException();
-        }
     }
 }
