@@ -88,7 +88,6 @@
     <Compile Include="Search\SearchQuery.cs" />
     <Compile Include="Responses\Search\SearchResponse.cs" />
     <Compile Include="Transports\EnvironmentProvider.cs" />
-    <Compile Include="Transports\HttpTransports\HttpTransportBase.cs" />
     <Compile Include="Transports\HttpTransports\HttpMessageTransport.cs" />
     <Compile Include="Transports\Interfaces\IMessageTransport.cs" />
     <Compile Include="Transports\Interfaces\ISearchTransport.cs" />

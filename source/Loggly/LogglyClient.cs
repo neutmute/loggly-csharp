@@ -11,6 +11,12 @@ namespace Loggly
 
     public class LogglyClient : ILogglyClient
     {
+        private IMessageTransport _transport;
+
+        public LogglyClient()
+        {
+            _transport = TransportFactory();
+        }
         public async Task<LogResponse> Log(LogglyEvent logglyEvent)
         {
             return await LogWorker(new [] {logglyEvent}).ConfigureAwait(false);
@@ -40,8 +46,7 @@ namespace Loggly
 						}
                     }
                     
-                    IMessageTransport transporter = TransportFactory();
-                    response = await transporter.Send(events.Select(x => new LogglyMessage
+                    response = await _transport.Send(events.Select(x => new LogglyMessage
                     {
                         Timestamp = x.Timestamp,
                         Syslog = x.Syslog,
