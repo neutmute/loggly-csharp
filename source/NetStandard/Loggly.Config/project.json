@@ -11,7 +11,8 @@
         "../../loggly.Config/ConfigurationSection*.*",
         "../../loggly.Config/AppConfigPartials/*.cs"
       ]
-    }
+    },
+    "keyFile": "../../../LogglyCsharp.snk"
   },
   "dependencies": {
   },
