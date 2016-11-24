@@ -10,7 +10,8 @@
         "../../loggly/**/*.cs",
         "../../../SolutionItems/Properties/AssemblyInfo.cs"
       ]
-    }
+    },
+    "keyFile": "../../../LogglyCsharp.snk"
   },
   "dependencies": {
     "Loggly.Config": {

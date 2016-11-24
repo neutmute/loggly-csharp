@@ -3,7 +3,8 @@
     "define": [ "NET_STANDARD" ],
     "compile": {
       "include": [ "../../loggly.Tests/**/*.cs" ]
-    }
+    },
+    "keyFile": "../../../LogglyCsharp.snk"
   },
   "testRunner": "nunit",
   "dependencies": {
