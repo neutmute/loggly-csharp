@@ -6,7 +6,7 @@ assembly_info:
   file: '**\AssemblyInfo.*'
   assembly_version: '{version}'
   assembly_file_version: '{version}'
-  assembly_informational_version: '{branch}-$(APPVEYOR_REPO_COMMIT)'
+  assembly_informational_version: 'branch={branch},commit=$(APPVEYOR_REPO_COMMIT)'
 nuget:
   disable_publish_on_pr: true
 build_script:
