@@ -1,6 +1,7 @@
 #![](https://raw.githubusercontent.com/neutmute/loggly-csharp/master/SolutionItems/loggly.png) .NET Client for Loggly  
 
-[![loggly-csharp MyGet Build Status](https://www.myget.org/BuildSource/Badge/loggly-csharp?identifier=096040c5-29c7-4254-9b71-611f780d43ff)](https://www.myget.org/) ![Version](https://img.shields.io/nuget/v/loggly-csharp.svg)
+[![Build status](https://ci.appveyor.com/api/projects/status/olaoata7qpl7fnk8?svg=true)](https://ci.appveyor.com/project/neutmute/loggly-csharp)
+![Version](https://img.shields.io/nuget/v/loggly-csharp.svg)
 
 A .NET client for loggly. Supporting Https, Syslog UDP and encrypted Syslog TCP transports.
 Install via nuget with
