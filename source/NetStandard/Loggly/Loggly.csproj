@@ -1,0 +1,44 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>A .NET client for loggly. Supporting Https, Syslog UDP and encrypted Syslog TCP transports.</Description>
+    <AssemblyTitle>loggly-csharp</AssemblyTitle>
+    <VersionPrefix>4.6.0</VersionPrefix>
+    <TargetFramework>netstandard1.5</TargetFramework>
+    <DefineConstants>$(DefineConstants);NET_STANDARD</DefineConstants>
+    <AssemblyName>Loggly</AssemblyName>
+    <AssemblyOriginatorKeyFile>../../../LogglyCsharp.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+    <PackageId>Loggly</PackageId>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="..\..\loggly\**\*.cs;..\..\..\SolutionItems\Properties\AssemblyInfo.cs" Exclude="bin\**;obj\**;**\*.xproj;packages\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Loggly.Config\Loggly.Config.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
+    <PackageReference Include="System.Diagnostics.Process" Version="4.1.0" />
+    <PackageReference Include="System.Net.Http" Version="4.1.1" />
+    <PackageReference Include="System.Net.NameResolution" Version="4.0.0" />
+    <PackageReference Include="System.Net.Requests" Version="4.0.11" />
+    <PackageReference Include="System.Net.Security" Version="4.0.0" />
+    <PackageReference Include="System.Net.Sockets" Version="4.1.0" />
+    <PackageReference Include="System.Diagnostics.Tracing" Version="4.1.0" />
+  </ItemGroup>
+
+</Project>

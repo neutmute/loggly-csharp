@@ -1,0 +1,32 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <Description>Configuration classes for loggly clients. Settings are read from app.config or can be programmatically injected at runtime. See readme.md for documentation</Description>
+    <AssemblyTitle>loggly-csharp-config</AssemblyTitle>
+    <VersionPrefix>4.6.0</VersionPrefix>
+    <TargetFramework>netstandard1.5</TargetFramework>
+    <DefineConstants>$(DefineConstants);NET_STANDARD</DefineConstants>
+    <AssemblyName>Loggly.Config</AssemblyName>
+    <AssemblyOriginatorKeyFile>../../../LogglyCsharp.snk</AssemblyOriginatorKeyFile>
+    <SignAssembly>true</SignAssembly>
+    <PublicSign Condition=" '$(OS)' != 'Windows_NT' ">true</PublicSign>
+    <PackageId>Loggly.Config</PackageId>
+    <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
+    <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="..\..\loggly.Config\ConfigurationSection*.*;..\..\loggly.Config\AppConfigPartials\*.cs" />
+    <Compile Include="..\..\loggly.Config\**\*.cs" Exclude="..\..\loggly.Config\ConfigurationSection*.*;..\..\loggly.Config\AppConfigPartials\*.cs;bin\**;obj\**;**\*.xproj;packages\**" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
+    <PackageReference Include="System.Collections" Version="4.0.11" />
+    <PackageReference Include="System.Diagnostics.Tools" Version="4.0.1" />
+    <PackageReference Include="System.Linq" Version="4.1.0" />
+    <PackageReference Include="System.Runtime.Extensions" Version="4.1.0" />
+    <PackageReference Include="System.Text.RegularExpressions" Version="4.1.0" />
+    <PackageReference Include="System.Threading.Tasks" Version="4.0.11" />
+  </ItemGroup>
+
+</Project>
