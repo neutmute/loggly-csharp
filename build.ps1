@@ -68,7 +68,7 @@ function buildSolution{
 
     _WriteOut -ForegroundColor $ColorScheme.Banner "Build Solution"
 
-    msbuild "$rootFolder\$solutionName.sln" /p:Configuration=$configuration
+    msbuild.exe "$rootFolder\$solutionName.sln" /p:Configuration=$configuration
     gitlink $rootFolder -u $sourceUrl
 }
 
@@ -88,7 +88,7 @@ function executeTests{
 
     checkExitCode
 
-    dotnet test .\Source\NetStandard\Loggly.Tests\project.json -c $configuration --result=.\Source\NetStandard\Loggly.Tests\bin\$configuration\nunit-netstandard-results.xml
+    dotnet test .\Source\NetStandard\Loggly.Tests\Loggly.Tests.csproj -c $configuration --result=.\Source\NetStandard\Loggly.Tests\bin\$configuration\nunit-netstandard-results.xml
 
     checkExitCode
 }
