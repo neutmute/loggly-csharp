@@ -93,6 +93,9 @@ function executeTests{
     checkExitCode
 }
 
+#appveyor test
+where msbuild
+
 init
 
 restorePackages
