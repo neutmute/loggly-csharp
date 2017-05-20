@@ -14,8 +14,7 @@ function init {
     $global:rootFolder = Join-Path $rootFolder .
     $global:packagesFolder = Join-Path $rootFolder packages
     $global:outputFolder = Join-Path $rootFolder _output
-    $global:msbuild = "C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe"
-    
+        
     # Test for AppVeyor config
     if(!(Test-Path Env:\PackageVersion )){
         $env:PackageVersion = $env:APPVEYOR_BUILD_VERSION
@@ -32,12 +31,13 @@ function init {
 }
 
 function restorePackages{
-    _WriteOut -ForegroundColor $ColorScheme.Banner "nuget, gitlink restore"
+    _WriteOut -ForegroundColor $ColorScheme.Banner "Getting nuget, vswhere, gitlink"
     
     New-Item -Force -ItemType directory -Path $packagesFolder
     _DownloadNuget $packagesFolder
     nuget restore
-    nuget install gitlink -SolutionDir "$rootFolder" -ExcludeVersion
+    FindGitlink $rootFolder
+    FindMsbuild $rootFolder
 }
 
 function nugetPack{
@@ -67,9 +67,9 @@ function nugetPublish{
 function buildSolution{
 
     _WriteOut -ForegroundColor $ColorScheme.Banner "Build Solution"
-    & $msbuild "$rootFolder\$solutionName.sln" /p:Configuration=$configuration
 
-    &"$rootFolder\packages\gitlink\lib\net45\GitLink.exe" $rootFolder -u $sourceUrl
+    msbuild "$rootFolder\$solutionName.sln" /p:Configuration=$configuration
+    gitlink $rootFolder -u $sourceUrl
 }
 
 function executeTests{

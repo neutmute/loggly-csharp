@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.6
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{5B1BDA21-CAE4-4686-B45B-1087AA9A36F4}"
 	ProjectSection(SolutionItems) = preProject
@@ -27,11 +27,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{C06638
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetStandard", "NetStandard", "{FF964C86-C884-453C-ACE4-41A5ACBBF2C7}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Loggly.Config.NetStandard", "source\NetStandard\Loggly.Config\Loggly.Config.NetStandard.xproj", "{FC9EC8AD-F2C3-4FFD-916C-2A3639DB9AE4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loggly", "source\NetStandard\Loggly\Loggly.csproj", "{EF687F10-E317-4349-BE24-AB35FA042DD9}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Loggly.NetStandard", "source\NetStandard\Loggly\Loggly.NetStandard.xproj", "{9E9052E5-A217-477D-8A1A-010AA7A588AF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loggly.Config", "source\NetStandard\Loggly.Config\Loggly.Config.csproj", "{326FDFD5-A16A-406E-9D34-8E43FDA1D392}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Loggly.Tests.NetStandard", "source\NetStandard\Loggly.Tests\Loggly.Tests.NetStandard.xproj", "{909515FA-7AFD-4E77-907F-8E776784DF1C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loggly.Tests", "source\NetStandard\Loggly.Tests\Loggly.Tests.csproj", "{C47095A7-7F7F-41E0-83C4-BDBDF416B003}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -54,25 +54,25 @@ Global
 		{F66349BA-29A6-4336-BA81-993170FC9963}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F66349BA-29A6-4336-BA81-993170FC9963}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F66349BA-29A6-4336-BA81-993170FC9963}.Release|Any CPU.Build.0 = Release|Any CPU
-		{9E9052E5-A217-477D-8A1A-010AA7A588AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{9E9052E5-A217-477D-8A1A-010AA7A588AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{9E9052E5-A217-477D-8A1A-010AA7A588AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{9E9052E5-A217-477D-8A1A-010AA7A588AF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FC9EC8AD-F2C3-4FFD-916C-2A3639DB9AE4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FC9EC8AD-F2C3-4FFD-916C-2A3639DB9AE4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FC9EC8AD-F2C3-4FFD-916C-2A3639DB9AE4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FC9EC8AD-F2C3-4FFD-916C-2A3639DB9AE4}.Release|Any CPU.Build.0 = Release|Any CPU
-		{909515FA-7AFD-4E77-907F-8E776784DF1C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{909515FA-7AFD-4E77-907F-8E776784DF1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{909515FA-7AFD-4E77-907F-8E776784DF1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{909515FA-7AFD-4E77-907F-8E776784DF1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EF687F10-E317-4349-BE24-AB35FA042DD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EF687F10-E317-4349-BE24-AB35FA042DD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EF687F10-E317-4349-BE24-AB35FA042DD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EF687F10-E317-4349-BE24-AB35FA042DD9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{326FDFD5-A16A-406E-9D34-8E43FDA1D392}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{326FDFD5-A16A-406E-9D34-8E43FDA1D392}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{326FDFD5-A16A-406E-9D34-8E43FDA1D392}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{326FDFD5-A16A-406E-9D34-8E43FDA1D392}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C47095A7-7F7F-41E0-83C4-BDBDF416B003}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C47095A7-7F7F-41E0-83C4-BDBDF416B003}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C47095A7-7F7F-41E0-83C4-BDBDF416B003}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C47095A7-7F7F-41E0-83C4-BDBDF416B003}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{9E9052E5-A217-477D-8A1A-010AA7A588AF} = {FF964C86-C884-453C-ACE4-41A5ACBBF2C7}
-		{FC9EC8AD-F2C3-4FFD-916C-2A3639DB9AE4} = {FF964C86-C884-453C-ACE4-41A5ACBBF2C7}
-		{909515FA-7AFD-4E77-907F-8E776784DF1C} = {FF964C86-C884-453C-ACE4-41A5ACBBF2C7}
+		{EF687F10-E317-4349-BE24-AB35FA042DD9} = {FF964C86-C884-453C-ACE4-41A5ACBBF2C7}
+		{326FDFD5-A16A-406E-9D34-8E43FDA1D392} = {FF964C86-C884-453C-ACE4-41A5ACBBF2C7}
+		{C47095A7-7F7F-41E0-83C4-BDBDF416B003} = {FF964C86-C884-453C-ACE4-41A5ACBBF2C7}
 	EndGlobalSection
 EndGlobal

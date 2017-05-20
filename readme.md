@@ -9,7 +9,7 @@ Install via nuget with
 	Install-Package loggly-csharp
 
 ## Building
-This project supports .NET standard and so requires the [latest tooling installed](https://www.microsoft.com/net/core#windowsvs2015)
+This project supports .NET standard and so requires the [latest tooling installed](https://www.microsoft.com/net/core#windowscmd)
 
 ## Configuration via app.Config
 Configuration may be done via your app.config. The minimal amount config you require is to specify your `customerToken`: 

@@ -69,6 +69,24 @@ param(
 
 }
 
+function FindGitlink($rootFolder){
+    nuget install gitlink -SolutionDir "$rootFolder" -ExcludeVersion
+    Set-Alias gitlink $rootFolder\packages\gitlink\lib\net45\GitLink.exe -Scope Global
+}
+
+function FindMsbuild($rootFolder){
+
+    nuget install vswhere -SolutionDir "$rootFolder" -ExcludeVersion
+
+    $path = &$rootFolder\packages\vswhere\tools\vswhere.exe -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
+    if ($path) {
+      $path = join-path $path 'MSBuild\15.0\Bin\MSBuild.exe'
+      if (test-path $path) {
+        Set-Alias msbuild $path -Scope Global
+      }
+    }
+}
+
 function _DownloadNuget{
 param([Parameter(Mandatory=$true,Position=0)]$rootPath)
 
