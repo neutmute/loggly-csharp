@@ -94,7 +94,8 @@ function executeTests{
 }
 
 #appveyor test
-where msbuild
+$msbuildPath = $(cmd /c where msbuild)
+Write-Host $msbuildPath
 
 init
 
