@@ -33,7 +33,7 @@ namespace Loggly.Config
 
         bool ThrowExceptions { get; set; }
 
-        bool IsEnabled { get; }
+        bool IsEnabled { get; set; }
 
         bool IsValid { get;  }
         
