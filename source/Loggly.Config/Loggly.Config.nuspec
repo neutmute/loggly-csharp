@@ -12,20 +12,20 @@
     <tags>loggly</tags>
     <dependencies>
       <group targetFramework="net45" />
-      <group targetFramework=".NETStandard1.5">
+      <!--group targetFramework=".NETStandard1.5">
         <dependency id="System.Collections" version="4.0.11" />
         <dependency id="System.Diagnostics.Tools" version="4.0.1" />
         <dependency id="System.Linq" version="4.1.0" />
         <dependency id="System.Runtime.Extensions" version="4.1.0" />
         <dependency id="System.Text.RegularExpressions" version="4.1.0" />
         <dependency id="System.Threading.Tasks" version="4.0.11" />
-      </group>
+      </group-->
     </dependencies>
   </metadata>
   <files>
     <file src="bin\$configuration$\Loggly.Config.dll" target="lib\net45\" />
     <file src="bin\$configuration$\Loggly.Config.pdb" target="lib\net45\" />
-    <file src="..\NetStandard\Loggly.Config\bin\$configuration$\netstandard1.5\Loggly.Config.dll" target="lib\netstandard1.5" />
-    <file src="..\NetStandard\Loggly.Config\bin\$configuration$\netstandard1.5\Loggly.Config.pdb" target="lib\netstandard1.5" />
+    <!--file src="..\NetStandard\Loggly.Config\bin\$configuration$\netstandard1.5\Loggly.Config.dll" target="lib\netstandard1.5" />
+    <file src="..\NetStandard\Loggly.Config\bin\$configuration$\netstandard1.5\Loggly.Config.pdb" target="lib\netstandard1.5" /-->
   </files>
 </package>
