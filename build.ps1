@@ -88,14 +88,10 @@ function executeTests{
 
     checkExitCode
 
-    dotnet test .\Source\NetStandard\Loggly.Tests\Loggly.Tests.csproj -c $configuration --result=.\Source\NetStandard\Loggly.Tests\bin\$configuration\nunit-netstandard-results.xml
+    dotnet test .\Source\NetStandard\Loggly.Tests\Loggly.Tests.csproj -c $configuration
 
     checkExitCode
 }
-
-#appveyor test
-$msbuildPath = $(cmd /c where msbuild)
-Write-Host $msbuildPath
 
 init
 
