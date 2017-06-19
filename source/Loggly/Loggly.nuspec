@@ -16,7 +16,7 @@
                 <dependency id="loggly-csharp-config" version="$version$" />
                 <dependency id="Newtonsoft.Json" version="6.0.8" />
             </group>
-            <!--group targetFramework=".NETStandard1.5">
+            <group targetFramework=".NETStandard1.5">
                 <dependency id="System.Diagnostics.Process" version="4.1.0" />
                 <dependency id="System.Net.Http" version="4.1.0" />
                 <dependency id="System.Net.NameResolution" version="4.0.0" />
@@ -26,7 +26,7 @@
                 <dependency id="System.Diagnostics.Tracing" version="4.1.0" />
                 <dependency id="loggly-csharp-config" version="$version$" />
                 <dependency id="Newtonsoft.Json" version="9.0.1" />
-            </group-->
+            </group>
         </dependencies>
     </metadata>
     <files>

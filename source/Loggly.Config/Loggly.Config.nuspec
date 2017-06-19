@@ -12,14 +12,14 @@
     <tags>loggly</tags>
     <dependencies>
       <group targetFramework="net45" />
-      <!--group targetFramework=".NETStandard1.5">
+      <group targetFramework=".NETStandard1.5">
         <dependency id="System.Collections" version="4.0.11" />
         <dependency id="System.Diagnostics.Tools" version="4.0.1" />
         <dependency id="System.Linq" version="4.1.0" />
         <dependency id="System.Runtime.Extensions" version="4.1.0" />
         <dependency id="System.Text.RegularExpressions" version="4.1.0" />
         <dependency id="System.Threading.Tasks" version="4.0.11" />
-      </group-->
+      </group>
     </dependencies>
   </metadata>
   <files>
