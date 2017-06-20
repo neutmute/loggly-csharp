@@ -14,7 +14,9 @@ function init {
     $global:rootFolder = Join-Path $rootFolder .
     $global:packagesFolder = Join-Path $rootFolder packages
     $global:outputFolder = Join-Path $rootFolder _output
-    $global:msbuild = "C:\Program Files (x86)\MSBuild\14.0\Bin\MSBuild.exe"
+    $global:msbuild = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\MSBuild\15.0\Bin\MSBuild.exe"
+
+
     
     # Test for AppVeyor config
     if(!(Test-Path Env:\PackageVersion )){
