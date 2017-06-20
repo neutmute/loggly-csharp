@@ -40,6 +40,8 @@ function restorePackages{
     _DownloadNuget $packagesFolder
     nuget restore
     nuget install gitlink -SolutionDir "$rootFolder" -ExcludeVersion
+
+	dotnet restore
 }
 
 function nugetPack{
