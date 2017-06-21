@@ -25,7 +25,7 @@
   <files>
     <file src="bin\$configuration$\Loggly.Config.dll" target="lib\net45\" />
     <file src="bin\$configuration$\Loggly.Config.pdb" target="lib\net45\" />
-    <!--file src="..\NetStandard\Loggly.Config\bin\$configuration$\netstandard1.5\Loggly.Config.dll" target="lib\netstandard1.5" />
-    <file src="..\NetStandard\Loggly.Config\bin\$configuration$\netstandard1.5\Loggly.Config.pdb" target="lib\netstandard1.5" /-->
+    <file src="..\NetStandard\Loggly.Config\bin\$configuration$\netstandard1.5\Loggly.Config.dll" target="lib\netstandard1.5" />
+    <file src="..\NetStandard\Loggly.Config\bin\$configuration$\netstandard1.5\Loggly.Config.pdb" target="lib\netstandard1.5" />
   </files>
 </package>
