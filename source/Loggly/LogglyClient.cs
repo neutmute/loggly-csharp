@@ -13,6 +13,10 @@ namespace Loggly
     {
         private IMessageTransport _transport;
 
+        internal LogglyClient(IMessageTransport transport)
+        {
+            _transport = transport;
+        }
         public LogglyClient()
         {
             _transport = TransportFactory();
@@ -73,6 +77,7 @@ namespace Loggly
             {
                 NullValueHandling = NullValueHandling.Ignore,
                 TypeNameHandling = TypeNameHandling.None,
+                ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             });
         }
         

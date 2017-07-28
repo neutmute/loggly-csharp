@@ -32,7 +32,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
-	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>..\..\LogglyCsharp.snk</AssemblyOriginatorKeyFile>
@@ -95,6 +95,7 @@
     <Compile Include="Fixture.cs" />
     <Compile Include="Loggly.Config\ComplexTags\HostnameTagFixture.cs" />
     <Compile Include="Loggly.Config\TagConfigurationFixture.cs" />
+    <Compile Include="Loggly\Client\SerializationDataFixture.cs" />
     <Compile Include="Loggly\Events\MessageDataFixture.cs" />
     <Compile Include="Loggly\ExtensionMethods\DateTimeExtensionsFixture.cs" />
     <Compile Include="Loggly\LogglyMessageDataFixture.cs" />
