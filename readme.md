@@ -150,15 +150,15 @@ Contributions are welcome.
 ### v4.5.0.3
 * Bug fixes for syslog transports
 
-###v4.5 
+### v4.5 
 * Targets framework 4.5
 * Log method returns `Task<LogResponse>` for async/await compatibility
 
-###v3.5
+### v3.5
 * New maintainer [neutmute](https://github.com/neutmute)
 * Refactored API with new Config assembly
 * Syslog UDP and TCP support added
 
-###v2.0 and prior
+### v2.0 and prior
 * Maintained by [Karl Seguin](https://github.com/karlseguin) 
  
