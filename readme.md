@@ -1,4 +1,4 @@
-#![](https://raw.githubusercontent.com/neutmute/loggly-csharp/master/SolutionItems/loggly.png) .NET Client for Loggly  
+# ![](https://raw.githubusercontent.com/neutmute/loggly-csharp/master/SolutionItems/loggly.png) .NET Client for Loggly  
 
 [![Build status](https://ci.appveyor.com/api/projects/status/olaoata7qpl7fnk8?svg=true)](https://ci.appveyor.com/project/neutmute/loggly-csharp)
 ![Version](https://img.shields.io/nuget/v/loggly-csharp.svg)
