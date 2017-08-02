@@ -14,11 +14,15 @@
 	<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GenerateAssemblyTitleAttribute>false</GenerateAssemblyTitleAttribute>
     <GenerateAssemblyDescriptionAttribute>false</GenerateAssemblyDescriptionAttribute>
+    <GenerateAssemblyConfigurationAttribute>false</GenerateAssemblyConfigurationAttribute>
+    <GenerateAssemblyVersionAttribute>false</GenerateAssemblyVersionAttribute>
+    <GenerateAssemblyProductAttribute>false</GenerateAssemblyProductAttribute>
+    <GenerateAssemblyInformationalVersionAttribute>false</GenerateAssemblyInformationalVersionAttribute>
   </PropertyGroup>
 
   <ItemGroup>
     <Compile Remove="..\..\loggly.Config\ConfigurationSection*.*;..\..\loggly.Config\AppConfigPartials\*.cs" />
-    <Compile Include="..\..\loggly.Config\**\*.cs" Exclude="..\..\loggly.Config\ConfigurationSection*.*;..\..\loggly.Config\AppConfigPartials\*.cs;bin\**;obj\**;**\*.xproj;packages\**" />
+    <Compile Include="..\..\loggly.Config\**\*.cs;..\..\..\SolutionItems\Properties\AssemblyInfo.cs" Exclude="..\..\loggly.Config\ConfigurationSection*.*;..\..\loggly.Config\AppConfigPartials\*.cs;bin\**;obj\**;**\*.xproj;packages\**" />
   </ItemGroup>
 
   <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
