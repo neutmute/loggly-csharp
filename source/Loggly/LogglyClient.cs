@@ -50,14 +50,7 @@ namespace Loggly
 						}
                     }
                     
-                    response = await _transport.Send(events.Select(x => new LogglyMessage
-                    {
-                        Timestamp = x.Timestamp,
-                        Syslog = x.Syslog,
-                        Type = MessageType.Json,
-                        Content = ToJson(x.Data),
-                        CustomTags = x.Options.Tags
-                    })).ConfigureAwait(false);
+                    response = await _transport.Send(events.Select(BuildMessage)).ConfigureAwait(false);
                 }
                 else
                 {
@@ -69,6 +62,18 @@ namespace Loggly
                 LogglyException.Throw(e);
             }
             return response;
+        }
+
+        protected virtual LogglyMessage BuildMessage(LogglyEvent logglyEvent)
+        {
+            return new LogglyMessage
+                   {
+                       Timestamp = logglyEvent.Timestamp,
+                       Syslog = logglyEvent.Syslog,
+                       Type = MessageType.Json,
+                       Content = ToJson(logglyEvent.Data),
+                       CustomTags = logglyEvent.Options.Tags
+                   };
         }
 
         private static string ToJson(object value)
