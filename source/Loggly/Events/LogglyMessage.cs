@@ -7,12 +7,12 @@ using Loggly.Transports.Syslog;
 
 namespace Loggly
 {
-    internal enum MessageType
+    public enum MessageType
     {
         Plain,
         Json
     }
-    internal class LogglyMessage
+    public class LogglyMessage
     {
         public DateTimeOffset Timestamp { get; set; }
         public SyslogHeader Syslog { get; set; }
@@ -33,7 +33,7 @@ namespace Loggly
         }
     }
 
-    internal enum HttpRequestType
+    public enum HttpRequestType
     {
         Get
         ,Post
