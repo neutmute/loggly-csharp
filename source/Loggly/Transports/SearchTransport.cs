@@ -47,7 +47,7 @@ namespace Loggly
         public FieldResponse Search(FieldQuery query)
         {
             var parameters = query.ToParameters();
-            return Search<FieldResponse>("apiv2/fields", parameters);
+            return Search<FieldResponse>($"apiv2/fields/{query.FieldName}/", parameters);
         }
 
         private T Search<T>(string endPoint, IDictionary<string, object> parameters)
