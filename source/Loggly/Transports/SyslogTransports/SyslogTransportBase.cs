@@ -12,7 +12,7 @@ namespace Loggly.Transports.Syslog
             foreach (var message in messages)
             {
                 var sysLog = ConstructSyslog(message);
-                await Send(sysLog);
+                await Send(sysLog).ConfigureAwait(false);
 
                 var response = new LogResponse
                 {
