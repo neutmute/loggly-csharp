@@ -58,7 +58,7 @@ namespace Loggly.Example
             var logEvent = new LogglyEvent();
             logEvent.Data.Add("message", "Log event sent with forced transport={0}", transport);
             logEvent.Options.Tags.Add("secondCustomTag");
-            await _loggly.Log(logEvent);
+            await _loggly.Log(logEvent).ConfigureAwait(false);
 
             LogglyConfig.Instance.Transport = priorTransport;
         }
