@@ -168,7 +168,7 @@ namespace Loggly
             {
                 return null;
             }
-            return await response.Content.ReadAsStringAsync();
+            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
         }
     }
 }
