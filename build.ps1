@@ -73,7 +73,7 @@ function buildSolution{
     _WriteOut -ForegroundColor $ColorScheme.Banner "Build Solution"
     & $msbuild "$rootFolder\$solutionName.sln" /p:Configuration=$configuration
 
-    &"$rootFolder\packages\gitlink\lib\net45\GitLink.exe" $rootFolder -u $sourceUrl
+    &"$rootFolder\packages\gitlink\build\GitLink.exe" $rootFolder -u $sourceUrl
 }
 
 function executeTests{
