@@ -30,25 +30,25 @@ namespace Loggly
         public async Task<SearchResponse> Search(SearchQuery query)
         {
             var parameters = query.ToParameters();
-            return await Search<SearchResponse>("apiv2/search", parameters);
+            return await Search<SearchResponse>("apiv2/search", parameters).ConfigureAwait(false);
         }
 
         public async Task<SearchResponse<T>> Search<T>(SearchQuery query)
         {
             var parameters = query.ToParameters();
-            return await Search<SearchResponse<T>>("apiv2/search", parameters);
+            return await Search<SearchResponse<T>>("apiv2/search", parameters).ConfigureAwait(false);
         }
 
         public async Task<EntryJsonResponseBase> Search(EventQuery query)
         {
             var parameters = query.ToParameters();
-            return await Search<EntryJsonResponse>("apiv2/events", parameters);
+            return await Search<EntryJsonResponse>("apiv2/events", parameters).ConfigureAwait(false);
         }
 
         public async Task<FieldResponse> Search(FieldQuery query)
         {
             var parameters = query.ToParameters();
-            return await Search<FieldResponse>($"apiv2/fields/{query.FieldName}/", parameters);
+            return await Search<FieldResponse>($"apiv2/fields/{query.FieldName}/", parameters).ConfigureAwait(false);
         }
 
         private async Task<T> Search<T>(string endPoint, IDictionary<string, object> parameters)
