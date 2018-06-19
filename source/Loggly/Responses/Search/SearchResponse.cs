@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 
 namespace Loggly.Responses
@@ -12,7 +13,7 @@ namespace Loggly.Responses
         {
             int page = 0;
             int returnedEntryCount = 0;
-            var entryResonse = this.FirstEntryResponse ?? GetEntryJsonResponse(page);
+            var entryResonse = this.FirstEntryResponse ?? GetEntryJsonResponse(page).Result;
 
             while (true)
             {
@@ -26,7 +27,7 @@ namespace Loggly.Responses
                     yield break;
 
                 page++;
-                entryResonse = GetEntryJsonResponse(page);
+                entryResonse = GetEntryJsonResponse(page).Result;
             }
 
         }
@@ -36,10 +37,10 @@ namespace Loggly.Responses
             return GetEnumerator();
         }
 
-        protected override EntryJsonResponseBase GetEntryJsonResponse(int page)
+        protected override async Task<EntryJsonResponseBase> GetEntryJsonResponse(int page)
         {
             var eventQuery = new EventQuery {Rsid = this.Rsid.Id, Page = page};
-            var entryResonse = this.Transport.Search(eventQuery);
+            var entryResonse = await this.Transport.Search(eventQuery).ConfigureAwait(false);
             return entryResonse;
         }
     }

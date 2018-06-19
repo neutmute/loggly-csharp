@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
+using System.Threading.Tasks;
 using Loggly.Config;
 using Loggly.Responses;
 using Newtonsoft.Json;
@@ -26,41 +27,41 @@ namespace Loggly
                         Encoding.ASCII.GetBytes(
                         string.Format("{0}:{1}", config.Username, config.Password))));
         }
-        public SearchResponse Search(SearchQuery query)
+        public async Task<SearchResponse> Search(SearchQuery query)
         {
             var parameters = query.ToParameters();
-            return Search<SearchResponse>("apiv2/search", parameters);
+            return await Search<SearchResponse>("apiv2/search", parameters);
         }
 
-        public SearchResponse<T> Search<T>(SearchQuery query)
+        public async Task<SearchResponse<T>> Search<T>(SearchQuery query)
         {
             var parameters = query.ToParameters();
-            return Search<SearchResponse<T>>("apiv2/search", parameters);
+            return await Search<SearchResponse<T>>("apiv2/search", parameters);
         }
 
-        public EntryJsonResponseBase Search(EventQuery query)
+        public async Task<EntryJsonResponseBase> Search(EventQuery query)
         {
             var parameters = query.ToParameters();
-            return Search<EntryJsonResponse>("apiv2/events", parameters);
+            return await Search<EntryJsonResponse>("apiv2/events", parameters);
         }
 
-        public FieldResponse Search(FieldQuery query)
+        public async Task<FieldResponse> Search(FieldQuery query)
         {
             var parameters = query.ToParameters();
-            return Search<FieldResponse>($"apiv2/fields/{query.FieldName}/", parameters);
+            return await Search<FieldResponse>($"apiv2/fields/{query.FieldName}/", parameters);
         }
 
-        private T Search<T>(string endPoint, IDictionary<string, object> parameters)
+        private async Task<T> Search<T>(string endPoint, IDictionary<string, object> parameters)
             where T : class
         {
             try
             {
                 var searchPathAndQuery = GetUrl(endPoint, parameters);
                 
-                using (var response = _httpClient.GetAsync(searchPathAndQuery).Result)
+                using (var response = await _httpClient.GetAsync(searchPathAndQuery).ConfigureAwait(false))
                 {
                     var isFieldResponseResultExpected = typeof(T) == typeof(FieldResponse);
-                    var responseBody = response.Content.ReadAsStringAsync().Result;
+                    var responseBody = await response.Content.ReadAsStringAsync().ConfigureAwait(false);
                     if (response.IsSuccessStatusCode)
                     {
                         T responseObject = isFieldResponseResultExpected
