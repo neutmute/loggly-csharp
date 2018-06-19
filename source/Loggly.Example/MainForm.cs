@@ -62,7 +62,7 @@ namespace Loggly.Example
             query.Until = DateTime.Now;
             query.Size = 2;
 
-            _searchResponse = searchClient.Search(query);
+            _searchResponse = searchClient.Search(query).Result;
             txtSearchResult.Text = _searchResponse.ToString();
         }
 

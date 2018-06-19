@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Threading.Tasks;
 using Loggly.Config;
 using Loggly.Responses;
 
@@ -20,47 +21,47 @@ namespace Loggly
         }
 
 
-        public SearchResponse Search(string query)
+        public Task<SearchResponse> Search(string query)
         {
             return Search(new SearchQuery { Query = query });
         }
 
-        public SearchResponse Search(string query, DateTime start, DateTime until)
+        public Task<SearchResponse> Search(string query, DateTime start, DateTime until)
         {
             return Search(new SearchQuery { Query = query, From = start, Until = until });
         }
 
-        public SearchResponse Search(string query, DateTime start, DateTime until, int size)
+        public Task<SearchResponse> Search(string query, DateTime start, DateTime until, int size)
         {
             return Search(new SearchQuery { Query = query, From = start, Until = until, Size = size});
         }
 
-        public SearchResponse Search(SearchQuery query)
+        public Task<SearchResponse> Search(SearchQuery query)
         {
             return _transport.Search(query);
         }
 
-        public SearchResponse<TMessage> Search<TMessage>(string query)
+        public Task<SearchResponse<TMessage>> Search<TMessage>(string query)
         {
             return Search<TMessage>(new SearchQuery { Query = query });
         }
 
-        public SearchResponse<TMessage> Search<TMessage>(string query, DateTime start, DateTime until)
+        public Task<SearchResponse<TMessage>> Search<TMessage>(string query, DateTime start, DateTime until)
         {
             return Search<TMessage>(new SearchQuery { Query = query, From = start, Until = until });
         }
 
-        public SearchResponse<TMessage> Search<TMessage>(string query, DateTime start, DateTime until, int size)
+        public Task<SearchResponse<TMessage>> Search<TMessage>(string query, DateTime start, DateTime until, int size)
         {
             return Search<TMessage>(new SearchQuery { Query = query, From = start, Until = until, Size = size });
         }
 
-        public SearchResponse<TMessage> Search<TMessage>(SearchQuery query)
+        public Task<SearchResponse<TMessage>> Search<TMessage>(SearchQuery query)
         {
             return _transport.Search<TMessage>(query);
         }
 
-        public FieldResponse Field(FieldQuery query)
+        public Task<FieldResponse> Field(FieldQuery query)
         {
             return _transport.Search(query);
         }
