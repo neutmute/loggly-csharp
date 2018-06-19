@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Loggly.Responses;
 
 namespace Loggly
 {
    public interface ISearchClient
    {
-       SearchResponse Search(string query);
-       SearchResponse Search(string query, DateTime start, DateTime until);
-       SearchResponse Search(string query, DateTime start, DateTime until, int size);
-       SearchResponse Search(SearchQuery query);
-       SearchResponse<TMessage> Search<TMessage>(string query);
-       SearchResponse<TMessage> Search<TMessage>(string query, DateTime start, DateTime until);
-       SearchResponse<TMessage> Search<TMessage>(string query, DateTime start, DateTime until, int size);
-       SearchResponse<TMessage> Search<TMessage>(SearchQuery query);
-       FieldResponse Field(FieldQuery query);
+       Task<SearchResponse> Search(string query);
+       Task<SearchResponse> Search(string query, DateTime start, DateTime until);
+       Task<SearchResponse> Search(string query, DateTime start, DateTime until, int size);
+       Task<SearchResponse> Search(SearchQuery query);
+       Task<SearchResponse<TMessage>> Search<TMessage>(string query);
+       Task<SearchResponse<TMessage>> Search<TMessage>(string query, DateTime start, DateTime until);
+       Task<SearchResponse<TMessage>> Search<TMessage>(string query, DateTime start, DateTime until, int size);
+       Task<SearchResponse<TMessage>> Search<TMessage>(SearchQuery query);
+       Task<FieldResponse> Field(FieldQuery query);
    }
 }

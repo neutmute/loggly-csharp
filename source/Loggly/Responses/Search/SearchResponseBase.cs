@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace Loggly.Responses
 {
@@ -19,14 +20,14 @@ namespace Loggly.Responses
             {
                 if (this.FirstEntryResponse == null)
                 {
-                    this.FirstEntryResponse = GetEntryJsonResponse(0);
+                    this.FirstEntryResponse = GetEntryJsonResponse(0).Result;
                 }
 
                 return this.FirstEntryResponse.TotalEvents;
             }
         }
 
-        protected abstract EntryJsonResponseBase GetEntryJsonResponse(int page);
+        protected abstract Task<EntryJsonResponseBase> GetEntryJsonResponse(int page);
 
         public override string ToString()
         {
