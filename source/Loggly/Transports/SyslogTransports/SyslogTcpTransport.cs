@@ -47,6 +47,21 @@ namespace Loggly.Transports.Syslog
             {
                 LogglyException.Throw(e, e.Message);
             }
+            catch (IOException ioException)
+            {
+#if NET_STANDARD
+                _tcpClient?.Dispose();
+#else
+                _tcpClient?.Close();
+#endif
+                _networkStream = null;
+                LogglyException.Throw(ioException, ioException.Message);
+            }
+            catch (ObjectDisposedException disposedException)
+            {
+                _networkStream = null;
+                LogglyException.Throw(disposedException, disposedException.Message);
+            }
             finally
             {
                 _semaphore.Release();
