@@ -86,6 +86,21 @@ param([Parameter(Mandatory=$true,Position=0)]$rootPath)
 	Set-Alias nuget $targetNugetExe -Scope Global
 }
 
+function Set-MsBuildAlias()
+{
+    $path = &"$PSScriptRoot\packages\vswhere.2.5.2\tools\vswhere.exe" -latest -products * -requires Microsoft.Component.MSBuild -property installationPath
+    if ($path) {
+      $path = join-path $path 'MSBuild\15.0\Bin\MSBuild.exe'
+      if (test-path $path) {
+        Set-Alias msbuild $path -Scope Global
+        Write-Host "MSBuild found at '$path'"
+      }
+      else{
+        Write-Error "MSBuild not found"
+      }
+    }
+}
+
 function checkExitCode{
     if ($lastExitCode -ne 0)
     {

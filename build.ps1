@@ -14,9 +14,6 @@ function init {
     $global:rootFolder = Join-Path $rootFolder .
     $global:packagesFolder = Join-Path $rootFolder packages
     $global:outputFolder = Join-Path $rootFolder _output
-    $global:msbuild = "C:\Program Files (x86)\Microsoft Visual Studio\2017\Community\MSBuild\15.0\Bin\MSBuild.exe"
-
-
     
     # Test for AppVeyor config
     if(!(Test-Path Env:\PackageVersion )){
@@ -31,6 +28,7 @@ function init {
     _WriteOut -ForegroundColor $ColorScheme.Banner "-= $solutionName Build =-"
     _WriteConfig "rootFolder" $rootFolder
     _WriteConfig "version" $env:PackageVersion
+
 }
 
 function restorePackages{
@@ -70,10 +68,12 @@ function nugetPublish{
 
 function buildSolution{
 
-    _WriteOut -ForegroundColor $ColorScheme.Banner "Build Solution"
-    & $msbuild "$rootFolder\$solutionName.sln" /p:Configuration=$configuration
+    Set-MsBuildAlias
 
-    &"$rootFolder\packages\gitlink\build\GitLink.exe" $rootFolder -u $sourceUrl
+    _WriteOut -ForegroundColor $ColorScheme.Banner "Build Solution"
+    msbuild "$rootFolder\$solutionName.sln" /p:Configuration=$configuration
+
+    #&"$rootFolder\packages\gitlink\build\GitLink.exe" $rootFolder -u $sourceUrl
 }
 
 function executeTests{
