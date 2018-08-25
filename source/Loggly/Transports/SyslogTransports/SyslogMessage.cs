@@ -89,7 +89,7 @@ namespace Loggly.Transports.Syslog
             int priority = (((int) Facility)*8) + ((int) Level);
 
             var msg = String.Format(
-                "<{0}>1 {1} {2} {3} {4} {5} {6}"
+                "<{0}>1 {1} {2} {3} {4} {5} {6}\n"
                 , priority
                 , Timestamp.ToSyslog()
                 , EnvironmentProvider.MachineName
