@@ -9,14 +9,14 @@ namespace Loggly.Config
 {
     public static class TagExtensions
     {
-        public static string[] ToLegalStrings(this List<ITag> tags)
+        private static readonly Regex IllegalCharRegex = new Regex(@"[^A-z0-9\.\-_]|\^", RegexOptions.None);
+
+        public static IEnumerable<string> ToLegalStrings(this List<ITag> tags)
         {
-            var renderedTags = new List<string>();
-            tags.ForEach(st => renderedTags.Add(st.Value));
-
-            CoerceLegalTags(renderedTags);
-
-            return renderedTags.ToArray();
+            foreach (var tag in tags)
+            {
+                yield return CoerceLegalTag(tag.Value);
+            }
         }
 
         public static void Add(this List<ITag> tags, string value)
@@ -27,21 +27,22 @@ namespace Loggly.Config
         /// <summary>
         /// https://www.loggly.com/docs/tags/
         /// </summary>
-        internal static void CoerceLegalTags(List<string> tags)
+        internal static string CoerceLegalTag(string tagValue)
         {
-            const string illegalCharRegex = @"[^A-z0-9\.\-_]";
-            var regex = new Regex(illegalCharRegex, RegexOptions.None);
+            tagValue = IllegalCharRegex.Replace(tagValue, "_");
 
-            for (int i = 0; i < tags.Count; i++)
+            // needs to be an alpha numeric prefix
+            if (tagValue.StartsWith(".") || tagValue.StartsWith("-") || tagValue.StartsWith("_"))
             {
-                tags[i] = regex.Replace(tags[i], "_");
-
-                // needs to be an alpha numeric prefix
-                if (tags[i].StartsWith(".") || tags[i].StartsWith("-") || tags[i].StartsWith("_"))
-                {
-                    tags[i] = "z" + tags[i];
-                }
+                tagValue = "z" + tagValue;
             }
+
+            if (tagValue.Length > 64)
+            {
+                tagValue = tagValue.Substring(0, 64);
+            }
+
+            return tagValue;
         }
     }
 }
