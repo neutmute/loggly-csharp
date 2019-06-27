@@ -9,17 +9,22 @@ namespace Loggly
         /// <summary>
         /// Metadata to populate into the syslog header
         /// </summary>
-        public SyslogHeader Syslog {get;set;}
+        public SyslogHeader Syslog { get; set; }
 
         public IMessageData Data { get; set; }
 
         public EventOptions Options { get; set; }
 
         public LogglyEvent()
+            : this(new MessageData())
+        {
+        }
+
+        public LogglyEvent(MessageData data)
         {
             Options = new EventOptions();
             Syslog = new SyslogHeader();
-            Data = new MessageData();
+            Data = data;
 
             Timestamp = DateTimeOffset.Now;
         }
