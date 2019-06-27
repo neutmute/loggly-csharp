@@ -1,14 +1,127 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 
 namespace Loggly.Tests.Loggly.Events
 {
     public class MessageDataFixture : Fixture
     {
+        [Test]
+        public void CtorWithOutOfRangeCapacityThrowsException()
+        {
+            Assert.Throws<ArgumentOutOfRangeException>(() => new MessageData(-1));
+        }
+
+        [Test]
+        public void AddFromNullObjectKeyedDictionaryThrowsException()
+        {
+            var messageData = new MessageData();
+
+            Assert.Throws<ArgumentNullException>(() => messageData.AddFromDictionary((IDictionary<object, object>)null));
+        }
+
+        [Test]
+        public void AddFromNullStringKeyedDictionaryThrowsException()
+        {
+            var messageData = new MessageData();
+
+            Assert.Throws<ArgumentNullException>(() => messageData.AddFromDictionary((IDictionary<string, object>)null));
+        }
+
+        [Test]
+        public void AddDuplicateKeysFromObjectKeyedDictionaryThrowsException()
+        {
+            var messageData = new MessageData();
+            var source1 = new Dictionary<object, object>
+            {
+                {"key1", "value"},
+                {"key2", "value"}
+            };
+            messageData.AddFromDictionary(source1);
+            var source2 = new Dictionary<object, object>
+            {
+                {"key1", "value"}
+            };
+
+            Assert.Throws<ArgumentException>(() => messageData.AddFromDictionary(source2));
+        }
+
+        [Test]
+        public void AddDuplicateKeysFromStringKeyedDictionaryThrowsException()
+        {
+            var messageData = new MessageData();
+            var source1 = new Dictionary<string, object>
+            {
+                {"key1", "value"},
+                {"key2", "value"}
+            };
+            messageData.AddFromDictionary(source1);
+            var source2 = new Dictionary<string, object>
+            {
+                {"key1", "value"}
+            };
+
+            Assert.Throws<ArgumentException>(() => messageData.AddFromDictionary(source2));
+        }
+
+        [Test]
+        public void AddFromStringKeyedDictionaryAddsPairs()
+        {
+            var messageData = new MessageData();
+            var source = new Dictionary<string, object>
+            {
+                {"key1", "value"},
+                {"key2", "value"}
+            };
+
+            messageData.AddFromDictionary(source);
+
+            Assert.That(messageData, Is.EquivalentTo(source));
+        }
+
+        [Test]
+        public void AddFromObjectKeyedDictionaryAddsPairs()
+        {
+            var messageData = new MessageData();
+            var source = new Dictionary<object, object>
+            {
+                {"key1", "value"},
+                {"key2", "value"}
+            };
+
+            messageData.AddFromDictionary(source);
+
+            Assert.That(messageData, Is.EquivalentTo(source));
+        }
+
+        [Test]
+        public void InitialiseFromStringKeyedDictionaryAddsPairs()
+        {
+            var source = new Dictionary<string, object>
+            {
+                {"key1", "value"},
+                {"key2", "value"}
+            };
+
+            var messageData = MessageData.FromDictionary(source);
+
+            Assert.That(messageData, Is.EquivalentTo(source));
+        }
+
+        [Test]
+        public void InitialiseFromObjectKeyedDictionaryAddsPairs()
+        {
+            var source = new Dictionary<object, object>
+            {
+                {"key1", "value"},
+                {"key2", "value"}
+            };
+
+            var messageData = MessageData.FromDictionary(source);
+
+            Assert.That(messageData, Is.EquivalentTo(source));
+        }
+        
         /// <summary>
         /// Fix for this exception..
         /// 
