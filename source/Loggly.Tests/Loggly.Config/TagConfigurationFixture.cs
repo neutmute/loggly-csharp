@@ -26,10 +26,10 @@ namespace Loggly.Tests.Loggly.Config
 
             var output = tags.ToLegalStrings();
 
-            Assert.AreEqual("legalTag", output[0]);
-            Assert.AreEqual("z_my_little.pony", output[1]);
-            Assert.AreEqual("z-us", output[2]);
-            Assert.AreEqual("apache_", output[3]);
+            Assert.AreEqual("legalTag", output.ElementAt(0));
+            Assert.AreEqual("z_my_little.pony", output.ElementAt(1));
+            Assert.AreEqual("z-us", output.ElementAt(2));
+            Assert.AreEqual("apache_", output.ElementAt(3));
 
         }
     }

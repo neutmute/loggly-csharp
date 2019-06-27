@@ -65,7 +65,7 @@ namespace Loggly.Transports.Syslog
             {
                 sb.AppendFormat("tag=\"{0}\" ", tag);
             }
-            if (tags.Length > 0)
+            if (tags.Count > 0)
             {
                 sb.Remove(sb.Length - 1, 1);
             }

@@ -125,19 +125,20 @@ namespace Loggly
                 LogglyException.Throw("Cannot have mixed Plain and Json messages");
             }
 
-            var builder = new StringBuilder();
-            bool isFirst = true;
-            foreach (var m in messages)
+            string messageContent;
+            if (messages.Count == 1)
             {
-                if (isFirst)
-                {
-                    isFirst = false;
-                }
-                else
+                messageContent = messages[0].Content;
+            }
+            else
+            {
+                var builder = new StringBuilder(messages[0].Content);
+                for (var i = 1; i < messages.Count; i++)
                 {
                     builder.Append('\n');
+                    builder.Append(messages[i].Content);
                 }
-                builder.Append(m.Content);
+                messageContent = builder.ToString();
             }
 
             StringContent postData = null;
@@ -145,10 +146,10 @@ namespace Loggly
             switch (type)
             {
                 case MessageType.Plain:
-                    postData = new StringContent(builder.ToString(), Encoding.UTF8, "text/plain");
+                    postData = new StringContent(messageContent, Encoding.UTF8, "text/plain");
                     break;
                 case MessageType.Json:
-                    postData = new StringContent(builder.ToString(), Encoding.UTF8, "application/json");
+                    postData = new StringContent(messageContent, Encoding.UTF8, "application/json");
                     break;
             }
 

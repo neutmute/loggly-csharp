@@ -13,13 +13,12 @@ namespace Loggly.Transports
         /// <summary>
         /// Combines custom with global tags and makes sure they are loggly legal
         /// </summary>
-        public string[] GetLegalTagUnion(List<ITag> customTags)
+        public ICollection<string> GetLegalTagUnion(List<ITag> customTags)
         {
-            var tagList = new List<ITag>();
-            tagList.AddRange(LogglyConfig.Instance.TagConfig.Tags);
-            tagList.AddRange(customTags);
-
-            return tagList.ToLegalStrings();
+            var tagList = new List<string>(LogglyConfig.Instance.TagConfig.Tags.Count + customTags.Count);
+            tagList.AddRange(LogglyConfig.Instance.TagConfig.Tags.ToLegalStrings());
+            tagList.AddRange(customTags.ToLegalStrings());
+            return tagList;
         }
     }
 }
