@@ -25,16 +25,14 @@ namespace Loggly
         #endregion
 
         #region Static Methods
-        public static void Throw(string format, params object[] args)
+        public static void Throw(string message)
         {
-            string message = string.Format(format, args);
             var exception = new LogglyException(message);
             Throw(exception);
         }
 
-        public static void Throw(Exception innerException, string format, params object[] args)
+        public static void Throw(Exception innerException, string message)
         {
-            string message = string.Format(format, args);
             var exception = new LogglyException(message, innerException);
             Throw(exception);
         }
