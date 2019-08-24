@@ -4,7 +4,7 @@
     <Description>A .NET client for loggly. Supporting Https, Syslog UDP and encrypted Syslog TCP transports.</Description>
     <AssemblyTitle>loggly-csharp</AssemblyTitle>
     <VersionPrefix>4.6.0</VersionPrefix>
-    <TargetFramework>netstandard1.5</TargetFramework>
+    <TargetFrameworks>netstandard1.5;netstandard2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);NET_STANDARD</DefineConstants>
     <AssemblyName>Loggly</AssemblyName>
     <AssemblyOriginatorKeyFile>../../../LogglyCsharp.snk</AssemblyOriginatorKeyFile>
