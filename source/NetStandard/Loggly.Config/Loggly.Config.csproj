@@ -4,7 +4,7 @@
     <Description>Configuration classes for loggly clients. Settings are read from app.config or can be programmatically injected at runtime. See readme.md for documentation</Description>
     <AssemblyTitle>loggly-csharp-config</AssemblyTitle>
     <VersionPrefix>4.6.0</VersionPrefix>
-    <TargetFramework>netstandard1.5</TargetFramework>
+    <TargetFrameworks>netstandard1.5;netstandard2.0</TargetFrameworks>
     <DefineConstants>$(DefineConstants);NET_STANDARD</DefineConstants>
     <AssemblyName>Loggly.Config</AssemblyName>
     <AssemblyOriginatorKeyFile>../../../LogglyCsharp.snk</AssemblyOriginatorKeyFile>

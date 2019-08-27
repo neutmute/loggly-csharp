@@ -20,6 +20,7 @@
         <dependency id="System.Text.RegularExpressions" version="4.1.0" />
         <dependency id="System.Threading.Tasks" version="4.0.11" />
       </group>
+      <group targetFramework=".NETStandard2.0" />
     </dependencies>
   </metadata>
   <files>
@@ -27,5 +28,7 @@
     <file src="bin\$configuration$\Loggly.Config.pdb" target="lib\net45\" />
     <file src="..\NetStandard\Loggly.Config\bin\$configuration$\netstandard1.5\Loggly.Config.dll" target="lib\netstandard1.5" />
     <file src="..\NetStandard\Loggly.Config\bin\$configuration$\netstandard1.5\Loggly.Config.pdb" target="lib\netstandard1.5" />
+    <file src="..\NetStandard\Loggly.Config\bin\$configuration$\netstandard2.0\Loggly.Config.dll" target="lib\netstandard2.0" />
+    <file src="..\NetStandard\Loggly.Config\bin\$configuration$\netstandard2.0\Loggly.Config.pdb" target="lib\netstandard2.0" />
   </files>
 </package>
