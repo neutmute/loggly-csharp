@@ -920,7 +920,33 @@ namespace Loggly.Config
 				base[global::Loggly.Config.TransportAppConfig.IsOmitTimestampPropertyName] = value;
 			}
 		}
-		#endregion
+        #endregion
+
+        #region ForwardedForIp Property
+        /// <summary>
+        /// The XML name of the <see cref="ForwardedForIp"/> property.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        internal const string ForwardedForIpPropertyName = "forwardedForIp";
+
+        /// <summary>
+        /// Gets or sets the ForwardedForIp.
+        /// </summary>
+        [global::System.CodeDom.Compiler.GeneratedCodeAttribute("ConfigurationSectionDesigner.CsdFileGenerator", "2.0.1.7")]
+        [global::System.ComponentModel.DescriptionAttribute("The ForwardedForIp.")]
+        [global::System.Configuration.ConfigurationPropertyAttribute(global::Loggly.Config.TransportAppConfig.ForwardedForIpPropertyName, IsRequired = false, IsKey = false, IsDefaultCollection = false)]
+        public virtual string ForwardedForIp
+        {
+            get
+            {
+                return ((string)(base[global::Loggly.Config.TransportAppConfig.ForwardedForIpPropertyName]));
+            }
+            set
+            {
+                base[global::Loggly.Config.TransportAppConfig.ForwardedForIpPropertyName] = value;
+            }
+        }
+        #endregion
     }
 }
 namespace Loggly.Config

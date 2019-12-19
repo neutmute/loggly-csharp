@@ -30,6 +30,11 @@ namespace Loggly
             HttpClient = new HttpClient(messageHandler);
             HttpClient.DefaultRequestHeaders.UserAgent.ParseAdd(_userAgent);
             HttpClient.DefaultRequestHeaders.Add("Connection", "close");
+
+            if (!string.IsNullOrWhiteSpace(LogglyConfig.Instance.Transport.ForwardedForIp))
+            {
+                HttpClient.DefaultRequestHeaders.Add("X-Forwarded-For", LogglyConfig.Instance.Transport.ForwardedForIp);
+            }
         }
 
         public HttpMessageTransport() : this(new HttpClientHandler())

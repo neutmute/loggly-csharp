@@ -93,6 +93,9 @@ Uses Syslog over TCP but is not encrypted. Note this needs to be on port 514 for
 #### logTransport="SyslogSecure"
 Transmits using syslog messages via a secure TLS TCP channel so that your logs are encrypted over the wire. Syslog supports JSON formatted messages just like Https. Port 6514 is required for loggly and will be the default if not specified.
 
+#### ForwardedForIp
+When using remote logging from a desktop application, Loggly will record the IP of the machine transmitting logs (HTTP). This may represent PII (Personally Identifiable Information) and may not be desired. In order to override the value Loggly records, you may add the `ForwardedForIp` property to the Transport object's configuration with a dummy value (such as `0.0.0.0`). All messages sent to Loggly with record this Ip in the indexed clientHost property. The property allows for any string, but only a valid IP value will replace the indexed value at Loggly.
+
 #### tags 
 `simple` tags are string literals added to the app.config. What you see is what you get.
 
