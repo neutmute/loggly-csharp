@@ -134,6 +134,11 @@
             <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/Boolean" />
           </type>
         </attributeProperty>
+        <attributeProperty name="ForwardedForIp" isRequired="false" isKey="false" isDefaultCollection="false" xmlName="forwardedForIp" isReadOnly="false">
+          <type>
+            <externalTypeMoniker name="/d0ed9acb-0435-4532-afdd-b5115bc4d562/String" />
+          </type>
+        </attributeProperty>
       </attributeProperties>
     </configurationElement>
     <configurationElement name="SearchAppConfig" accessModifier="Internal">

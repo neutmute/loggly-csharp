@@ -109,4 +109,57 @@ namespace Loggly.Tests.Loggly.Transports.HttpTransports
             Assert.AreEqual(ResponseCode.Error, response.Code);
         }
     }
+
+    [TestFixture]
+    public class HttpMessageTransportHeaderSetupFixture
+    {
+        private HttpMessageTransport _transport;
+        private string _ipHeader;
+        private Mock<FakeHttpMessageHandler> _handler;
+
+        [SetUp]
+        public void Setup()
+        {
+            LogglyConfig.Instance.TagConfig.Tags.Clear();
+            LogglyConfig.Instance.TagConfig.Tags.Add(new SimpleTag {Value = "myTag"});
+            LogglyConfig.Instance.CustomerToken = "MyLogglyToken";
+            LogglyConfig.Instance.Transport.EndpointHostname = "test";
+            LogglyConfig.Instance.Transport.EndpointPort = 443;
+
+            _handler = new Mock<FakeHttpMessageHandler> { CallBase = true };
+
+            _handler.Setup(x => x.Send(It.IsAny<HttpRequestMessage>()))
+                .Callback(async (HttpRequestMessage x) =>
+                    {
+                        _ipHeader = x.Headers.GetValues("X-Forwarded-For").FirstOrDefault();
+                    }
+                )
+                .Returns((HttpRequestMessage request) =>
+                    {
+                        return new HttpResponseMessage
+                        {
+                            StatusCode = HttpStatusCode.OK,
+                            Content = new StringContent("{\"response\" : \"ok\"}", Encoding.UTF8, "application/json")
+                        };
+                    }
+                );
+        }
+
+        [Test]
+        [TestCase(null, null)]
+        [TestCase("", null)]
+        [TestCase(" ", null)]
+        [TestCase("0.0.0.0", "0.0.0.0")]
+        public async Task ForwardedForIpIsAddedCorrectly(string ipValueToForward, string expectedIpInHeader)
+        {
+            //set this before creating the transport
+            LogglyConfig.Instance.Transport.ForwardedForIp = ipValueToForward;
+            _transport = new HttpMessageTransport(_handler.Object);
+
+            var message = new LogglyMessage {Content = "Test1"};
+            await _transport.Send(new[] {message});
+
+            Assert.AreEqual(expectedIpInHeader, _ipHeader);
+        }
+    }
 }
