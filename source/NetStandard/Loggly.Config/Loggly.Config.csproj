@@ -25,13 +25,4 @@
     <Compile Include="..\..\loggly.Config\**\*.cs;..\..\..\SolutionItems\Properties\AssemblyInfo.cs" Exclude="..\..\loggly.Config\ConfigurationSection*.*;..\..\loggly.Config\AppConfigPartials\*.cs;bin\**;obj\**;**\*.xproj;packages\**" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard1.5' ">
-    <PackageReference Include="System.Collections" Version="4.3.0" />
-    <PackageReference Include="System.Diagnostics.Tools" Version="4.3.0" />
-    <PackageReference Include="System.Linq" Version="4.3.0" />
-    <PackageReference Include="System.Runtime.Extensions" Version="4.3.0" />
-    <PackageReference Include="System.Text.RegularExpressions" Version="4.3.0" />
-    <PackageReference Include="System.Threading.Tasks" Version="4.3.0" />
-  </ItemGroup>
-
 </Project>
