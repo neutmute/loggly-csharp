@@ -27,7 +27,7 @@
             </group>
             <group targetFramework=".NETStandard2.0">
                 <dependency id="loggly-csharp-config" version="$version$" />
-                <dependency id="Newtonsoft.Json" version="9.0.1" />
+                <dependency id="Newtonsoft.Json" version="11.0.2" />
             </group>
         </dependencies>
     </metadata>
