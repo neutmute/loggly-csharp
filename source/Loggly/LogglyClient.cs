@@ -113,6 +113,9 @@ namespace Loggly
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
             };
             jsonSerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+            jsonSerializerSettings.Converters.Add(new ToStringConverter(typeof(System.Reflection.Assembly)));
+            jsonSerializerSettings.Converters.Add(new ToStringConverter(typeof(System.Reflection.Module)));
+            jsonSerializerSettings.Converters.Add(new ToStringConverter(typeof(System.Reflection.MethodBase)));
             jsonSerializerSettings.Error = (sender, args) =>
             {
                 System.Diagnostics.Debug.WriteLine($"Error serializing exception property '{args.ErrorContext.Member}', property ignored: {args.ErrorContext.Error}");
@@ -131,6 +134,44 @@ namespace Loggly
                 case LogTransport.SyslogTcp: return new SyslogTcpTransport();
                 case LogTransport.SyslogSecure: return new SyslogSecureTransport();
                 default: throw new NotSupportedException("Unsupported transport: " + transport);
+            }
+        }
+
+        public class ToStringConverter : JsonConverter
+        {
+            private readonly Type _type;
+
+            /// <inheritdoc />
+            public override bool CanRead { get; } = false;
+
+            public ToStringConverter(Type type)
+            {
+                _type = type;
+            }
+
+            /// <inheritdoc />
+            public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+            {
+                if (value == null)
+                {
+                    writer.WriteNull();
+                }
+                else
+                {
+                    writer.WriteValue(value.ToString());
+                }
+            }
+
+            /// <inheritdoc />
+            public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+            {
+                throw new NotSupportedException("Only serialization is supported");
+            }
+
+            /// <inheritdoc />
+            public override bool CanConvert(Type objectType)
+            {
+                return _type.IsAssignableFrom(objectType);
             }
         }
     }
