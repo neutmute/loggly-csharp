@@ -12,15 +12,19 @@ namespace Loggly
     public class LogglyClient : ILogglyClient
     {
         private IMessageTransport _transport;
-
+        private JsonSerializer JsonSerializer => _jsonSerializer ?? (_jsonSerializer = JsonSerializer.CreateDefault(CreateJsonSerializerSettings()));
+        private JsonSerializer _jsonSerializer;
+        
         internal LogglyClient(IMessageTransport transport)
         {
             _transport = transport;
         }
+
         public LogglyClient()
         {
             _transport = TransportFactory();
         }
+
         public async Task<LogResponse> Log(LogglyEvent logglyEvent)
         {
             return await LogWorker(new [] {logglyEvent}).ConfigureAwait(false);
@@ -33,7 +37,6 @@ namespace Loggly
 
         private async Task<LogResponse> LogWorker(LogglyEvent[] events)
         {
-            var response = new LogResponse {Code = ResponseCode.Unknown};
             try
             {
                 if (LogglyConfig.Instance.IsEnabled)
@@ -50,18 +53,18 @@ namespace Loggly
 						}
                     }
                     
-                    response = await _transport.Send(events.Select(BuildMessage)).ConfigureAwait(false);
+                    return await _transport.Send(events.Select(BuildMessage)).ConfigureAwait(false);
                 }
                 else
                 {
-                    response = new LogResponse {Code = ResponseCode.SendDisabled};
+                    return new LogResponse {Code = ResponseCode.SendDisabled};
                 }
             }
             catch (Exception e)
             {
                 LogglyException.Throw(e);
+                return new LogResponse { Code = ResponseCode.Unknown };
             }
-            return response;
         }
 
         protected virtual LogglyMessage BuildMessage(LogglyEvent logglyEvent)
@@ -76,16 +79,48 @@ namespace Loggly
                    };
         }
 
-        private static string ToJson(object value)
+        private string ToJson(object value)
         {
-            return JsonConvert.SerializeObject(value, new JsonSerializerSettings
+            var jsonSerializer = JsonSerializer;
+            try
+            {
+                var sb = new System.Text.StringBuilder(256);
+                var sw = new System.IO.StringWriter(sb, System.Globalization.CultureInfo.InvariantCulture);
+
+                using (JsonTextWriter jsonWriter = new JsonTextWriter(sw))
+                {
+                    lock (jsonSerializer)
+                    {
+                        jsonWriter.Formatting = jsonSerializer.Formatting;
+                        jsonSerializer.Serialize(jsonWriter, value, value.GetType());
+                    }
+                    return sb.ToString();
+                }
+            }
+            catch
+            {
+                _jsonSerializer = null; // Reset as it might now be in bad state
+                throw;
+            }
+        }
+
+        private static JsonSerializerSettings CreateJsonSerializerSettings()
+        {
+            var jsonSerializerSettings = new JsonSerializerSettings
             {
                 NullValueHandling = NullValueHandling.Ignore,
                 TypeNameHandling = TypeNameHandling.None,
                 ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-            });
+            };
+            jsonSerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
+            jsonSerializerSettings.Error = (sender, args) =>
+            {
+                System.Diagnostics.Debug.WriteLine($"Error serializing exception property '{args.ErrorContext.Member}', property ignored: {args.ErrorContext.Error}");
+                args.ErrorContext.Handled = true;
+            };
+            return jsonSerializerSettings;
         }
-        
+
         private IMessageTransport TransportFactory()
         {
             var transport = LogglyConfig.Instance.Transport.LogTransport;
