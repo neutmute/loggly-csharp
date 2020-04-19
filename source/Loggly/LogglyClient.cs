@@ -115,7 +115,7 @@ namespace Loggly
             jsonSerializerSettings.Converters.Add(new Newtonsoft.Json.Converters.StringEnumConverter());
             jsonSerializerSettings.Converters.Add(new ToStringConverter(typeof(System.Reflection.Assembly)));
             jsonSerializerSettings.Converters.Add(new ToStringConverter(typeof(System.Reflection.Module)));
-            jsonSerializerSettings.Converters.Add(new ToStringConverter(typeof(System.Reflection.MethodBase)));
+            jsonSerializerSettings.Converters.Add(new ToStringConverter(typeof(System.Reflection.MethodInfo)));
             jsonSerializerSettings.Error = (sender, args) =>
             {
                 System.Diagnostics.Debug.WriteLine($"Error serializing exception property '{args.ErrorContext.Member}', property ignored: {args.ErrorContext.Error}");
