@@ -171,7 +171,7 @@ namespace Loggly
             /// <inheritdoc />
             public override bool CanConvert(Type objectType)
             {
-                return _type.IsAssignableFrom(objectType);
+                return _type.GetTypeInfo().IsAssignableFrom(objectType);
             }
         }
     }
