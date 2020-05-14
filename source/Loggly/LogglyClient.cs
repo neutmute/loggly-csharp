@@ -5,6 +5,7 @@ using Loggly.Config;
 using Loggly.Transports.Syslog;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using System.Reflection;
 
 namespace Loggly
 {
