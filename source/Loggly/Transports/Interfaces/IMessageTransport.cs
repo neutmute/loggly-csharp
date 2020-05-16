@@ -5,6 +5,6 @@ namespace Loggly
 {
     internal interface IMessageTransport
     {
-        Task<LogResponse> Send(IEnumerable<LogglyMessage> message);
+        Task<LogResponse> Send(IEnumerable<LogglyMessage> messages);
     }
 }

@@ -1,7 +1,5 @@
 using System;
-using System.Diagnostics;
 using System.Text;
-using Loggly.Config;
 
 namespace Loggly.Transports.Syslog
 {
@@ -50,6 +48,8 @@ namespace Loggly.Transports.Syslog
 
     public class SyslogMessage
     {
+        private static IEnvironmentProvider DefaultEnvironment = new EnvironmentProvider();
+
         #region Properties
 
         public DateTimeOffset Timestamp { get; set; }
@@ -70,7 +70,7 @@ namespace Loggly.Transports.Syslog
 
         public SyslogMessage()
         {
-            EnvironmentProvider = new EnvironmentProvider();
+            EnvironmentProvider = DefaultEnvironment;
         }
 
         public SyslogMessage(Facility facility, Level level, string text) : this()
