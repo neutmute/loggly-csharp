@@ -8,16 +8,22 @@ namespace Loggly.Transports
 {
     internal abstract class TransportBase
     {
-        protected abstract string GetRenderedTags(List<ITag> customTags);
+        private static readonly ICollection<string> EmptyCollection = new string[0];
 
         /// <summary>
         /// Combines custom with global tags and makes sure they are loggly legal
         /// </summary>
         public ICollection<string> GetLegalTagUnion(List<ITag> customTags)
         {
-            var tagList = new List<string>(LogglyConfig.Instance.TagConfig.Tags.Count + customTags.Count);
-            tagList.AddRange(LogglyConfig.Instance.TagConfig.Tags.ToLegalStrings());
-            tagList.AddRange(customTags.ToLegalStrings());
+            int capacity = LogglyConfig.Instance.TagConfig.Tags.Count + customTags.Count;
+            if (capacity == 0)
+                return EmptyCollection;
+
+            var tagList = new List<string>(capacity);
+            if (LogglyConfig.Instance.TagConfig.Tags.Count > 0)
+                tagList.AddRange(LogglyConfig.Instance.TagConfig.Tags.ToLegalStrings());
+            if (customTags.Count > 0)
+                tagList.AddRange(customTags.ToLegalStrings());
             return tagList;
         }
     }

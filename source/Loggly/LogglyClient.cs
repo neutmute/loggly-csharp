@@ -12,31 +12,33 @@ namespace Loggly
 
     public class LogglyClient : ILogglyClient
     {
-        private IMessageTransport _transport;
+        private readonly IMessageTransport _transport;
+        private Func<LogglyEvent, LogglyMessage> _buildMessage;
         private JsonSerializer JsonSerializer => _jsonSerializer ?? (_jsonSerializer = JsonSerializer.CreateDefault(CreateJsonSerializerSettings()));
         private JsonSerializer _jsonSerializer;
-        
+
         internal LogglyClient(IMessageTransport transport)
         {
             _transport = transport;
+            _buildMessage = (e) => BuildMessage(e);
         }
 
         public LogglyClient()
+            : this(TransportFactory())
         {
-            _transport = TransportFactory();
         }
 
         public async Task<LogResponse> Log(LogglyEvent logglyEvent)
         {
-            return await LogWorker(new [] {logglyEvent}).ConfigureAwait(false);
+            return await LogWorker(new[] { logglyEvent }).ConfigureAwait(false);
         }
 
         public async Task<LogResponse> Log(IEnumerable<LogglyEvent> logglyEvents)
         {
-            return await LogWorker(logglyEvents.ToArray()).ConfigureAwait(false);
+            return await LogWorker(logglyEvents.ToList()).ConfigureAwait(false);
         }
 
-        private async Task<LogResponse> LogWorker(LogglyEvent[] events)
+        private async Task<LogResponse> LogWorker(IList<LogglyEvent> events)
         {
             try
             {
@@ -44,21 +46,22 @@ namespace Loggly
                 {
                     if (LogglyConfig.Instance.Transport.LogTransport == LogTransport.Https)
                     {
-						if (!LogglyConfig.Instance.Transport.IsOmitTimestamp)
-						{
-							foreach (var e in events)
-							{
-								// syslog has this data in the header, only need to add it for Http
-								e.Data.AddIfAbsent("timestamp", e.Timestamp);
-							}
-						}
+                        if (!LogglyConfig.Instance.Transport.IsOmitTimestamp)
+                        {
+                            for (int i = 0; i < events.Count; ++i)
+                            {
+                                var evt = events[i];
+                                // syslog has this data in the header, only need to add it for Http
+                                evt.Data.AddIfAbsent("timestamp", evt.Timestamp);
+                            }
+                        }
                     }
-                    
-                    return await _transport.Send(events.Select(BuildMessage)).ConfigureAwait(false);
+
+                    return await _transport.Send(events.Select(_buildMessage)).ConfigureAwait(false);
                 }
                 else
                 {
-                    return new LogResponse {Code = ResponseCode.SendDisabled};
+                    return new LogResponse { Code = ResponseCode.SendDisabled };
                 }
             }
             catch (Exception e)
@@ -71,13 +74,13 @@ namespace Loggly
         protected virtual LogglyMessage BuildMessage(LogglyEvent logglyEvent)
         {
             return new LogglyMessage
-                   {
-                       Timestamp = logglyEvent.Timestamp,
-                       Syslog = logglyEvent.Syslog,
-                       Type = MessageType.Json,
-                       Content = ToJson(logglyEvent.Data),
-                       CustomTags = logglyEvent.Options.Tags
-                   };
+            {
+                Timestamp = logglyEvent.Timestamp,
+                Syslog = logglyEvent.Syslog,
+                Type = MessageType.Json,
+                Content = ToJson(logglyEvent.Data),
+                CustomTags = logglyEvent.Options.Tags
+            };
         }
 
         private string ToJson(object value)
@@ -125,7 +128,7 @@ namespace Loggly
             return jsonSerializerSettings;
         }
 
-        private IMessageTransport TransportFactory()
+        private static IMessageTransport TransportFactory()
         {
             var transport = LogglyConfig.Instance.Transport.LogTransport;
             switch (transport)
