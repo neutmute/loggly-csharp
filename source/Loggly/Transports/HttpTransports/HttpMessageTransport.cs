@@ -1,14 +1,11 @@
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using System.Net.Http;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using Loggly.Config;
-using Loggly.Responses;
 using Loggly.Transports;
-using Newtonsoft.Json;
 
 namespace Loggly
 {
@@ -40,7 +37,6 @@ namespace Loggly
         {
 
         }
-
 
         private static string UrlSingle
         {
@@ -74,7 +70,7 @@ namespace Loggly
 
         public async Task<LogResponse> Send(IEnumerable<LogglyMessage> messages)
         {
-            var logResponse = new LogResponse();
+            LogResponse logResponse;
 
             if (LogglyConfig.Instance.IsValid)
             {
@@ -91,6 +87,7 @@ namespace Loggly
                         logResponse = new LogResponse { Code = ResponseCode.Error, Message = "Loggly returned status:" + response.StatusCode };
                     }
                 }
+
                 foreach (var m in list)
                 {
                     LogglyEventSource.Instance.Log(m, logResponse);
@@ -99,34 +96,31 @@ namespace Loggly
             }
             else
             {
+                logResponse = new LogResponse() { Code = ResponseCode.Unknown };
                 LogglyException.Throw("Loggly configuration is missing or invalid. Did you specify a customer token?");
             }
+
             return logResponse;
         }
 
         private Task<HttpResponseMessage> PostUsingHttpClient(List<LogglyMessage> messages)
         {
-            string tags;
-            if (messages.Count == 1)
-            {
-                tags = GetRenderedTags(messages[0].CustomTags);
-            }
-            else
-            {
-                // if bulk sending messages, send all tags which have the same value for all messages
-                tags = string.Join(",", messages.SelectMany(x => GetLegalTagUnion(x.CustomTags)).GroupBy(x => x).Where(x => x.Count() == messages.Count).Select(x => x.Key));
-            }
+            string tags = GetRenderedTags(messages);
 
-            var request=new HttpRequestMessage(HttpMethod.Post, messages.Count == 1 ? UrlSingle : UrlBulk);
-            
+            var request = new HttpRequestMessage(HttpMethod.Post, messages.Count == 1 ? UrlSingle : UrlBulk);
+
             if (!string.IsNullOrEmpty(tags))
             {
                 request.Headers.Add("X-LOGGLY-TAG", tags);
             }
+
             var type = messages.First().Type;
-            if (!messages.TrueForAll(x => type == x.Type))
+            foreach (var msg in messages)
             {
-                LogglyException.Throw("Cannot have mixed Plain and Json messages");
+                if (msg.Type != type)
+                {
+                    LogglyException.Throw("Cannot have mixed Plain and Json messages");
+                }
             }
 
             string messageContent;
@@ -161,19 +155,17 @@ namespace Loggly
             return HttpClient.SendAsync(request);
         }
 
-        protected override string GetRenderedTags(List<ITag> customTags)
+        private string GetRenderedTags(List<LogglyMessage> messages)
         {
-            var tags = string.Join(",", GetLegalTagUnion(customTags));
-            return tags;
-        }
-
-        private async Task<string> GetResponseBodyAsync(HttpResponseMessage response)
-        {
-            if (response == null)
+            if (messages.Count == 1)
             {
-                return null;
+                var tags = GetLegalTagUnion(messages[0].CustomTags);
+                if (tags.Count == 0)
+                    return string.Empty;
             }
-            return await response.Content.ReadAsStringAsync().ConfigureAwait(false);
+
+            // if bulk sending messages, send all tags which have the same value for all messages
+            return string.Join(",", messages.SelectMany(x => GetLegalTagUnion(x.CustomTags)).GroupBy(x => x).Where(x => x.Count() == messages.Count).Select(x => x.Key));
         }
     }
 }

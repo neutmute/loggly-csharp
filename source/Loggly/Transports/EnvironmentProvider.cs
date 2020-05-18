@@ -8,20 +8,17 @@ namespace Loggly
 {
     class EnvironmentProvider : IEnvironmentProvider
     {
-        public int ProcessId
+        private readonly int _processId;
+        private readonly string _machineName;
+
+        public EnvironmentProvider()
         {
-            get
-            {
-                return Process.GetCurrentProcess().Id;
-            }
+            _processId = Process.GetCurrentProcess().Id;
+            _machineName = Environment.MachineName;
         }
 
-        public string MachineName
-        {
-            get
-            {
-                return Environment.MachineName;
-            }
-        }
+        public int ProcessId => _processId;
+
+        public string MachineName => _machineName;
     }
 }
