@@ -1,7 +1,7 @@
 version: 4.6.1.{build}
-image: Visual Studio 2017
 pull_requests:
   do_not_increment_build_number: true
+image: Visual Studio 2019
 assembly_info:
   patch: true
   file: '**\AssemblyInfo.*'
@@ -11,13 +11,13 @@ assembly_info:
 nuget:
   disable_publish_on_pr: true
 build_script:
-- ps: ./build.ps1
+- ps: .\build.ps1
 artifacts:
 - path: _output\**\*.nupkg
   name: nupkg
 deploy:
 - provider: NuGet
   api_key:
-    secure: V2Jb2pTvgA6qqpYg6Jolj1RJmgae8Xd6p42b7J21EEDl3Czn+IKpX3t5tnho/fz2
+    secure: 1DSPmb9Ky+RRHrzeeTg/I0nJ/FbWWZ54CA9JfuhbdbC+Lv1W4GI2BnHRYz7ZeSzW
   on:
     branch: master
