@@ -50,7 +50,7 @@ namespace Loggly.Transports.Syslog
             }
             catch (IOException ex)
             {
-#if NET_STANDARD
+#if NETSTANDARD
                 _tcpClient?.Dispose();
 #else
                 _tcpClient?.Close();
@@ -73,7 +73,7 @@ namespace Loggly.Transports.Syslog
 
         public void Dispose()
         {
-#if NET_STANDARD
+#if NETSTANDARD
             _tcpClient?.Dispose();
 #else
             _tcpClient?.Close();
