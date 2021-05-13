@@ -88,15 +88,17 @@ namespace Loggly
                     }
                 }
 
-                foreach (var m in list)
+                if (LogglyEventSource.Instance.IsEnabled())
                 {
-                    LogglyEventSource.Instance.Log(m, logResponse);
+                    foreach (var m in list)
+                    {
+                        LogglyEventSource.Instance.Log(m, logResponse);
+                    }
                 }
-
             }
             else
             {
-                logResponse = new LogResponse() { Code = ResponseCode.Unknown };
+                logResponse = new LogResponse() { Code = ResponseCode.Unknown, Message = "Loggly config missing or invalid" };
                 LogglyException.Throw("Loggly configuration is missing or invalid. Did you specify a customer token?");
             }
 
@@ -162,6 +164,8 @@ namespace Loggly
                 var tags = GetLegalTagUnion(messages[0].CustomTags);
                 if (tags.Count == 0)
                     return string.Empty;
+                else if (tags.Count == 1)
+                    return tags.First();
             }
 
             // if bulk sending messages, send all tags which have the same value for all messages
