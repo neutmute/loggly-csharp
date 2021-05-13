@@ -9,20 +9,18 @@ namespace Loggly.Transports.Syslog
     {
         public async Task<LogResponse> Send(IEnumerable<LogglyMessage> messages)
         {
-            var response = new LogResponse
-            {
-                Code = ResponseCode.AssumedSuccess
-            };
+            LogResponse logResponse = null;
 
             foreach (var message in messages)
             {
                 var sysLog = ConstructSyslog(message);
-                await Send(sysLog).ConfigureAwait(false);
-
-                LogglyEventSource.Instance.Log(message, response);
+                var response = await Send(sysLog).ConfigureAwait(false);
+                if (logResponse == null || logResponse.Code == ResponseCode.Success)
+                    logResponse = response;
+                LogglyEventSource.Instance.Log(message, logResponse);
             }
 
-            return response;
+            return logResponse ?? new LogResponse { Code = ResponseCode.AssumedSuccess };
         }
 
         internal SyslogMessage ConstructSyslog(LogglyMessage message)
@@ -51,7 +49,7 @@ namespace Loggly.Transports.Syslog
             return syslogMessage;
         }
 
-        protected abstract Task Send(SyslogMessage syslogMessage);
+        protected abstract Task<LogResponse> Send(SyslogMessage syslogMessage);
 
         private string GetRenderedTags(List<ITag> customTags)
         {

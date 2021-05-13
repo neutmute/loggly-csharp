@@ -1,9 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Net;
 using Loggly.Config;
-using Loggly.Responses;
-using Loggly.Transports.Syslog;
 
 namespace Loggly
 {
@@ -22,9 +19,14 @@ namespace Loggly
         public List<ITag> CustomTags { get; set; }
 
         public LogglyMessage()
+            :this(new List<ITag>(), new SyslogHeader())
         {
-            Syslog = new SyslogHeader();
-            CustomTags = new List<ITag>();
+        }
+
+        public LogglyMessage(List<ITag> customTags, SyslogHeader syslog)
+        {
+            CustomTags = customTags;
+            Syslog = syslog;
         }
 
         public override string ToString()

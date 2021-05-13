@@ -13,7 +13,7 @@ namespace Loggly
     public class LogglyClient : ILogglyClient
     {
         private readonly IMessageTransport _transport;
-        private Func<LogglyEvent, LogglyMessage> _buildMessage;
+        private readonly Func<LogglyEvent, LogglyMessage> _buildMessage;
         private JsonSerializer JsonSerializer => _jsonSerializer ?? (_jsonSerializer = JsonSerializer.CreateDefault(CreateJsonSerializerSettings()));
         private JsonSerializer _jsonSerializer;
 
@@ -28,35 +28,22 @@ namespace Loggly
         {
         }
 
-        public async Task<LogResponse> Log(LogglyEvent logglyEvent)
+        public Task<LogResponse> Log(LogglyEvent logglyEvent)
         {
-            return await LogWorker(new[] { logglyEvent }).ConfigureAwait(false);
+            return LogWorker(new[] { logglyEvent });
         }
 
-        public async Task<LogResponse> Log(IEnumerable<LogglyEvent> logglyEvents)
+        public Task<LogResponse> Log(IEnumerable<LogglyEvent> logglyEvents)
         {
-            return await LogWorker(logglyEvents.ToList()).ConfigureAwait(false);
+            return LogWorker(logglyEvents);
         }
 
-        private async Task<LogResponse> LogWorker(IList<LogglyEvent> events)
+        private async Task<LogResponse> LogWorker(IEnumerable<LogglyEvent> events)
         {
             try
             {
                 if (LogglyConfig.Instance.IsEnabled)
                 {
-                    if (LogglyConfig.Instance.Transport.LogTransport == LogTransport.Https)
-                    {
-                        if (!LogglyConfig.Instance.Transport.IsOmitTimestamp)
-                        {
-                            for (int i = 0; i < events.Count; ++i)
-                            {
-                                var evt = events[i];
-                                // syslog has this data in the header, only need to add it for Http
-                                evt.Data.AddIfAbsent("timestamp", evt.Timestamp);
-                            }
-                        }
-                    }
-
                     return await _transport.Send(events.Select(_buildMessage)).ConfigureAwait(false);
                 }
                 else
@@ -67,19 +54,26 @@ namespace Loggly
             catch (Exception e)
             {
                 LogglyException.Throw(e);
-                return new LogResponse { Code = ResponseCode.Unknown };
+                return new LogResponse { Code = ResponseCode.Error, Message = $"{e.GetType()}: {e.Message}" };
             }
         }
 
         protected virtual LogglyMessage BuildMessage(LogglyEvent logglyEvent)
         {
-            return new LogglyMessage
+            if (LogglyConfig.Instance.Transport.LogTransport == LogTransport.Https)
+            {
+                if (!LogglyConfig.Instance.Transport.IsOmitTimestamp)
+                {
+                    // syslog has this data in the header, only need to add it for Http
+                    logglyEvent.Data.AddIfAbsent("timestamp", logglyEvent.Timestamp);
+                }
+            }
+
+            return new LogglyMessage(logglyEvent.Options.Tags, logglyEvent.Syslog)
             {
                 Timestamp = logglyEvent.Timestamp,
-                Syslog = logglyEvent.Syslog,
                 Type = MessageType.Json,
                 Content = ToJson(logglyEvent.Data),
-                CustomTags = logglyEvent.Options.Tags
             };
         }
 
