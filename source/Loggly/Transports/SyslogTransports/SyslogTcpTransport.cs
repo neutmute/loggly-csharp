@@ -8,7 +8,7 @@ using Loggly.Config;
 
 namespace Loggly.Transports.Syslog
 {
-    class SyslogTcpTransport : SyslogTransportBase, IDisposable
+    internal class SyslogTcpTransport : SyslogTransportBase, IDisposable
     {
         private Stream _networkStream;
         private TcpClient _tcpClient;
@@ -22,10 +22,9 @@ namespace Loggly.Transports.Syslog
         protected virtual Task<Stream> GetNetworkStream(TcpClient client)
         {
             return Task.FromResult<Stream>(client.GetStream());
-        }
-        
+        }       
 
-        protected override async Task Send(SyslogMessage syslogMessage)
+        protected override async Task<LogResponse> Send(SyslogMessage syslogMessage)
         {
             await _semaphore.WaitAsync();
             
@@ -42,12 +41,14 @@ namespace Loggly.Transports.Syslog
                 
                 await _networkStream.WriteAsync(messageBytes, 0, messageBytes.Length).ConfigureAwait(false);
                 await _networkStream.FlushAsync().ConfigureAwait(false);
+                return new LogResponse() { Code = ResponseCode.Success };
             }
-            catch (AuthenticationException e)
+            catch (AuthenticationException ex)
             {
-                LogglyException.Throw(e, e.Message);
+                LogglyException.Throw(ex, ex.Message);
+                return new LogResponse() { Code = ResponseCode.Error, Message = $"{ex.GetType()}: {ex.Message}" };
             }
-            catch (IOException ioException)
+            catch (IOException ex)
             {
 #if NET_STANDARD
                 _tcpClient?.Dispose();
@@ -55,18 +56,19 @@ namespace Loggly.Transports.Syslog
                 _tcpClient?.Close();
 #endif
                 _networkStream = null;
-                LogglyException.Throw(ioException, ioException.Message);
+                LogglyException.Throw(ex, ex.Message);
+                return new LogResponse() { Code = ResponseCode.Error, Message = $"{ex.GetType()}: {ex.Message}" };
             }
-            catch (ObjectDisposedException disposedException)
+            catch (ObjectDisposedException ex)
             {
                 _networkStream = null;
-                LogglyException.Throw(disposedException, disposedException.Message);
+                LogglyException.Throw(ex, ex.Message);
+                return new LogResponse() { Code = ResponseCode.Error, Message = $"{ex.GetType()}: {ex.Message}" };
             }
             finally
             {
                 _semaphore.Release();
             }
-
         }
 
         public void Dispose()

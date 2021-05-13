@@ -36,21 +36,23 @@ namespace Loggly.Transports.Syslog
         }
 
 
-        protected override async Task Send(SyslogMessage syslogMessage)
+        protected override async Task<LogResponse> Send(SyslogMessage syslogMessage)
         {
             try
             {
-                var hostEntry = Dns.GetHostEntryAsync(LogglyConfig.Instance.Transport.EndpointHostname).Result;
+                var hostEntry = await Dns.GetHostEntryAsync(LogglyConfig.Instance.Transport.EndpointHostname).ConfigureAwait(false);
                 var logglyEndpointIp = hostEntry.AddressList[0];
                 var bytes = syslogMessage.GetBytes();
                 await _udpClient.SendAsync(
                     bytes,
                     bytes.Length,
                     new IPEndPoint(logglyEndpointIp, LogglyConfig.Instance.Transport.EndpointPort)).ConfigureAwait(false);
+                return new LogResponse() { Code = ResponseCode.Success };
             }
             catch (Exception ex)
             {
                 LogglyException.Throw(ex, "Error when sending data using Udp client.");
+                return new LogResponse() { Code = ResponseCode.Error, Message = $"{ex.GetType()}: {ex.Message}" };
             }
             finally
             {
