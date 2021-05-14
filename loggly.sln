@@ -1,14 +1,14 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26228.4
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31205.134
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SolutionItems", "SolutionItems", "{5B1BDA21-CAE4-4686-B45B-1087AA9A36F4}"
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		appveyor.yml = appveyor.yml
+		build-common.ps1 = build-common.ps1
 		build.ps1 = build.ps1
-		common.ps1 = common.ps1
 		LICENSE = LICENSE
 		readme.md = readme.md
 	EndProjectSection
@@ -20,14 +20,6 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loggly.Example", "source\Loggly.Example\Loggly.Example.csproj", "{38D8CC5E-6E59-437C-B33E-430AE1E4E760}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Loggly", "source\Loggly\Loggly.csproj", "{F66349BA-29A6-4336-BA81-993170FC9963}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "NetStandard", "NetStandard", "{45F03704-6667-4EF3-A53F-721B01B86442}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loggly", "source\NetStandard\Loggly\Loggly.csproj", "{4B177388-2A8D-4B79-848C-567E8A48219C}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loggly.Config", "source\NetStandard\Loggly.Config\Loggly.Config.csproj", "{8CDDFB41-AA21-4975-90E7-42BE6E4583EC}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Loggly.Tests", "source\NetStandard\Loggly.Tests\Loggly.Tests.csproj", "{245FA0D6-B93F-4563-9D2C-88FF628E207C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,26 +42,9 @@ Global
 		{F66349BA-29A6-4336-BA81-993170FC9963}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F66349BA-29A6-4336-BA81-993170FC9963}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F66349BA-29A6-4336-BA81-993170FC9963}.Release|Any CPU.Build.0 = Release|Any CPU
-		{4B177388-2A8D-4B79-848C-567E8A48219C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{4B177388-2A8D-4B79-848C-567E8A48219C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{4B177388-2A8D-4B79-848C-567E8A48219C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{4B177388-2A8D-4B79-848C-567E8A48219C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8CDDFB41-AA21-4975-90E7-42BE6E4583EC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8CDDFB41-AA21-4975-90E7-42BE6E4583EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8CDDFB41-AA21-4975-90E7-42BE6E4583EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8CDDFB41-AA21-4975-90E7-42BE6E4583EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{245FA0D6-B93F-4563-9D2C-88FF628E207C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{245FA0D6-B93F-4563-9D2C-88FF628E207C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{245FA0D6-B93F-4563-9D2C-88FF628E207C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{245FA0D6-B93F-4563-9D2C-88FF628E207C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{4B177388-2A8D-4B79-848C-567E8A48219C} = {45F03704-6667-4EF3-A53F-721B01B86442}
-		{8CDDFB41-AA21-4975-90E7-42BE6E4583EC} = {45F03704-6667-4EF3-A53F-721B01B86442}
-		{245FA0D6-B93F-4563-9D2C-88FF628E207C} = {45F03704-6667-4EF3-A53F-721B01B86442}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {61F249B5-3057-47D7-B637-3ED17A6A00B6}

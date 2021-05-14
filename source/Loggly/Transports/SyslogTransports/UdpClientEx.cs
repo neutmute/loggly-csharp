@@ -13,7 +13,7 @@ namespace Loggly.Transports.Syslog
         ~UdpClientEx()
         {
             if (Active)
-#if NET_STANDARD
+#if NETSTANDARD
                 Dispose();
 #else
                 Close();

@@ -3,7 +3,7 @@ param(
     [string]$configuration = "Release"
 )
 
-. ".\common.ps1"
+. "./build-common.ps1"
 
 $solutionName = "loggly"
 $sourceUrl = "https://github.com/neutmute/loggly-csharp"
@@ -14,7 +14,7 @@ function init {
     $global:rootFolder = Join-Path $rootFolder .
     $global:packagesFolder = Join-Path $rootFolder packages
     $global:outputFolder = Join-Path $rootFolder _output
-    
+
     # Test for AppVeyor config
     if(!(Test-Path Env:\PackageVersion )){
         $env:PackageVersion = $env:APPVEYOR_BUILD_VERSION
@@ -28,72 +28,64 @@ function init {
     _WriteOut -ForegroundColor $ColorScheme.Banner "-= $solutionName Build =-"
     _WriteConfig "rootFolder" $rootFolder
     _WriteConfig "version" $env:PackageVersion
-
 }
 
 function restorePackages{
-    _WriteOut -ForegroundColor $ColorScheme.Banner "nuget, gitlink restore"
+    _WriteOut -ForegroundColor $ColorScheme.Banner "nuget restore"
     
     New-Item -Force -ItemType directory -Path $packagesFolder
     _DownloadNuget $packagesFolder
     nuget restore
-    nuget install gitlink -SolutionDir "$rootFolder" -ExcludeVersion
 
-	dotnet restore
+	dotnet restore "$rootFolder\$solutionName.sln"
+
+	checkExitCode
 }
 
 function nugetPack{
-    _WriteOut -ForegroundColor $ColorScheme.Banner "Nuget pack"
-    
-    New-Item -Force -ItemType directory -Path $outputFolder
+    _WriteOut -ForegroundColor $ColorScheme.Banner "Nuget pack"   
 
     if(!(Test-Path Env:\nuget )){
         $env:nuget = nuget
     }
-    
-    nuget pack $rootFolder\Source\Loggly\Loggly.nuspec -o $outputFolder -IncludeReferencedProjects -p Configuration=$configuration -Version $env:PackageVersion
-    nuget pack $rootFolder\Source\Loggly.Config\Loggly.Config.nuspec -IncludeReferencedProjects -o $outputFolder -p Configuration=$configuration -Version $env:PackageVersion
+
+	dotnet pack "$rootFolder\$solutionName.sln" --configuration $configuration --no-build --no-restore -p:IncludeSymbols=true -p:SymbolPackageFormat=snupkg -p:ContinuousIntegrationBuild=true -p:EmbedUntrackedSources=true -p:PublishRepositoryUrl=true --output $outputFolder
+
+	checkExitCode
 }
 
 function nugetPublish{
 
-    if(Test-Path Env:\nugetapikey ){
-        _WriteOut -ForegroundColor $ColorScheme.Banner "Nuget publish..."
-        &nuget push $outputFolder\* -ApiKey "$env:nugetapikey" -source https://www.nuget.org
-    }
-    else{
-        _WriteOut -ForegroundColor Yellow "nugetapikey environment variable not detected. Skipping nuget publish"
-    }
+    if($env:APPVEYOR_PULL_REQUEST_NUMBER){
+		_WriteOut -ForegroundColor Yellow "Pull Request Build Detected. Skipping Publish"
+	}
+	else{
+		if(Test-Path Env:\nugetapikey ){
+	        _WriteOut -ForegroundColor $ColorScheme.Banner "Nuget publish..."
+		    &nuget push $outputFolder\* -ApiKey "$env:nugetapikey" -source https://www.nuget.org
+		}
+		else{
+			_WriteOut -ForegroundColor Yellow "nugetapikey environment variable not detected. Skipping nuget publish"
+		}
+	}
 }
 
 function buildSolution{
-
-    Set-MsBuildAlias
-
     _WriteOut -ForegroundColor $ColorScheme.Banner "Build Solution"
-    msbuild "$rootFolder\$solutionName.sln" /p:Configuration=$configuration
+	    
+	New-Item -Force -ItemType directory -Path $outputFolder
 
-    #&"$rootFolder\packages\gitlink\build\GitLink.exe" $rootFolder -u $sourceUrl
+    dotnet build "$rootFolder\$solutionName.sln" --configuration $configuration -p:PackageVersion=$env:PackageVersion -p:ContinuousIntegrationBuild=true -p:EmbedUntrackedSources=true -p:PublishRepositoryUrl=true
+
+	checkExitCode
 }
+
 
 function executeTests{
 
-    Write-Host "Execute Tests"
+	_WriteOut -ForegroundColor $ColorScheme.Banner "Execute Tests"
 
-    $testResultformat = ""
-    $nunitConsole = "$rootFolder\packages\NUnit.ConsoleRunner.3.4.1\tools\nunit3-console.exe"
-
-    if(Test-Path Env:\APPVEYOR){
-        $testResultformat = ";format=AppVeyor"
-        $nunitConsole = "nunit3-console"
-    }
-
-    & $nunitConsole .\Source\Loggly.Tests\bin\$configuration\Loggly.Tests.dll --result=.\Source\Loggly.Tests\bin\$configuration\nunit-results.xml$testResultformat
-
-    checkExitCode
-
-    #Appveyor may 2017 isn't building vs2017 for me
-    #dotnet test .\Source\NetStandard\Loggly.Tests\project.json -c $configuration
+	dotnet test $rootFolder\source\Loggly.Tests
 
     checkExitCode
 }
