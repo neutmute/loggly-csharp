@@ -1,3 +1,5 @@
+﻿#if !NET45
+
 namespace Loggly.Config
 {
     /// <summary>
@@ -28,3 +30,5 @@ namespace Loggly.Config
         SyslogTcp,
     }
 }
+
+#endif

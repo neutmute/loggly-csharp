@@ -27,7 +27,7 @@ namespace Loggly.Transports.Syslog
         {
             if (_udpClient.IsActive)
             {
-#if NET_STANDARD
+#if NETSTANDARD
                 _udpClient.Dispose();
 #else
                 _udpClient.Close();

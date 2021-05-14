@@ -15,6 +15,8 @@ build_script:
 artifacts:
 - path: _output\**\*.nupkg
   name: nupkg
+- path: _output\**\*.snupkg
+  name: nupkg
 deploy:
 - provider: NuGet
   api_key:
