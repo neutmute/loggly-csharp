@@ -8,6 +8,7 @@
     <Company>neutmute</Company>
     <Authors>neutmute</Authors>
     <Description>A .NET client for loggly. Supporting Https, Syslog UDP and encrypted Syslog TCP transports.</Description>
+    <PackageId>loggly-csharp</PackageId>
     <PackageTags>loggly;syslog;logging</PackageTags>
     <PackageIcon>loggly.png</PackageIcon>
     <PackageProjectUrl>https://github.com/neutmute/loggly-csharp</PackageProjectUrl>

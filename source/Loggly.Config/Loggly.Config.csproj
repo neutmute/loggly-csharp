@@ -8,6 +8,7 @@
     <Company>neutmute</Company>
     <Authors>neutmute</Authors>
     <Description>Configuration classes for loggly clients. Settings are read from app.config or can be programmatically injected at runtime. See readme.md for documentation</Description>
+    <PackageId>loggly-csharp-config</PackageId>
     <PackageTags>loggly;syslog;logging</PackageTags>
     <PackageIcon>loggly-config.png</PackageIcon>
     <PackageProjectUrl>https://github.com/neutmute/loggly-csharp</PackageProjectUrl>
