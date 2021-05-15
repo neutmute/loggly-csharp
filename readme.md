@@ -1,10 +1,10 @@
 # ![](https://raw.githubusercontent.com/neutmute/loggly-csharp/master/SolutionItems/loggly.png) .NET Client for Loggly  
 
 [![Build status](https://ci.appveyor.com/api/projects/status/olaoata7qpl7fnk8?svg=true)](https://ci.appveyor.com/project/neutmute/loggly-csharp)
-![Version](https://img.shields.io/nuget/v/loggly-csharp.svg)
+[![NuGet](https://img.shields.io/nuget/v/loggly-csharp.svg)](https://www.nuget.org/packages/loggly-csharp) 
 
 A .NET client for loggly. Supporting Https, Syslog UDP and encrypted Syslog TCP transports.
-Install via nuget with
+Install via [nuget](https://www.nuget.org/packages/loggly-csharp/) with
 
 	Install-Package loggly-csharp
 
@@ -14,59 +14,65 @@ This project supports .NET standard and so requires the [latest tooling installe
 ## Configuration via app.Config
 Configuration may be done via your app.config. The minimal amount config you require is to specify your `customerToken`: 
 
-	<configuration>
-	  <configSections>
-	    <section name="loggly" type="Loggly.Config.LogglyAppConfig, Loggly.Config"/>
-	  </configSections>
-	  <loggly xmlns="Loggly" customerToken="your token here" />
-	</configuration>
+```xml
+<configuration>
+	<configSections>
+	<section name="loggly" type="Loggly.Config.LogglyAppConfig, Loggly.Config"/>
+	</configSections>
+	<loggly xmlns="Loggly" customerToken="your token here" />
+</configuration>
+```
  
 When you get that working, take the training wheels off and go crazy:
 
-	<loggly 
-	  xmlns="Loggly" 
-	  applicationName="MyAwesomeApp" 
-	  customerToken="your token here" 
-	  isEnabled="true"
-	  throwExceptions="true">
+```xml
+<loggly 
+	xmlns="Loggly" 
+	applicationName="MyAwesomeApp" 
+	customerToken="your token here" 
+	isEnabled="true"
+	throwExceptions="true">
 
-  	  <transport logTransport="Https" endpointHostname="logs-01.loggly.com" endpointPort="443"/>
+  	<transport logTransport="Https" endpointHostname="logs-01.loggly.com" endpointPort="443"/>
 
-	  <search account="your_loggly_account" username="a_loggly_username" password="myLittleP0ny!"/>
+	<search account="your_loggly_account" username="a_loggly_username" password="myLittleP0ny!"/>
   
-	  <tags>
-	    <simple>
-	      <tag value="winforms"/>
-	    </simple>
-	    <complex>
-	      <tag type="Loggly.HostnameTag" formatter="host-{0}"/>
-	      <tag type="Loggly.ApplicationNameTag" formatter="application-{0}"/>
-	      <tag type="Loggly.OperatingSystemVersionTag" formatter="os-{0}"/>
-	      <tag type="Loggly.OperatingSystemPlatformTag" formatter="platform-{0}"/>
-	    </complex>
-	  </tags>
-	</loggly>
-
+	<tags>
+	<simple>
+	    <tag value="winforms"/>
+	</simple>
+	<complex>
+	    <tag type="Loggly.HostnameTag" formatter="host-{0}"/>
+	    <tag type="Loggly.ApplicationNameTag" formatter="application-{0}"/>
+	    <tag type="Loggly.OperatingSystemVersionTag" formatter="os-{0}"/>
+	    <tag type="Loggly.OperatingSystemPlatformTag" formatter="platform-{0}"/>
+	</complex>
+	</tags>
+</loggly>
+```
 ## Configuration via Code
 
 The following sample shows how to configure loggly via code - useful for Azure/Asp.NET core scenarios. Be sure to do this very early in the application life cycle in order to capture your early logs.
 
-    var config = LogglyConfig.Instance;
-    config.CustomerToken = "1ceb00da-cec7-45cb-8135-d3adbeef";
-    config.ApplicationName = $"MyApp-{_environmentName}";
+```csharp
+var config = LogglyConfig.Instance;
+config.CustomerToken = "1ceb00da-cec7-45cb-8135-d3adbeef";
+config.ApplicationName = $"MyApp-{_environmentName}";
 
-    config.Transport.EndpointHostname = "logs-01.loggly.com";
-    config.Transport.EndpointPort = 443;
-    config.Transport.LogTransport = LogTransport.Https;
+config.Transport.EndpointHostname = "logs-01.loggly.com";
+config.Transport.EndpointPort = 443;
+config.Transport.LogTransport = LogTransport.Https;
 
-    var ct = new ApplicationNameTag();
-    ct.Formatter = "application-{0}";
-    config.TagConfig.Tags.Add(ct);
+var ct = new ApplicationNameTag();
+ct.Formatter = "application-{0}";
+config.TagConfig.Tags.Add(ct);
+```
 
 ## Proxy 
 To set a global proxy for WebRequests used by HTTPS, you can do something like
-
-    System.Net.WebRequest.DefaultWebProxy = new WebProxy("http://proxy.net:3128");
+```csharp
+System.Net.WebRequest.DefaultWebProxy = new WebProxy("http://proxy.net:3128");
+```
 
 ## Configuration Detail
 
@@ -107,17 +113,21 @@ Loggly has certain restrictions around characters allowed in tags. This library 
 ## Usage: LogglyClient
 Send simple text messages with something like this.
 
-	ILogglyClient _loggly = new LogglyClient();
-    var logEvent = new LogglyEvent();
-    logEvent.Data.Add("message", "Simple message at {0}", DateTime.Now);
-    _loggly.Log(logEvent);
+```csharp
+ILogglyClient _loggly = new LogglyClient();
+var logEvent = new LogglyEvent();
+logEvent.Data.Add("message", "Simple message at {0}", DateTime.Now);
+_loggly.Log(logEvent);
+```
 
 Or log an entire object and let the client send it as structured JSON
 
-	logEvent.Data.Add("context", new GlimmerWingPony());
-    _loggly.Log(logEvent);
+```csharp
+logEvent.Data.Add("context", new GlimmerWingPony());
+_loggly.Log(logEvent);
+```
 
-The `Log` method returns `Task<LogResponse>` so it is asynchronous by default but can be awaited. Only the Https transport would be worth awaiting as the Syslog transports are fire and forget. 
+The `Log` method returns `Task<LogResponse>` so it is asynchronous by default but can be awaited.
 
 ## Usage: SearchClient
 
@@ -142,9 +152,9 @@ Contributions are welcome.
 * `.\build.ps1` / Visual Studio 2015 will require VS2015 command prompt / [.NET core tooling](https://www.microsoft.com/net/core#windows) to compile the solution
 
 ## Projects using this client
-* [nlog-targets-loggly](https://github.com/joefitzgerald/nlog-targets-loggly) An NLog target
-* [Serilog.Sinks.Loggly](https://github.com/serilog/serilog/tree/master/src/Serilog.Sinks.Loggly) Serilog sink
-* [Loggly.CompositeC1](https://www.nuget.org/packages/Loggly.CompositeC1) TraceListener for Composite C1 CMS
+* [nlog-targets-loggly](https://www.nuget.org/packages/NLog.Targets.Loggly) - NLog target
+* [Serilog.Sinks.Loggly](https://www.nuget.org/packages/Serilog.Sinks.Loggly/) - Serilog sink
+* [Loggly.CompositeC1](https://www.nuget.org/packages/Loggly.CompositeC1) - TraceListener for Composite C1 CMS
 
 ## History
 ### v4.6
