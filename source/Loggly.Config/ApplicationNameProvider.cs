@@ -1,4 +1,4 @@
-﻿#if FEATURE_SYSTEM_CONFIGURATION
+﻿#if NETFRAMEWORK
 using System;
 using System.Collections.Generic;
 using System.Configuration;
@@ -20,7 +20,7 @@ namespace Loggly.Config
         {
             var newRelicAppName = ConfigurationManager.AppSettings["NewRelic.AppName"];
             string name= null;
-            if (LogglyAppConfig.HasAppCopnfig && !string.IsNullOrEmpty(LogglyAppConfig.Instance.ApplicationName))
+            if (!string.IsNullOrEmpty(LogglyAppConfig.Instance?.ApplicationName))
             {
                 name = LogglyAppConfig.Instance.ApplicationName;
             }
