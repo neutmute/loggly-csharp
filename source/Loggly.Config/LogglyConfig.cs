@@ -1,4 +1,4 @@
-﻿#if FEATURE_SYSTEM_CONFIGURATION
+﻿#if NETFRAMEWORK
 using System.Configuration;
 #endif
 using System.Linq;
@@ -35,8 +35,8 @@ namespace Loggly.Config
             {
                 if (_instance == null)
                 {
-#if FEATURE_SYSTEM_CONFIGURATION
-                    if (LogglyAppConfig.HasAppCopnfig)
+#if NETFRAMEWORK
+                    if (LogglyAppConfig.Instance != null)
                     {
                         _instance = FromAppConfig();
                         return _instance;
@@ -54,7 +54,7 @@ namespace Loggly.Config
             return new LogglyConfig();
         }
 
-#if FEATURE_SYSTEM_CONFIGURATION
+#if NETFRAMEWORK
         private static ILogglyConfig FromAppConfig()
         {
             var config = new LogglyConfig();
@@ -64,7 +64,7 @@ namespace Loggly.Config
             config.ApplicationName = new ApplicationNameProvider().GetName();
             config.IsEnabled = LogglyAppConfig.Instance.IsEnabled;
 
-            if (LogglyAppConfig.Instance.HasTagConfig)
+            if (LogglyAppConfig.Instance?.Tags != null)
             {
                 config.TagConfig.Tags.AddRange(LogglyAppConfig.Instance.Tags.Simple.Cast<ITag>().ToList());
                 config.TagConfig.Tags.AddRange(LogglyAppConfig.Instance.Tags.GetComplexTags());
